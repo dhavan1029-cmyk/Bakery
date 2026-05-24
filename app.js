@@ -1,6 +1,6 @@
 import express from 'express'
 import path from 'path'
-
+import './config/mongoose.js'
 const app = express()
 
 app.set('view engine', 'ejs')
