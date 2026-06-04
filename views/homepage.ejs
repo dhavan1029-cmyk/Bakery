@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLOURish Bakery</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body class="bg-[#F8F4EE] text-[#4A3428]">
+    <!-- NAVBAR -->
+
+    <nav class="fixed top-0 left-0 w-full z-50 bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB]">
+
+        <div class="w-[90%] mx-auto">
+
+            <div class="h-20 flex items-center justify-between">
+
+                <!-- Logo -->
+
+                <div class="w-[40%] flex items-center gap-3">
+
+                    <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+                    <div>
+
+                        <h1 class="font-serif text-4xl font-bold">
+                            FLOUR<span class="italic text-[#C9A36B]">ish</span>
+                        </h1>
+
+                    </div>
+
+                </div>
+
+                <!-- Desktop Links -->
+
+                <ul class="w-[40%] md:flex items-center justify-around text-sm uppercase tracking-wide">
+
+                    <li>
+                        <a href="/" class="hover:text-[#C9A36B] transition">
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/menu" class="hover:text-[#C9A36B] transition">
+                            Our Menu
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/about" class="hover:text-[#C9A36B] transition">
+                            About
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/cakes" class="hover:text-[#C9A36B] transition">
+                            Custom Cakes
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/contact" class="hover:text-[#C9A36B] transition">
+                            Contact
+                        </a>
+                    </li>
+
+                </ul>
+
+                <!-- Right Side -->
+
+                <div class="flex items-center justify-around gap-5">
+
+                    <a href="/search">
+                        <i class="fa-solid fa-magnifying-glass text-lg hover:text-[#C9A36B] transition"></i>
+                    </a>
+
+                    <a href="/login"
+                        class="bg-[#4A3428] text-white px-5 py-2 rounded-full hover:bg-[#7A5C45] transition">
+
+                        Sign In
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="pt-28">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+            <div
+                class="relative min-h-[750px] rounded-3xl overflow-hidden flex items-center"
+                style="
+                    background-image:url('/images/homepage.png');
+                    background-size:cover;
+                    background-position:center;
+                "
+            >
+
+                <!-- Overlay -->
+
+                <div class="absolute inset-0 bg-black/40"></div>
+
+                <!-- Content -->
+
+                <div class="relative z-10 px-8 md:px-16 lg:px-24 max-w-4xl">
+
+                    <p class="uppercase tracking-[8px] text-[#D9B97A] text-sm font-semibold">
+
+                        Freshly Baked Daily
+
+                    </p>
+
+                    <h1 class="mt-6 text-white font-serif text-5xl md:text-7xl font-bold leading-tight">
+
+                        Where Every Bite
+                        <br>
+                        Feels Like Home
+
+                    </h1>
+
+                    <p class="mt-8 text-white/90 text-lg md:text-xl max-w-2xl">
+
+                        Experience handcrafted breads, flaky pastries,
+                        custom cakes and sweet treats baked with
+                        love every single day.
+
+                    </p>
+
+                    <button
+                        class="mt-10 bg-[#C9A36B] text-[#2F241D] px-8 py-4 rounded-md font-bold uppercase tracking-wide hover:bg-[#B89056] transition">
+
+                        Explore Our Menu
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DAILY DELIGHTS -->
+
+    <section class="py-28">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+            <div class="text-center">
+
+                <h2 class="font-serif text-5xl md:text-6xl">
+
+                    Our Daily Delights
+
+                </h2>
+
+                <p class="mt-5 text-[#6B5B50] max-w-2xl mx-auto">
+
+                    Freshly prepared every day using quality ingredients,
+                    traditional techniques and a passion for baking.
+
+                </p>
+
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition">
+
+                    <div class="w-20 h-20 mx-auto rounded-full bg-[#F5EBDD] flex items-center justify-center">
+
+                        <i class="fa-solid fa-bread-slice text-3xl text-[#C9A36B]"></i>
+
+                    </div>
+
+                    <h3 class="mt-6 text-center font-serif text-2xl">
+
+                        Artisan Breads
+
+                    </h3>
+
+                    <p class="mt-3 text-center text-[#6B5B50]">
+
+                        Sourdough, baguettes, brioche and fresh loaves.
+
+                    </p>
+
+                    <button
+                        class="mt-6 w-full py-3 bg-[#C9A36B] rounded-md font-semibold hover:bg-[#B89056] transition">
+
+                        VIEW ALL
+
+                    </button>
+
+                </div>
+
+
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition">
+
+                    <div class="w-20 h-20 mx-auto rounded-full bg-[#F5EBDD] flex items-center justify-center">
+
+                        <i class="fa-solid fa-croissant text-3xl text-[#C9A36B]"></i>
+
+                    </div>
+
+                    <h3 class="mt-6 text-center font-serif text-2xl">
+
+                        Pastries
+
+                    </h3>
+
+                    <p class="mt-3 text-center text-[#6B5B50]">
+
+                        Croissants, danishes and buttery classics.
+
+                    </p>
+
+                    <button
+                        class="mt-6 w-full py-3 bg-[#C9A36B] rounded-md font-semibold hover:bg-[#B89056] transition">
+
+                        VIEW ALL
+
+                    </button>
+
+                </div>
+
+
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition">
+
+                    <div class="w-20 h-20 mx-auto rounded-full bg-[#F5EBDD] flex items-center justify-center">
+
+                        <i class="fa-solid fa-cake-candles text-3xl text-[#C9A36B]"></i>
+
+                    </div>
+
+                    <h3 class="mt-6 text-center font-serif text-2xl">
+
+                        Specialty Cakes
+
+                    </h3>
+
+                    <p class="mt-3 text-center text-[#6B5B50]">
+
+                        Birthdays, weddings and custom celebrations.
+
+                    </p>
+
+                    <button
+                        class="mt-6 w-full py-3 bg-[#C9A36B] rounded-md font-semibold hover:bg-[#B89056] transition">
+
+                        VIEW ALL
+
+                    </button>
+
+                </div>
+
+
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition">
+
+                    <div class="w-20 h-20 mx-auto rounded-full bg-[#F5EBDD] flex items-center justify-center">
+
+                        <i class="fa-solid fa-cookie-bite text-3xl text-[#C9A36B]"></i>
+
+                    </div>
+
+                    <h3 class="mt-6 text-center font-serif text-2xl">
+
+                        Sweet Treats
+
+                    </h3>
+
+                    <p class="mt-3 text-center text-[#6B5B50]">
+
+                        Cookies, brownies, muffins and desserts.
+
+                    </p>
+
+                    <button
+                        class="mt-6 w-full py-3 bg-[#C9A36B] rounded-md font-semibold hover:bg-[#B89056] transition">
+
+                        VIEW ALL
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+        <!-- FEATURED PRODUCTS -->
+
+    <section class="pb-28">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+            <div class="flex items-center justify-between mb-12">
+
+                <h2 class="font-serif text-5xl">
+                    Customer Favorites
+                </h2>
+
+                <a href="/menu"
+                   class="text-[#C9A36B] font-semibold hover:underline">
+
+                    View Full Menu
+
+                </a>
+
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <% const products = [
+                    {
+                        name: "Classic Croissant",
+                        price: "$4.99"
+                    },
+                    {
+                        name: "Chocolate Cake",
+                        price: "$24.99"
+                    },
+                    {
+                        name: "Sourdough Loaf",
+                        price: "$8.99"
+                    }
+                ] %>
+
+                <% products.forEach(product => { %>
+
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition">
+
+                        <div class="h-72 bg-[#E8DCCB]"></div>
+
+                        <div class="p-6">
+
+                            <h3 class="font-serif text-2xl">
+                                <%= product.name %>
+                            </h3>
+
+                            <p class="mt-2 text-[#6B5B50]">
+                                Freshly baked with premium ingredients.
+                            </p>
+
+                            <div class="mt-5 flex items-center justify-between">
+
+                                <span class="font-bold text-xl">
+                                    <%= product.price %>
+                                </span>
+
+                                <button class="bg-[#C9A36B] px-5 py-2 rounded-md hover:bg-[#B89056] transition">
+
+                                    Add To Cart
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <% }) %>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- PRE ORDER -->
+
+    <section class="pb-28">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+            <div class="grid lg:grid-cols-2 rounded-3xl overflow-hidden bg-[#EFE4D4]">
+
+                <div class="min-h-[450px] bg-[#D8C2A8]"></div>
+
+                <div class="p-12 lg:p-16 flex flex-col justify-center">
+
+                    <span class="uppercase tracking-[5px] text-[#C9A36B] font-semibold">
+
+                        Fresh Everyday
+
+                    </span>
+
+                    <h2 class="mt-5 font-serif text-5xl">
+
+                        Pre-Order Online
+
+                    </h2>
+
+                    <p class="mt-6 text-[#6B5B50] leading-relaxed">
+
+                        Skip the queue and reserve your favorite breads,
+                        pastries and cakes before they sell out.
+                        Schedule pickup or delivery directly from our website.
+
+                    </p>
+
+                    <button class="mt-8 w-fit bg-[#4A3428] text-white px-8 py-4 rounded-md hover:bg-[#6A4B39] transition">
+
+                        Order Now
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ABOUT -->
+
+    <section class="pb-28">
+
+        <div class="max-w-6xl mx-auto px-6 lg:px-10 text-center">
+
+            <span class="uppercase tracking-[6px] text-[#C9A36B] font-semibold">
+
+                Our Story
+
+            </span>
+
+            <h2 class="mt-5 font-serif text-5xl">
+
+                Baking Memories Since 1998
+
+            </h2>
+
+            <p class="mt-8 max-w-3xl mx-auto text-lg text-[#6B5B50] leading-relaxed">
+
+                At FLOURish, every loaf, pastry and cake is crafted
+                with dedication, tradition and the finest ingredients.
+                We believe baking is more than food—it's about creating
+                moments worth sharing.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- TESTIMONIALS -->
+
+    <section class="pb-28">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+            <h2 class="text-center font-serif text-5xl mb-14">
+
+                What Our Customers Say
+
+            </h2>
+
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm">
+
+                    <div class="text-[#C9A36B] text-xl">
+
+                        ★★★★★
+
+                    </div>
+
+                    <p class="mt-5 text-[#6B5B50]">
+
+                        Best croissants I've ever had.
+                        Fresh, flaky and absolutely delicious.
+
+                    </p>
+
+                    <h4 class="mt-6 font-semibold">
+
+                        Sarah Johnson
+
+                    </h4>
+
+                </div>
+
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm">
+
+                    <div class="text-[#C9A36B] text-xl">
+
+                        ★★★★★
+
+                    </div>
+
+                    <p class="mt-5 text-[#6B5B50]">
+
+                        Their custom birthday cake exceeded all expectations.
+
+                    </p>
+
+                    <h4 class="mt-6 font-semibold">
+
+                        Michael Carter
+
+                    </h4>
+
+                </div>
+
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm">
+
+                    <div class="text-[#C9A36B] text-xl">
+
+                        ★★★★★
+
+                    </div>
+
+                    <p class="mt-5 text-[#6B5B50]">
+
+                        The sourdough is worth coming back for every week.
+
+                    </p>
+
+                    <h4 class="mt-6 font-semibold">
+
+                        Emma Wilson
+
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- NEWSLETTER -->
+
+    <section class="pb-28">
+
+        <div class="max-w-5xl mx-auto px-6">
+
+            <div class="bg-[#4A3428] rounded-3xl p-12 text-center">
+
+                <h2 class="font-serif text-5xl text-white">
+
+                    Stay Updated
+
+                </h2>
+
+                <p class="mt-5 text-white/80">
+
+                    Get notified about seasonal specials,
+                    fresh menu items and exclusive offers.
+
+                </p>
+
+                <form class="mt-8 flex flex-col md:flex-row gap-4 justify-center">
+
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        class="bg-white px-5 py-4 rounded-md outline-none md:w-96"
+                    >
+
+                    <button
+                        type="submit"
+                        class="bg-[#C9A36B] px-8 py-4 rounded-md font-semibold hover:bg-[#B89056] transition"
+                    >
+
+                        Subscribe
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="border-t border-[#E8DCCB]">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+
+            <div class="grid md:grid-cols-4 gap-10">
+
+                <div>
+
+                    <h3 class="font-serif text-3xl">
+
+                        FLOUR<span class="italic text-[#C9A36B]">ish</span>
+
+                    </h3>
+
+                    <p class="mt-4 text-[#6B5B50]">
+
+                        Handcrafted breads, pastries and cakes made fresh daily.
+
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <h4 class="font-semibold mb-4">
+                        Quick Links
+                    </h4>
+
+                    <ul class="space-y-2 text-[#6B5B50]">
+
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/menu">Menu</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
+
+                    </ul>
+
+                </div>
+
+
+                <div>
+
+                    <h4 class="font-semibold mb-4">
+                        Contact
+                    </h4>
+
+                    <ul class="space-y-2 text-[#6B5B50]">
+
+                        <li>hello@flourish.com</li>
+                        <li>+1 (555) 123-4567</li>
+                        <li>123 Baker Street</li>
+
+                    </ul>
+
+                </div>
+
+
+                <div>
+
+                    <h4 class="font-semibold mb-4">
+                        Follow Us
+                    </h4>
+
+                    <div class="flex gap-4 text-xl">
+
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-facebook"></i>
+                        <i class="fa-brands fa-pinterest"></i>
+                        <i class="fa-brands fa-x-twitter"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-[#E8DCCB] text-center text-[#6B5B50]">
+
+                © 2026 FLOURish Bakery. All rights reserved.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>
