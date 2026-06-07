@@ -11,82 +11,42 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(process.cwd(), 'public')))
 
-const products = [
+const product = {
+    _id: "123",
+
+    name: "Chocolate Cake",
+
+    category: "Cakes",
+
+    price: 799,
+
+    description: "Rich chocolate sponge layered with smooth chocolate ganache.",
+
+    // image: "/images/chocolate-cake.jpg"
+};
+
+const relatedProducts = [
+
     {
-        _id: "1",
-        name: "Chocolate Cake",
+        _id: "456",
+        name: "Vanilla Cake",
         category: "Cakes",
-        description: "Rich chocolate sponge",
-        price: 799,
-        // image: "/images/cake.jpg"
+        price: 699,
+        // image: "/images/vanilla-cake.jpg"
     },
 
     {
-        _id: "2",
-        name: "Croissant",
-        category: "Pastries",
-        description: "Buttery flaky pastry",
-        price: 149,
-        // image: "/images/croissant.jpg"
-    },
-    
-    {
-        _id: "1",
-        name: "Chocolate Cake",
+        _id: "789",
+        name: "Red Velvet Cake",
         category: "Cakes",
-        description: "Rich chocolate sponge",
-        price: 799,
-        // image: "/images/cake.jpg"
-    },
-
-    {
-        _id: "2",
-        name: "Croissant",
-        category: "Pastries",
-        description: "Buttery flaky pastry",
-        price: 149,
-        // image: "/images/croissant.jpg"
-    },
-
-    {
-        _id: "1",
-        name: "Chocolate Cake",
-        category: "Cakes",
-        description: "Rich chocolate sponge",
-        price: 799,
-        // image: "/images/cake.jpg"
-    },
-
-    {
-        _id: "2",
-        name: "Croissant",
-        category: "Pastries",
-        description: "Buttery flaky pastry",
-        price: 149,
-        // image: "/images/croissant.jpg"
-    },
-    
-    {
-        _id: "1",
-        name: "Chocolate Cake",
-        category: "Cakes",
-        description: "Rich chocolate sponge",
-        price: 799,
-        // image: "/images/cake.jpg"
-    },
-
-    {
-        _id: "2",
-        name: "Croissant",
-        category: "Pastries",
-        description: "Buttery flaky pastry",
-        price: 149,
-        // image: "/images/croissant.jpg"
+        price: 899,
+        // image: "/images/red-velvet.jpg"
     }
+
 ];
 
 app.get('/', (req, res) => {
-    res.render('menu', {products})
+    res.render('product', {product, relatedProducts})
 })
 
 app.listen(3000)
