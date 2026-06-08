@@ -95,10 +95,7 @@ const products = [
     }
 ];
 app.get('/', (req, res) => {
-    res.render('checkout', {cartItems, subtotal: 0,
-    deliveryFee: 0,
-    total: 0,
-    error: null});
+    res.render('order-success', {orderId: 'dshfuyds duygfd'});
 })
 
 // app.get('/', (req, res) => {

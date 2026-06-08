@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Confirmed | FLOURish</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+</head>
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen flex flex-col">
+
+
+
+
+    <!-- NAVBAR -->
+
+    <nav class="bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB]">
+
+        <div class="max-w-7xl mx-auto">
+
+            <div class="h-20 flex items-center justify-between">
+
+                <a href="/" class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+                    <h1 class="font-serif text-4xl">
+
+                        FLOUR<span class="italic text-[#C9A36B]">ish</span>
+
+                    </h1>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+
+
+    <!-- SUCCESS SECTION -->
+
+    <main class="flex-1 flex items-center justify-center px-6 py-20">
+
+        <div class="max-w-2xl w-full">
+
+            <div class="bg-white rounded-3xl p-12 text-center shadow-sm">
+
+                <div class="w-24 h-24 rounded-full bg-[#E7F7EA] flex items-center justify-center mx-auto">
+
+                    <i class="fa-solid fa-check text-5xl text-green-600"></i>
+
+                </div>
+
+                <h1 class="font-serif text-5xl mt-8">
+
+                    Order Confirmed
+                </h1>
+
+                <p class="mt-5 text-lg text-[#6B5B50]">
+
+                    Thank you for choosing FLOURish. Your order has been received and our bakers are getting started.
+                </p>
+
+                <div class="mt-10 bg-[#FAF7F2] rounded-2xl p-6">
+
+                    <p class="text-sm uppercase tracking-wider text-[#8B7765]">
+
+                        Order Number
+
+                    </p>
+
+                    <p class="mt-2 text-2xl font-semibold">
+
+                        <%= orderId %>
+
+                    </p>
+
+                </div>
+
+
+
+
+
+                <!-- TIMELINE -->
+
+                <div class="mt-10 text-left">
+
+                    <div class="flex gap-4">
+
+                        <div class="w-10 h-10 rounded-full bg-[#C9A36B] text-white flex items-center justify-center shrink-0">
+
+                            <i class="fa-solid fa-receipt"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3 class="font-semibold">
+
+                                Order Received
+
+                            </h3>
+
+                            <p class="text-[#6B5B50]">
+
+                                We've successfully received your order.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="w-px h-10 bg-[#E8DCCB] ml-5"></div>
+
+                    <div class="flex gap-4">
+
+                        <div class="w-10 h-10 rounded-full bg-[#F3E7D3] flex items-center justify-center shrink-0">
+
+                            <i class="fa-solid fa-bread-slice text-[#C9A36B]"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3 class="font-semibold">
+
+                                Baking In Progress
+
+                            </h3>
+
+                            <p class="text-[#6B5B50]">
+
+                                Fresh ingredients. Freshly baked.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="w-px h-10 bg-[#E8DCCB] ml-5"></div>
+
+                    <div class="flex gap-4">
+
+                        <div class="w-10 h-10 rounded-full bg-[#F3E7D3] flex items-center justify-center shrink-0">
+
+                            <i class="fa-solid fa-truck text-[#C9A36B]"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3 class="font-semibold">
+
+                                Out For Delivery
+
+                            </h3>
+
+                            <p class="text-[#6B5B50]">
+
+                                You'll receive updates once your order is dispatched.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+                <!-- ACTIONS -->
+
+                <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+
+                    <a
+                        href="/orders"
+                        class="bg-[#C9A36B] px-8 py-4 rounded-xl font-semibold hover:bg-[#B89056] transition"
+                    >
+
+                        View Orders
+
+                    </a>
+
+                    <a
+                        href="/menu"
+                        class="border border-[#E8DCCB] px-8 py-4 rounded-xl hover:bg-[#FAF7F2] transition"
+                    >
+
+                        Continue Shopping
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="border-t border-[#E8DCCB]">
+
+        <div class="max-w-7xl mx-auto py-8 text-center">
+
+            <p class="text-[#6B5B50]">
+
+                © 2026 FLOURish Bakery. All rights reserved.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>
