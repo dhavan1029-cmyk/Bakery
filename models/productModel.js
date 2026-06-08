@@ -1,10 +1,11 @@
 import mongoose from "mongoose"
 
 const productSchema = mongoose.Schema({
-    productName: String,
-    productImageURL: URL,
+    name: String,
+    image: String,
     price: Number,
-    discountPrice: Number
+    description: String,
+    category: String
 })
 
 export default mongoose.model('product', productSchema)
