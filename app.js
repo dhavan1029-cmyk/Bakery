@@ -95,7 +95,7 @@ const products = [
     }
 ];
 app.get('/', (req, res) => {
-    res.render('login', {error: null});
+    res.render('signup', {error: null});
 })
 
 // app.get('/', (req, res) => {
