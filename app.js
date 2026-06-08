@@ -95,12 +95,7 @@ const products = [
     }
 ];
 app.get('/', (req, res) => {
-    res.render("cart", {
-        cartItems,
-        subtotal: 0,
-        deliveryFee: 0,
-        total: 0
-    });
+    res.render('login', {error: null});
 })
 
 // app.get('/', (req, res) => {
