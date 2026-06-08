@@ -95,7 +95,10 @@ const products = [
     }
 ];
 app.get('/', (req, res) => {
-    res.render('signup', {error: null});
+    res.render('checkout', {cartItems, subtotal: 0,
+    deliveryFee: 0,
+    total: 0,
+    error: null});
 })
 
 // app.get('/', (req, res) => {
