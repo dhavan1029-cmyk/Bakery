@@ -95,7 +95,104 @@ const products = [
     }
 ];
 app.get('/', (req, res) => {
-    res.render('order-success', {orderId: 'dshfuyds duygfd'});
+    res.render('orders', {orders: [
+    {
+        _id: "ORD-1001",
+
+        orderingDate: new Date("2026-06-01"),
+
+        paymentMethod: "Cash On Delivery",
+
+        status: "Preparing",
+
+        totalPrice: 1450,
+
+        products: [
+            {
+                quantity: 1,
+
+                product: {
+                    _id: "P1",
+                    name: "Chocolate Truffle Cake",
+                    price: 950,
+                    image: null
+                }
+            },
+
+            {
+                quantity: 2,
+
+                product: {
+                    _id: "P2",
+                    name: "Butter Croissant",
+                    price: 250,
+                    image: null
+                }
+            }
+        ]
+    },
+
+    {
+        _id: "ORD-1002",
+
+        orderingDate: new Date("2026-05-25"),
+
+        paymentMethod: "Online Payment",
+
+        status: "Delivered",
+
+        totalPrice: 2200,
+
+        products: [
+            {
+                quantity: 1,
+
+                product: {
+                    _id: "P3",
+                    name: "Red Velvet Cake",
+                    price: 1200,
+                    image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e"
+                }
+            },
+
+            {
+                quantity: 4,
+
+                product: {
+                    _id: "P4",
+                    name: "Chocolate Chip Cookies",
+                    price: 250,
+                    image: null
+                }
+            }
+        ]
+    },
+
+    {
+        _id: "ORD-1003",
+
+        orderingDate: new Date("2026-05-18"),
+
+        paymentMethod: "Cash On Delivery",
+
+        status: "Cancelled",
+
+        totalPrice: 750,
+
+        products: [
+            {
+                quantity: 3,
+
+                product: {
+                    _id: "P5",
+                    name: "Cinnamon Roll",
+                    price: 250,
+                    image: null
+                }
+            }
+        ]
+    }
+]});
 })
 
 // app.get('/', (req, res) => {

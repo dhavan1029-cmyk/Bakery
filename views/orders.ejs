@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders | FLOURish</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+</head>
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen flex flex-col">
+
+
+
+
+    <!-- NAVBAR -->
+
+    <nav class="bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB]">
+
+        <div class="max-w-7xl mx-auto">
+
+            <div class="h-20 flex items-center justify-between">
+
+                <a href="/" class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+                    <h1 class="font-serif text-4xl">
+
+                        FLOUR<span class="italic text-[#C9A36B]">ish</span>
+
+                    </h1>
+
+                </a>
+
+                <a
+                    href="/menu"
+                    class="hover:text-[#C9A36B] transition"
+                >
+
+                    Continue Shopping
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+
+
+    <!-- HEADER -->
+
+    <section class="py-16">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+            <h1 class="font-serif text-6xl">
+
+                My Orders
+
+            </h1>
+
+            <p class="mt-3 text-[#6B5B50]">
+
+                Track your recent and past bakery orders.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+
+
+    <% if(!orders.length){ %>
+
+        <section class="flex-1">
+
+            <div class="max-w-4xl mx-auto px-6 text-center py-16">
+
+                <i class="fa-solid fa-box-open text-8xl text-[#C9A36B]"></i>
+
+                <h2 class="font-serif text-4xl mt-8">
+
+                    No Orders Yet
+
+                </h2>
+
+                <p class="mt-4 text-[#6B5B50]">
+
+                    Your orders will appear here once you place them.
+
+                </p>
+
+                <a
+                    href="/menu"
+                    class="inline-block mt-8 bg-[#C9A36B] px-8 py-4 rounded-xl font-semibold hover:bg-[#B89056] transition"
+                >
+
+                    Browse Menu
+
+                </a>
+
+            </div>
+
+        </section>
+
+    <% } else { %>
+
+
+
+
+
+    <section class="pb-24 flex-1">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-10 space-y-8">
+
+            <% orders.forEach(order => { %>
+
+                <div class="bg-white rounded-3xl shadow-sm overflow-hidden">
+
+
+
+
+                    <!-- ORDER HEADER -->
+
+                    <div class="p-6 border-b border-[#E8DCCB]">
+
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+
+                            <div>
+
+                                <p class="text-xs uppercase tracking-widest text-[#8B7765]">
+
+                                    Order ID
+
+                                </p>
+
+                                <h2 class="font-serif text-3xl mt-1">
+
+                                    <%= order._id %>
+
+                                </h2>
+
+                            </div>
+
+                            <div class="flex flex-col lg:items-end">
+
+                                <p class="text-[#6B5B50]">
+
+                                    <%= new Date(order.orderingDate).toLocaleDateString() %>
+
+                                </p>
+
+                                <span
+                                    class="
+                                        mt-2 inline-block px-4 py-2 rounded-full text-sm
+
+                                        <%= order.status === 'Delivered'
+                                            ? 'bg-green-100 text-green-700'
+                                            : order.status === 'Cancelled'
+                                            ? 'bg-red-100 text-red-700'
+                                            : order.status === 'Preparing'
+                                            ? 'bg-yellow-100 text-yellow-700'
+                                            : 'bg-blue-100 text-blue-700'
+                                        %>
+                                    "
+                                >
+
+                                    <%= order.status %>
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    <!-- PRODUCTS -->
+
+                    <div class="p-6">
+
+                        <h3 class="font-semibold text-lg mb-6">
+
+                            Products Ordered
+
+                        </h3>
+
+                        <div class="space-y-5">
+
+                            <% order.products.forEach(item => { %>
+
+                                <div class="flex items-center justify-between">
+
+
+
+
+                                    <div class="flex items-center gap-4">
+
+                                        <div
+                                            class="w-16 h-16 rounded-xl bg-[#E8DCCB] flex items-center justify-center"
+                                            style="<%= item.product.image ? `background-image:url('${item.product.image}');background-size:cover;background-position:center;` : '' %>"
+                                        >
+
+                                            <% if(!item.product.image){ %>
+
+                                                <i class="fa-solid fa-cake-candles text-[#C9A36B]"></i>
+
+                                            <% } %>
+
+                                        </div>
+
+                                        <div>
+
+                                            <p class="font-medium">
+
+                                                <%= item.product.name %>
+
+                                            </p>
+
+                                            <p class="text-sm text-[#6B5B50]">
+
+                                                Quantity: <%= item.quantity %>
+
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+                                    <p class="font-medium">
+
+                                        ₹<%= item.product.price * item.quantity %>
+
+                                    </p>
+
+                                </div>
+
+                            <% }) %>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    <!-- ORDER DETAILS -->
+
+                    <div class="bg-[#FAF7F2] border-t border-[#E8DCCB] p-6">
+
+                        <div class="grid md:grid-cols-2 gap-6">
+
+                            <div>
+
+                                <p class="text-sm text-[#8B7765]">
+
+                                    Payment Method
+
+                                </p>
+
+                                <p class="mt-1 font-medium">
+
+                                    <%= order.paymentMethod %>
+
+                                </p>
+
+                            </div>
+
+                            <div class="md:text-right">
+
+                                <p class="text-sm text-[#8B7765]">
+
+                                    Total Amount
+
+                                </p>
+
+                                <p class="mt-1 font-bold text-2xl">
+
+                                    ₹<%= order.totalPrice %>
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    </section>
+
+    <% } %>
+
+
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="border-t border-[#E8DCCB]">
+
+        <div class="max-w-7xl mx-auto py-8 text-center">
+
+            <p class="text-[#6B5B50]">
+
+                © 2026 FLOURish Bakery. All rights reserved.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>
