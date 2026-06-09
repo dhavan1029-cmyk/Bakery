@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact Us | FLOURish</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+</head>
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen flex flex-col">
+
+
+
+
+    <!-- NAVBAR -->
+
+    <nav class="bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB]">
+
+        <div class="max-w-7xl mx-auto">
+
+            <div class="h-20 flex items-center justify-between">
+
+                <a href="/" class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+                    <h1 class="font-serif text-4xl">
+
+                        FLOUR<span class="italic text-[#C9A36B]">ish</span>
+
+                    </h1>
+
+                </a>
+
+                <div class="flex items-center gap-8">
+
+                    <a href="/" class="hover:text-[#C9A36B] transition">
+                        Home
+                    </a>
+
+                    <a href="/menu" class="hover:text-[#C9A36B] transition">
+                        Menu
+                    </a>
+
+                    <a href="/about" class="hover:text-[#C9A36B] transition">
+                        About
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+
+
+    <!-- HERO -->
+
+    <section class="py-24">
+
+        <div class="max-w-4xl mx-auto px-6 text-center">
+
+            <p class="uppercase tracking-[0.3em] text-[#C9A36B]">
+
+                CONTACT US
+
+            </p>
+
+            <h1 class="font-serif text-6xl lg:text-7xl mt-6">
+
+                We'd Love To Hear From You
+            </h1>
+
+            <p class="mt-8 text-lg text-[#6B5B50]">
+
+                Questions, custom cake requests, feedback, or just saying hello—
+                we're always happy to help.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+
+
+    <!-- CONTACT INFO -->
+
+    <section>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <div class="bg-white rounded-3xl p-10 text-center">
+
+                    <i class="fa-solid fa-phone text-4xl text-[#C9A36B]"></i>
+
+                    <h3 class="font-serif text-3xl mt-6">
+
+                        Call Us
+
+                    </h3>
+
+                    <p class="mt-4 text-[#6B5B50]">
+
+                        +91 98765 43210
+                    </p>
+
+                </div>
+
+
+
+
+
+                <div class="bg-white rounded-3xl p-10 text-center">
+
+                    <i class="fa-solid fa-envelope text-4xl text-[#C9A36B]"></i>
+
+                    <h3 class="font-serif text-3xl mt-6">
+
+                        Email
+
+                    </h3>
+
+                    <p class="mt-4 text-[#6B5B50]">
+
+                        hello@flourishbakery.com
+                    </p>
+
+                </div>
+
+
+
+
+
+                <div class="bg-white rounded-3xl p-10 text-center">
+
+                    <i class="fa-solid fa-location-dot text-4xl text-[#C9A36B]"></i>
+
+                    <h3 class="font-serif text-3xl mt-6">
+
+                        Visit Us
+
+                    </h3>
+
+                    <p class="mt-4 text-[#6B5B50]">
+
+                        123 Bakery Street<br>
+                        Davangere, Karnataka
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+
+    <!-- FORM + HOURS -->
+
+    <section class="py-24">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+            <div class="grid lg:grid-cols-2 gap-10">
+
+
+
+
+                <!-- FORM -->
+
+                <div class="bg-white rounded-3xl p-10">
+
+                    <h2 class="font-serif text-4xl">
+
+                        Send A Message
+
+                    </h2>
+
+                    <form
+                        action="/contact"
+                        method="POST"
+                        class="mt-8 space-y-5"
+                    >
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Your Name"
+                            required
+                            class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 outline-none focus:border-[#C9A36B]"
+                        >
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email Address"
+                            required
+                            class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 outline-none focus:border-[#C9A36B]"
+                        >
+
+                        <textarea
+                            name="message"
+                            rows="6"
+                            placeholder="Write your message..."
+                            required
+                            class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 outline-none focus:border-[#C9A36B] resize-none"
+                        ></textarea>
+
+                        <button
+                            type="submit"
+                            class="w-full bg-[#C9A36B] py-4 rounded-xl font-semibold hover:bg-[#B89056] transition"
+                        >
+
+                            Send Message
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+
+
+
+                <!-- HOURS -->
+
+                <div class="bg-white rounded-3xl p-10">
+
+                    <h2 class="font-serif text-4xl">
+
+                        Opening Hours
+
+                    </h2>
+
+                    <div class="mt-8 space-y-5">
+
+                        <div class="flex justify-between border-b border-[#E8DCCB] pb-3">
+
+                            <span>Monday</span>
+                            <span>8:00 AM - 8:00 PM</span>
+
+                        </div>
+
+                        <div class="flex justify-between border-b border-[#E8DCCB] pb-3">
+
+                            <span>Tuesday</span>
+                            <span>8:00 AM - 8:00 PM</span>
+
+                        </div>
+
+                        <div class="flex justify-between border-b border-[#E8DCCB] pb-3">
+
+                            <span>Wednesday</span>
+                            <span>8:00 AM - 8:00 PM</span>
+
+                        </div>
+
+                        <div class="flex justify-between border-b border-[#E8DCCB] pb-3">
+
+                            <span>Thursday</span>
+                            <span>8:00 AM - 8:00 PM</span>
+
+                        </div>
+
+                        <div class="flex justify-between border-b border-[#E8DCCB] pb-3">
+
+                            <span>Friday</span>
+                            <span>8:00 AM - 9:00 PM</span>
+
+                        </div>
+
+                        <div class="flex justify-between border-b border-[#E8DCCB] pb-3">
+
+                            <span>Saturday</span>
+                            <span>8:00 AM - 9:00 PM</span>
+
+                        </div>
+
+                        <div class="flex justify-between">
+
+                            <span>Sunday</span>
+                            <span>9:00 AM - 6:00 PM</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+
+    <!-- MAP PLACEHOLDER -->
+
+    <section class="pb-24">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+            <div class="h-[450px] bg-[#E8DCCB] rounded-3xl flex flex-col items-center justify-center">
+
+                <i class="fa-solid fa-map-location-dot text-7xl text-[#C9A36B]"></i>
+
+                <h3 class="font-serif text-4xl mt-6">
+
+                    Find Us Easily
+
+                </h3>
+
+                <p class="mt-4 text-[#6B5B50]">
+
+                    Replace this section with a Google Maps embed later.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="border-t border-[#E8DCCB]">
+
+        <div class="max-w-7xl mx-auto py-8 text-center">
+
+            <p class="text-[#6B5B50]">
+
+                © 2026 FLOURish Bakery. All rights reserved.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>
