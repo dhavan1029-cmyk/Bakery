@@ -1,6 +1,6 @@
 import express from "express";
 import { home, about, contact, login, signup, cart, checkout, orders } from "../controllers/pageController.js";
-
+import menu from "../controllers/menuController.js";
 const router = express.Router();
 
 router.get('/', home);
