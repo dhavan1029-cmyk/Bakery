@@ -1,16 +1,5 @@
 import express from "express";
-
-import {
-    home,
-    menu,
-    about,
-    contact,
-    login,
-    signup,
-    cart,
-    checkout,
-    orders
-} from "../controllers/pageController.js";
+import { home, about, contact, login, signup, cart, checkout, orders } from "../controllers/pageController.js";
 
 const router = express.Router();
 

@@ -10,10 +10,6 @@ export function contact(req, res){
     res.render('contact')
 }
 
-export function menu(req, res){
-    res.render('menu', {products: []})
-}
-
 export function login(req, res){
     res.render('login', {error: null})
 }
