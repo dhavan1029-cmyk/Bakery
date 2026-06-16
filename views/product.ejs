@@ -117,8 +117,14 @@
                     </p>
 
                     <h1 class="font-serif text-6xl mt-4">
+                        <%
+                        let name = product.name
 
-                        <%= product.name %>
+                        if (product.quantity > 1) name += ` (Pack of ${product.quantity})`
+                        %>
+
+
+                        <%= name %>
 
                     </h1>
 

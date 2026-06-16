@@ -1,6 +1,41 @@
 import productModel from "../models/productModel.js";
 
-export default async function product(req, res){
+export async function getMenu(req, res){
+    try{
+
+        const products = await productModel.find();
+
+        res.render('menu', { products });
+
+    }catch(err){
+
+        console.error(err);
+
+        res.status(500).send('Server Error');
+
+    }
+}
+
+export async function searchProducts(req, res){
+
+    const searchValue = req.query.q
+    
+    const resultProducts = await productModel.find({
+        name: {
+            $regex: searchValue,
+            $options: 'i'
+        }
+    })
+
+
+    res.json({
+        success: true,
+        products: resultProducts
+    })
+
+}
+
+export async function renderProduct(req, res){
     
     try {
         
@@ -19,3 +54,5 @@ export default async function product(req, res){
     }
 
 }
+
+// console.log(await productModel.find({}))

@@ -6,7 +6,10 @@ const productSchema = mongoose.Schema({
     price: Number,
     description: String,
     category: String,
-    quantity: Number
+    quantity: {
+        type: Number,
+        default: 1
+    }
 })
 
 export default mongoose.model('product', productSchema)

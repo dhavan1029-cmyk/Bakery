@@ -2,7 +2,7 @@ import './config/mongoose.js'
 import express from 'express'
 import path from 'path'
 import pageRoutes from './routes/pageRoutes.js'
-import productModel from './models/productModel.js'
+import productRoutes from './routes/productRoutes.js'
 
 const app = express()
 
@@ -13,5 +13,6 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(process.cwd(), 'public')))
 
 app.use(pageRoutes)
+app.use(productRoutes)
 
 app.listen(3000)
