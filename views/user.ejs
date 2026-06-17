@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><%= user.username %> | FLOURish</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link 
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+</head>
+
+<body class="bg-[#F8F4EE] text-[#4A3428]">
+
+
+<!-- NAVBAR -->
+
+<nav class="border-b border-[#E8DCCB] bg-[#F8F4EE]">
+
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center">
+
+        <a href="/" class="flex items-center gap-3">
+
+            <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+            <h1 class="font-serif text-4xl">
+                FLOUR<span class="italic text-[#C9A36B]">ish</span>
+            </h1>
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- PROFILE -->
+
+<section class="py-16">
+
+    <div class="max-w-5xl mx-auto px-6">
+
+
+        <h1 class="font-serif text-5xl text-center">
+            My Account
+        </h1>
+
+
+        <div class="mt-12 grid md:grid-cols-3 gap-8">
+
+
+            <!-- USER CARD -->
+
+            <div class="bg-white rounded-3xl shadow-sm p-8 text-center">
+
+
+                <div 
+                    class="w-28 h-28 mx-auto rounded-full bg-[#F5EBDD]
+                    flex items-center justify-center"
+                >
+
+                    <i class="fa-solid fa-user text-4xl text-[#C9A36B]"></i>
+
+                </div>
+
+
+                <h2 class="mt-5 font-serif text-3xl">
+
+                    <%= user.username %>
+
+                </h2>
+
+
+                <p class="mt-2 text-[#6B5B50]">
+
+                    FLOURish Customer
+
+                </p>
+
+
+                <% if(user.createdAt) { %>
+
+                    <p class="mt-4 text-sm text-[#8B7765]">
+
+                        Member since 
+                        <%= user.createdAt.toDateString() %>
+
+                    </p>
+
+                <% } %>
+
+
+            </div>
+
+
+            <!-- ACCOUNT DETAILS -->
+
+            <div class="md:col-span-2 bg-white rounded-3xl shadow-sm p-8">
+
+
+                <h3 class="font-serif text-3xl">
+
+                    Account Details
+
+                </h3>
+
+
+                <div class="mt-8 space-y-6">
+
+
+                    <!-- EMAIL -->
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-12 h-12 rounded-full bg-[#F5EBDD]
+                        flex items-center justify-center">
+
+                            <i class="fa-solid fa-envelope text-[#C9A36B]"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <p class="text-sm text-[#6B5B50]">
+
+                                Email
+
+                            </p>
+
+                            <p class="font-semibold">
+
+                                <%= user.email %>
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ORDERS -->
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-12 h-12 rounded-full bg-[#F5EBDD]
+                        flex items-center justify-center">
+
+                            <i class="fa-solid fa-box text-[#C9A36B]"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <p class="text-sm text-[#6B5B50]">
+
+                                Orders Placed
+
+                            </p>
+
+                            <p class="font-semibold">
+
+                                <%= user.orders.length %> orders
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CART -->
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-12 h-12 rounded-full bg-[#F5EBDD]
+                        flex items-center justify-center">
+
+                            <i class="fa-solid fa-cart-shopping text-[#C9A36B]"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <p class="text-sm text-[#6B5B50]">
+
+                                Cart Items
+
+                            </p>
+
+                            <p class="font-semibold">
+
+                                <%= user.cart.length %> items
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- ACTION BUTTONS -->
+
+
+                <div class="mt-10 flex flex-wrap gap-4">
+
+
+                    <a 
+                        href="/orders"
+                        class="bg-[#C9A36B] px-6 py-3 rounded-full 
+                        font-semibold hover:bg-[#B89056] transition"
+                    >
+
+                        View Orders
+
+                    </a>
+
+
+                    <a 
+                        href="/cart"
+                        class="border border-[#E8DCCB] px-6 py-3 
+                        rounded-full hover:bg-[#F5EBDD] transition"
+                    >
+
+                        View Cart
+
+                    </a>
+
+
+                    <form action="/logout" method="POST">
+
+                        <button 
+                            class="border border-red-300 text-red-600 
+                            px-6 py-3 rounded-full hover:bg-red-50 transition"
+                        >
+
+                            Logout
+
+                        </button>
+
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+</body>
+</html>

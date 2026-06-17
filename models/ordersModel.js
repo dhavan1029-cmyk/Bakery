@@ -15,4 +15,4 @@ const orderSchema = mongoose.Schema({
     orderingDate: Date
 })
 
-export default mongoose.model('order', orderSchema)
+export default mongoose.model('Order', orderSchema)

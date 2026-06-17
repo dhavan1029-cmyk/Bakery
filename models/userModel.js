@@ -1,14 +1,44 @@
 import mongoose from "mongoose"
 
-const userSchema = mongoose.Schema({
-    username: String,
-    password: String,
-    email: String,
-    orders: [mongoose.Schema.Types.ObjectId],
-    cart: [{
-        productID: mongoose.Schema.Types.ObjectId, 
-        quantity: Number, 
-    }]
-})
+const userSchema = new mongoose.Schema({
 
-export default mongoose.model('user', userSchema)
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+
+    password: {
+        type: String,
+        required: true
+    },
+
+    orders: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Order"
+    }],
+
+    cart: [{
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product"
+        },
+
+        quantity: {
+            type: Number,
+            default: 1,
+            min: 1
+        }
+    }]
+
+}, {
+    timestamps: true
+});
+
+export default mongoose.model('User', userSchema)
