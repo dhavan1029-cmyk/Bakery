@@ -1,8 +1,10 @@
+import './config/env.js'
 import './config/mongoose.js'
 import express from 'express'
 import path from 'path'
 import pageRoutes from './routes/pageRoutes.js'
 import productRoutes from './routes/productRoutes.js'
+
 
 const app = express()
 
@@ -40,4 +42,5 @@ app.get('/user', function(req, res){
     res.render('user', { user })
 })
 
-app.listen(3000)
+app.listen(process.env.PORT)
+// console.log(process.env)
