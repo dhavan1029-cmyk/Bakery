@@ -7,13 +7,9 @@ const router = express.Router();
 router.get('/', function(req, res){
     home(req, res)
     console.log(req.cookies)
-    // userModel.deleteMany({})
-    // .then(data => {
-    //     userModel.find({})
-    //     .then(data => {
-    //         console.log(data)
-    //     })
-    // })
+    userModel.find({}).then(res => {
+        console.log(res)
+    })
 });
 
 router.get('/about', about);

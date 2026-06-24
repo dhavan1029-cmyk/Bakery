@@ -46,9 +46,15 @@
                         <i class="fa-solid fa-cart-shopping text-lg hover:text-[#C9A36B] transition"></i>
                     </a>
 
-                    <a href="/login">
-                        <i class="fa-regular fa-user text-lg hover:text-[#C9A36B] transition"></i>
-                    </a>
+                    <%if (!user) {%>
+                        <a href="/login">
+                            <i class="fa-regular fa-user text-lg hover:text-[#C9A36B] transition"></i>
+                        </a>
+                    <% } else {%>
+                        <a href="/account">
+                            <i class="fa-regular fa-user text-lg hover:text-[#C9A36B] transition"></i>
+                        </a>
+                    <% } %>
 
                 </div>
 
