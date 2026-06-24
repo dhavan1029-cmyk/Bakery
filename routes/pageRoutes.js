@@ -1,17 +1,24 @@
 import express from "express";
-import { home, about, contact, login, signup, cart, checkout, orders } from "../controllers/pageController.js";
+import userModel from "../models/userModel.js";
+import { home, about, contact, cart, checkout, orders } from "../controllers/pageController.js";
 
 const router = express.Router();
 
-router.get('/', home);
+router.get('/', function(req, res){
+    home(req, res)
+    console.log(req.cookies)
+    // userModel.deleteMany({})
+    // .then(data => {
+    //     userModel.find({})
+    //     .then(data => {
+    //         console.log(data)
+    //     })
+    // })
+});
 
 router.get('/about', about);
 
 router.get('/contact', contact);
-
-router.get('/login', login);
-
-router.get('/signup', signup);
 
 router.get('/cart', cart);
 
