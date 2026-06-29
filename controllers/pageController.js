@@ -1,4 +1,5 @@
 export function home(req, res){
+    console.log(req.cookies)
     res.render('homepage')
 }
 

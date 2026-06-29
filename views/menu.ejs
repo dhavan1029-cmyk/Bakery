@@ -46,13 +46,15 @@
                         <i class="fa-solid fa-cart-shopping text-lg hover:text-[#C9A36B] transition"></i>
                     </a>
 
-                    <%if (!user) {%>
-                        <a href="/login">
-                            <i class="fa-regular fa-user text-lg hover:text-[#C9A36B] transition"></i>
-                        </a>
-                    <% } else {%>
+                    <%if (user) {%>
                         <a href="/account">
                             <i class="fa-regular fa-user text-lg hover:text-[#C9A36B] transition"></i>
+                            <!-- <%=user%> -->
+                        </a>
+                    <% } else {%>
+                        <a href="/login">
+                            <i class="fa-regular fa-user text-lg hover:text-[#C9A36B] transition"></i>
+                            <!-- <%=user%> -->
                         </a>
                     <% } %>
 
@@ -385,6 +387,8 @@
 
     <script>
         const products = JSON.parse('<%- JSON.stringify(products) %>');
+        const user = JSON.parse('<%- JSON.stringify(user)%>')
+        console.log(user)
     </script>
     <script src="/scripts/menu.js"></script>
 </body>

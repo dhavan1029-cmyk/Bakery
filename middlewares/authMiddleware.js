@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import userModel from '../models/userModel.js'
 
 export async function checkAuth (req, res, next) {
+
     try {
 
         const token = req.cookies.userToken
@@ -11,11 +12,12 @@ export async function checkAuth (req, res, next) {
             return next()
         }
 
-        const email = jwt.verify(token, process.env.JWT_CODE)
-        const user = userModel.findOne({email})
+        const decodedToken = jwt.verify(token, process.env.JWT_CODE)
+        const user = await userModel.findOne({email: decodedToken.email})
         res.locals.user = user
+
         next()
-        
+
     } catch (err) {
         res.locals.user = null
         next()
