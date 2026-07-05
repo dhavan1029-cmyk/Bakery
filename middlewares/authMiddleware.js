@@ -13,13 +13,15 @@ export async function checkAuth (req, res, next) {
         }
 
         const decodedToken = jwt.verify(token, process.env.JWT_CODE)
-        const user = await userModel.findOne({email: decodedToken.email})
+        const user = await userModel.findOne({email: decodedToken.email}).select('-password')
         res.locals.user = user
+        req.user = user
 
         next()
 
     } catch (err) {
         res.locals.user = null
+        req.user = null
         next()
     }
 

@@ -57,7 +57,7 @@
 
     <!-- HEADER -->
 
-    <section class="py-16">
+    <section class="py-8">
 
         <div class="max-w-7xl mx-auto px-6 lg:px-10">
 
@@ -77,233 +77,237 @@
 
     </section>
 
+    <% let isEmpty = false %>
+    <% if(!user || cartItems.length === 0){ %>
 
+        <% isEmpty = true %>
 
+    <% } %>
 
-    <% if(cartItems.length === 0){ %>
+    <% const emptyCartClass = 'flex-1 ' + (!isEmpty ? 'hidden' : '')%>
+    <% const cartClass = 'pb-24 flex-1 ' + (isEmpty ? 'hidden' : '') %>
+    
+    <section id="emptyCart" class='<%= emptyCartClass%>'>
 
-        <section class="flex-1">
+        <div class="max-w-4xl mx-auto px-6 py-20 text-center">
+            
+            <i class="fa-solid fa-cart-shopping text-8xl text-[#C9A36B]"></i>
+            
+            <h2 class="font-serif text-4xl mt-8">
+                
+                Your Cart Is Empty
+                
+            </h2>
+            
+            <p class="mt-4 text-[#6B5B50]">
+                
+                Fresh breads, cakes and pastries are waiting for you.
+                
+            </p>
+            
+            <a href="/menu"
+            
+               class="inline-block mt-8 bg-[#C9A36B] px-8 py-4 rounded-xl font-semibold hover:bg-[#B89056] transition">
+                
+               Browse Menu
+            </a>
+            
+        </div>
+        
+    </section>
 
-            <div class="max-w-4xl mx-auto px-6 py-20 text-center">
-
-                <i class="fa-solid fa-cart-shopping text-8xl text-[#C9A36B]"></i>
-
-                <h2 class="font-serif text-4xl mt-8">
-
-                    Your Cart Is Empty
-
-                </h2>
-
-                <p class="mt-4 text-[#6B5B50]">
-
-                    Fresh breads, cakes and pastries are waiting for you.
-
-                </p>
-
-                <a href="/menu"
-                   class="inline-block mt-8 bg-[#C9A36B] px-8 py-4 rounded-xl font-semibold hover:bg-[#B89056] transition">
-
-                    Browse Menu
-
-                </a>
-
-            </div>
-
-        </section>
-
-    <% } else { %>
-
-
-
-
+    <% if(!isEmpty){ %>
     <!-- CART -->
 
-    <section class="pb-24 flex-1">
+        <section id='cart' class='<%= cartClass%>'>
 
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="max-w-7xl mx-auto px-6 lg:px-10">
 
-            <div class="grid lg:grid-cols-3 gap-10">
-
-
-
-
-                <!-- ITEMS -->
-
-                <div class="lg:col-span-2 space-y-6">
-
-                    <% cartItems.forEach(item => { %>
-
-                        <div class="bg-white rounded-3xl p-6 shadow-sm">
-
-                            <div class="flex flex-col md:flex-row gap-6">
+                <div class="grid lg:grid-cols-3 gap-10">
 
 
 
 
-                                <!-- IMAGE -->
+                    <!-- ITEMS -->
 
-                                <div
-                                    class="w-full md:w-36 h-36 rounded-2xl bg-[#E8DCCB] flex items-center justify-center shrink-0"
-                                    style="<%= item.image ? `background-image:url('${item.image}');background-size:cover;background-position:center;` : '' %>"
-                                >
+                    <div class="lg:col-span-2 space-y-6">
 
-                                    <% if(!item.image){ %>
+                        <% cartItems.forEach(item => { %>
 
-                                        <% if(item.category === 'Breads'){ %>
+                            <div class="items bg-white rounded-3xl p-6 shadow-sm">
 
-                                            <i class="fa-solid fa-bread-slice text-5xl text-[#C9A36B]"></i>
+                                <div class="flex flex-col md:flex-row gap-6">
 
-                                        <% } else if(item.category === 'Cookies'){ %>
 
-                                            <i class="fa-solid fa-cookie-bite text-5xl text-[#C9A36B]"></i>
 
-                                        <% } else if(item.category === 'Cakes'){ %>
 
-                                            <i class="fa-solid fa-cake-candles text-5xl text-[#C9A36B]"></i>
+                                    <!-- IMAGE -->
 
-                                        <% } else { %>
+                                    <div
+                                        class="w-full md:w-36 h-36 rounded-2xl bg-[#E8DCCB] flex items-center justify-center shrink-0"
+                                        style="<%= item.image ? `background-image:url('${item.image}');background-size:cover;background-position:center;` : '' %>"
+                                    >
 
-                                            <i class="fa-solid fa-wheat-awn text-5xl text-[#C9A36B]"></i>
+                                        <% if(!item.image){ %>
+
+                                            <% if(item.category === 'Breads'){ %>
+
+                                                <i class="fa-solid fa-bread-slice text-5xl text-[#C9A36B]"></i>
+
+                                            <% } else if(item.category === 'Cookies'){ %>
+
+                                                <i class="fa-solid fa-cookie-bite text-5xl text-[#C9A36B]"></i>
+
+                                            <% } else if(item.category === 'Cakes'){ %>
+
+                                                <i class="fa-solid fa-cake-candles text-5xl text-[#C9A36B]"></i>
+
+                                            <% } else { %>
+
+                                                <i class="fa-solid fa-wheat-awn text-5xl text-[#C9A36B]"></i>
+
+                                            <% } %>
 
                                         <% } %>
 
-                                    <% } %>
-
-                                </div>
+                                    </div>
 
 
 
 
-                                <!-- INFO -->
+                                    <!-- INFO -->
 
-                                <div class="flex-1">
+                                    <div class="flex-1">
 
-                                    <p class="uppercase tracking-wide text-xs text-[#C9A36B]">
+                                        <p class="uppercase tracking-wide text-xs text-[#C9A36B]">
 
-                                        <%= item.category %>
+                                            <%= item.category %>
 
-                                    </p>
+                                        </p>
 
-                                    <h2 class="font-serif text-3xl mt-2">
+                                        <h2 class="font-serif text-3xl mt-2">
 
-                                        <%= item.name %>
+                                            <%= item.name %>
 
-                                    </h2>
+                                        </h2>
 
-                                    <p class="font-bold text-xl mt-4">
+                                        <p class="font-bold text-xl mt-4">
 
-                                        ₹<%= item.price %>
+                                            ₹<%= item.price %>
 
-                                    </p>
+                                        </p>
 
-                                    <div class="mt-5 flex items-center gap-3">
+                                        <div class="mt-5 flex items-center gap-3">
+
+                                            <button
+                                                class="decrease-btn w-10 h-10 rounded-full border border-[#E8DCCB]"
+                                                data-id="<%= item._id %>"
+                                            >
+                                                -
+                                            </button>
+
+                                            <span class="quantity font-medium">
+
+                                                <%= item.quantity %>
+
+                                            </span>
+
+                                            <button
+                                                class="increase-btn w-10 h-10 rounded-full border border-[#E8DCCB]"
+                                                data-id="<%= item._id %>"
+                                            >
+                                                +
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    <!-- RIGHT -->
+
+                                    <div class="flex md:flex-col justify-between items-end">
+
+                                        <p class="line-total font-bold text-xl">
+
+                                            ₹<%= item.price * item.quantity %>
+
+                                        </p>
 
                                         <button
-                                            class="decrease-btn w-10 h-10 rounded-full border border-[#E8DCCB]"
+                                            class="remove-btn text-red-500 hover:text-red-700 transition"
                                             data-id="<%= item._id %>"
                                         >
-                                            -
-                                        </button>
 
-                                        <span class="font-medium">
+                                            <i class="fa-solid fa-trash"></i>
 
-                                            <%= item.quantity %>
-
-                                        </span>
-
-                                        <button
-                                            class="increase-btn w-10 h-10 rounded-full border border-[#E8DCCB]"
-                                            data-id="<%= item._id %>"
-                                        >
-                                            +
                                         </button>
 
                                     </div>
 
                                 </div>
 
+                            </div>
+
+                        <% }) %>
+
+                    </div>
 
 
 
-                                <!-- RIGHT -->
 
-                                <div class="flex md:flex-col justify-between items-end">
+                    <!-- SUMMARY -->
 
-                                    <p class="font-bold text-xl">
+                    <div>
 
-                                        ₹<%= item.price * item.quantity %>
+                        <div class="bg-white rounded-3xl p-8 shadow-sm sticky top-28">
 
-                                    </p>
+                            <h2 class="font-serif text-4xl">
 
-                                    <button
-                                        class="remove-btn text-red-500 hover:text-red-700 transition"
-                                        data-id="<%= item._id %>"
-                                    >
+                                Order Summary
 
-                                        <i class="fa-solid fa-trash"></i>
+                            </h2>
 
-                                    </button>
+                            <div class="mt-8 space-y-5">
+
+                                <div class="flex justify-between">
+
+                                    <span>Subtotal</span>
+
+                                    <span id="subtotal">₹<%= subtotal %></span>
+
+                                </div>
+
+                                <div class="flex justify-between">
+
+                                    <span>Delivery</span>
+
+                                    <span>₹<%= deliveryFee %></span>
+
+                                </div>
+
+                                <div class="border-t border-[#E8DCCB] pt-5 flex justify-between font-bold text-xl">
+
+                                    <span>Total</span>
+
+                                    <span id="total">₹<%= total %></span>
 
                                 </div>
 
                             </div>
 
-                        </div>
+                            <a
+                                href="/checkout"
+                                class="block text-center w-full mt-8 bg-[#C9A36B] py-4 rounded-xl font-semibold hover:bg-[#B89056] transition"
+                            >
 
-                    <% }) %>
+                                Proceed To Checkout
 
-                </div>
-
-
-
-
-                <!-- SUMMARY -->
-
-                <div>
-
-                    <div class="bg-white rounded-3xl p-8 shadow-sm sticky top-28">
-
-                        <h2 class="font-serif text-4xl">
-
-                            Order Summary
-
-                        </h2>
-
-                        <div class="mt-8 space-y-5">
-
-                            <div class="flex justify-between">
-
-                                <span>Subtotal</span>
-
-                                <span>₹<%= subtotal %></span>
-
-                            </div>
-
-                            <div class="flex justify-between">
-
-                                <span>Delivery</span>
-
-                                <span>₹<%= deliveryFee %></span>
-
-                            </div>
-
-                            <div class="border-t border-[#E8DCCB] pt-5 flex justify-between font-bold text-xl">
-
-                                <span>Total</span>
-
-                                <span>₹<%= total %></span>
-
-                            </div>
+                            </a>
 
                         </div>
-
-                        <button
-                            class="w-full mt-8 bg-[#C9A36B] py-4 rounded-xl font-semibold hover:bg-[#B89056] transition"
-                        >
-
-                            Proceed To Checkout
-
-                        </button>
 
                     </div>
 
@@ -311,12 +315,9 @@
 
             </div>
 
-        </div>
-
-    </section>
+        <section>
 
     <% } %>
-
 
 
 
@@ -336,5 +337,6 @@
 
     </footer>
 
+    <script src="/scripts/cart.js" type="module"></script>
 </body>
 </html>

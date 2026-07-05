@@ -8,6 +8,7 @@ import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import cookieParser from 'cookie-parser'
 import { checkAuth } from './middlewares/authMiddleware.js'
+import ordersModel from './models/ordersModel.js'
 
 
 const app = express()

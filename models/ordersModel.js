@@ -3,7 +3,10 @@ import mongoose from "mongoose"
 const orderSchema = mongoose.Schema({
     userID: mongoose.Schema.Types.ObjectId,
     products: [{
-        product: mongoose.Schema.Types.ObjectId,
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product'
+        },
         quantity: Number
     }],
     totalPrice: Number,
