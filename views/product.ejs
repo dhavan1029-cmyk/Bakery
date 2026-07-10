@@ -58,8 +58,27 @@
 
     </nav>
 
+    <!-- TOAST NOTIFICATION -->
 
+    <div id="toast"
+        class="fixed z-50 top-6 right-6 translate-x-[120%] opacity-0 transition-all duration-300 bg-[#3A2E25] text-white px-6 py-4 rounded-xl shadow-xl flex items-center gap-4 z-50"
+        >
+        <i id="successToastIcon" class="hidden fa-solid fa-circle-check text-green-400 text-xl"></i>
+        <i id="errToastIcon" class="hidden fa-solid fa-circle-xmark text-red-400 text-xl"></i>
 
+        <div class="flex-1">
+            <p id="toastMessage" class="font-medium">
+                Product added to cart.
+            </p>
+        </div>
+
+        <a
+            href="/cart"
+            class="whitespace-nowrap bg-[#C9A36B] hover:bg-[#B89056] text-[#3A2E25] font-semibold px-4 py-2 rounded-lg transition"
+        >
+            View Cart
+        </a>
+    </div>
 
     <!-- PRODUCT -->
 
@@ -157,6 +176,7 @@
                             min="1"
                             value="1"
                             class="w-24 px-4 py-3 rounded-md border border-[#E8DCCB] outline-none"
+                            id="quantity"
                         >
 
                     </div>
@@ -168,6 +188,8 @@
                     <div class="mt-10 flex gap-4">
 
                         <button
+                            id="addToCart"
+                            data-id='<%=product._id %>'
                             class="bg-[#C9A36B] px-8 py-4 rounded-md font-semibold hover:bg-[#B89056] transition"
                         >
 
@@ -176,6 +198,8 @@
                         </button>
 
                         <button
+                            id="buyNow"
+                            data-id='<%=product._id %>'
                             class="border border-[#C9A36B] px-8 py-4 rounded-md hover:bg-[#F2E7D8] transition"
                         >
 
@@ -301,6 +325,8 @@
         </div>
 
     </footer>
+
+    <script src="/scripts/product.js"></script>
 
 </body>
 </html>

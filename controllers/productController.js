@@ -55,4 +55,3 @@ export async function renderProduct(req, res){
 
 }
 
-// console.log(await productModel.find({}))
