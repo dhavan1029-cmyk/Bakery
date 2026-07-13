@@ -6,10 +6,10 @@ import pageRoutes from './routes/pageRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import checkoutRoutes from './routes/checkoutRoutes.js'
 import cookieParser from 'cookie-parser'
 import { checkAuth } from './middlewares/authMiddleware.js'
 import ordersModel from './models/ordersModel.js'
-
 
 const app = express()
 
@@ -27,6 +27,7 @@ app.use(userRoutes)
 app.use(pageRoutes)
 app.use(productRoutes)
 app.use(authRoutes)
+app.use(checkoutRoutes)
 
 app.listen(process.env.PORT)
 // console.log(process.env)

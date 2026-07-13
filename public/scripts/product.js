@@ -38,4 +38,10 @@ async function addItem(e) {
 
 }
 
+function buyItem(e){
+    window.location.href = `/checkout?productID=${buyNow.getAttribute('data-id')}&quantity=${quantityInp.value}`
+}
+
 addToCart.addEventListener('click', addItem)
+
+buyNow.addEventListener('click', buyItem)
