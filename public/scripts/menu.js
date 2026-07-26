@@ -138,7 +138,11 @@ function createResultElement(product) {
     return element;
 }
 
+let request;
+
 async function handleSearch(searchValue) {
+
+    clearTimeout(request)
 
     clearSearchResults();
 
@@ -153,18 +157,22 @@ async function handleSearch(searchValue) {
 
     showLoading();
 
-    const data = await fetchSearchResults(searchValue);
+    console.log('sent')
 
-    hideLoading();
+    request = setTimeout(async () => {
+        const data = await fetchSearchResults(searchValue);
+        console.log('recieved')
+        hideLoading();
 
-    if (!data.products.length) {
-        noSearchResults.classList.remove('hidden');
-        return;
-    }
+        if (!data.products.length) {
+            noSearchResults.classList.remove('hidden');
+            return;
+        }
 
-    resultElements = data.products.map(createResultElement);
+        resultElements = data.products.map(createResultElement);
 
-    searchResultsBox.append(...resultElements);
+        searchResultsBox.append(...resultElements);
+    }, 500)
 }
 
 productSearchBar.addEventListener('input', e => {
