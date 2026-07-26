@@ -20,7 +20,28 @@
 <body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen flex flex-col">
 
 
+    <div id="loginRequiredToast"
+        class="fixed top-6 right-6 z-50 translate-x-[120%] opacity-0 transition-all duration-500 ease-out bg-[#3A2E25] text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 max-w-md">
 
+        <div class="w-11 h-11 rounded-full bg-[#C9A36B]/20 flex items-center justify-center">
+
+            <i class="fa-solid fa-lock text-[#C9A36B] text-xl"></i>
+
+        </div>
+
+        <div class="flex-1">
+
+            <h3 class="font-semibold text-lg">
+                Login Required
+            </h3>
+
+            <p class="text-sm text-white/80 mt-1">
+                Please log in to continue.
+            </p>
+
+        </div>
+
+    </div>
 
     <!-- NAVBAR -->
 
@@ -225,6 +246,20 @@
         </div>
 
     </footer>
+
+    <script>
+        const loginRequiredToast = document.querySelector('#loginRequiredToast')
+        const loginRequired = '<%=loginRequired %>' || null
+        if(loginRequired){
+            loginRequiredToast.classList.replace('translate-x-[120%]', 'translate-x-0')
+            loginRequiredToast.classList.replace('opacity-0', 'opacity-1')
+
+            setTimeout(() => {
+                loginRequiredToast.classList.replace('translate-x-0', 'translate-x-[120%]')
+                loginRequiredToast.classList.replace('opacity-1', 'opacity-0')
+            }, 5000)
+        }
+    </script>
 
 </body>
 </html>

@@ -1,16 +1,29 @@
 import userModel from "../models/userModel.js"
 import ordersModel from "../models/ordersModel.js";
 import productModel from '../models/productModel.js'
-
-await ordersModel.deleteMany({})
-const user = await userModel.findOne({email: 'david@john.com'})
-user.orders = []
-
-await user.save()
-
+import mongoose from "mongoose";
 
 const DELIVERY_FEE = 50
 
+async function checkAvailability(...products){
+
+    for (const item of products) {
+        const product = await productModel.findById(item.product._id)
+        if(!product.availability) {
+            return false
+        }
+    }
+
+    return true
+    
+}
+
+function validateFields(fields){
+    for(const field of fields){
+        if(!field) return false
+    }
+    return true
+}
 
 function calculateTotal(user) {
 
@@ -47,27 +60,49 @@ function calculateTotal(user) {
 
 export async function getCheckoutPage(req, res){
     try{
-        const {productID, quantity} = req.query
+        if(!req.user){
+            return res.redirect('/login?loginRequired=true')
+        }
+
+        let {productID, quantity} = req.query
+
         let cartItems = []
         let subtotal, total;
+
         if(!productID) {
+
             const user = await userModel.findOne({email: req.user.email})
+
             await user.populate('cart.product')
-            cartItems = user.cart;
+
+            const productsAvailability = checkAvailability(...user.cart)
+            
+
+            if(!productsAvailability) {
+                return res.redirect(`/cart`)
+            }
+
             ({subtotal, total} = calculateTotal(user))
+            cartItems = user.cart
+
         }else{
+
             const product = await productModel.findById(productID)
+            
+            if(!product.availability) {
+                return res.redirect(`/product/${productID}?unavailable=true`)
+            }
+
             cartItems.push({product, quantity})
             subtotal = product.price 
             total = product.price + DELIVERY_FEE
+
         }
+        res.render('checkout', {checkoutError: '', orderError: '', cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, productID, quantity, formData: {}})
 
-        res.render('checkout', {error: null, cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, productID, quantity})
-
-    } catch (err) {
-        res.status(404).send('something went wrong')
-
-        console.log(err)
+    } catch (checkoutError) {
+        console.log(checkoutError)
+        res.render('checkout', {checkoutError, orderError: '', formData: null})
     }
 
 
@@ -76,57 +111,90 @@ export async function getCheckoutPage(req, res){
 
 export async function placeOrder(req, res){
 
-    const { fullName, phone, house, landmark, address, city, state, pincode, paymentMethod, notes, productID, quantity } = req.body
+    try{
 
-    const user = await userModel.findOne({email: req.user.email})
-    await user.populate('cart.product')
+        const { fullName, phone, house, landmark, address, city, state, pincode, paymentMethod, notes, productID, quantity } = req.body
 
-    
-    const userID = user._id
+        if(!validateFields([ fullName, phone, house, landmark, address, city, state, pincode, paymentMethod ])){
+            res.redirect(`/checkout?productID=${productID}&quantity=${quantity}`)
+        }
 
-    const deliveryAddress = {
-        fullName, phone, house, landmark, address, city, state, pincode
+        const user = await userModel.findOne({email: req.user.email})
+
+        await user.populate('cart.product')
+
+        const userID = user._id
+
+        const deliveryAddress = {
+            fullName, phone, house, landmark, address, city, state, pincode
+        }
+
+        const paymentStatus = paymentMethod === 'cod' ? 'Pending' : 'Paid'
+
+        let totalPrice;
+        let products = [];
+        let subtotal, total;
+        if(!productID){
+            products = user.cart
+            const product = await productModel.findById(user.cart[0].product._id)
+
+            const productsAvailability = await checkAvailability(...user.cart)
+            console.log(productsAvailability)
+            if(!productsAvailability) {
+                return res.redirect(`/cart`)
+            }
+            // console.log(user instanceof mongoose.Model)
+            // console.log(typeof user.populate)
+            // await user.populate('cart.product')
+
+            ({subtotal, total} = calculateTotal(user))
+            totalPrice = total
+
+        } else {
+
+            const product = await productModel.findById(productID)
+            
+            if(!product.availability){
+                return res.redirect(`/product/${productID}`)
+            }
+
+            products.push({product, quantity})
+            subtotal = product.price 
+            totalPrice = product.price + DELIVERY_FEE
+        }
+
+
+
+
+        const order = await ordersModel.insertOne({
+            userID, 
+            products, 
+            subtotal, 
+            totalPrice, 
+            deliveryFee: DELIVERY_FEE, 
+            orderNotes: notes, 
+            deliveryAddress, 
+            paymentMethod, 
+            paymentStatus
+        })
+
+        user.orders.push(order._id)
+        user.cart = []
+        await user.save()
+        
+        res.redirect(`/order-success/${order._id}`)
+    } catch (orderError) {
+        console.log(orderError)
+        const { productID, quantity } = req.body
+
+        const user = await userModel.findOne({email: req.user.email})
+        await user.populate('cart.product')
+
+        const cartItems = productID ? await productModel.findById(productID) : user.cart || []
+
+        const formData = req.body
+        const {subtotal, total} = calculateTotal(user)
+        res.render('checkout', {orderError: 'Order not placed', checkoutError: '', formData, productID, quantity, cartItems, subtotal, total, deliveryFee: DELIVERY_FEE})
+
     }
-
-    const paymentStatus = paymentMethod === 'cod' ? 'Pending' : 'Paid'
-
-    let totalPrice;
-    let products = [];
-    let subtotal, total;
-    if(!productID){
-        ({subtotal, total} = calculateTotal(user))
-        totalPrice = total
-
-        products = user.cart.map(item => ({product: item.product._id, quantity: item.quantity}))
-        console.log(products)
-    } else {
-
-        const product = await productModel.findById(productID)
-        console.log(product)
-        products.push({product, quantity})
-        subtotal = product.price 
-        totalPrice = product.price + DELIVERY_FEE
-    }
-
-    
-
-
-    const order = await ordersModel.insertOne({
-        userID, 
-        products, 
-        subtotal, 
-        totalPrice, 
-        deliveryFee: DELIVERY_FEE, 
-        orderNotes: notes, 
-        deliveryAddress, 
-        paymentMethod, 
-        paymentStatus
-    })
-
-    user.orders.push(order._id)
-    user.cart = []
-    await user.save()
-    
-    res.redirect(`/order-success/${order._id}`)
-
 }

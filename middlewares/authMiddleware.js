@@ -22,6 +22,9 @@ export async function checkAuth (req, res, next) {
     } catch (err) {
         res.locals.user = null
         req.user = null
+
+        res.redirect('/serverError')
+
         next()
     }
 

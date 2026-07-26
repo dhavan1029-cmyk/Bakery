@@ -65,11 +65,10 @@
         >
         <i id="successToastIcon" class="hidden fa-solid fa-circle-check text-green-400 text-xl"></i>
         <i id="errToastIcon" class="hidden fa-solid fa-circle-xmark text-red-400 text-xl"></i>
-
+        <i id="preorderToastIcon" class="hidden fa-solid fa-calendar-check text-[#C9A36B] text-xl"></i>
+        
         <div class="flex-1">
-            <p id="toastMessage" class="font-medium">
-                Product added to cart.
-            </p>
+            <p id="toastMessage" class="font-medium"></p>
         </div>
 
         <a
@@ -186,27 +185,63 @@
                     <!-- BUTTONS -->
 
                     <div class="mt-10 flex gap-4">
+                        <%
+                        let productUnavailableClass = 'mt-4 flex items-start gap-3 rounded-2xl border border-[#E8DCCB] bg-[#FDF8F0] px-5 py-4'
 
-                        <button
-                            id="addToCart"
-                            data-id='<%=product._id %>'
-                            class="bg-[#C9A36B] px-8 py-4 rounded-md font-semibold hover:bg-[#B89056] transition"
-                        >
+                        productUnavailableClass += product.availability ? ' hidden' : ''
+                        
+                        %>
 
-                            Add To Cart
+                        <div id="productUnavailable" 
+                        class="<%= productUnavailableClass %>">
 
-                        </button>
+                            <div>
+                            
+                                <i class="fa-solid fa-box-open text-xl text-[#C9A36B]"></i>
+                            
+                            </div>
+                        
+                            <div>
+                            
+                                <h3 class="font-semibold text-lg">
+                                
+                                    Currently Unavailable
+                                
+                                </h3>
+                            
+                                <p class="mt-1 text-[#6B5B50] leading-relaxed">
+                                
+                                    This product is temporarily out of stock and cannot be ordered at the moment.
+                                    Please check back later.
+                                
+                                </p>
+                            
+                            </div>
+                        
+                        </div>
 
-                        <button
-                            id="buyNow"
-                            data-id='<%=product._id %>'
-                            class="border border-[#C9A36B] px-8 py-4 rounded-md hover:bg-[#F2E7D8] transition"
-                        >
+                        <div id="productAvailable" class="<%= !product.availability ? 'hidden' : '' %>">
+                            <button
+                                id="addToCart"
+                                data-id='<%=product._id %>'
+                                class="bg-[#C9A36B] px-8 py-4 rounded-md font-semibold hover:bg-[#B89056] transition"
+                            >
 
-                            Buy Now
+                                Add To Cart
 
-                        </button>
+                            </button>
 
+                            <button
+                                id="buyNow"
+                                data-id='<%=product._id %>'
+                                class="border border-[#C9A36B] px-8 py-4 rounded-md hover:bg-[#F2E7D8] transition"
+                            >
+
+                                Buy Now
+
+                            </button>
+                        </div>
+            
                     </div>
 
 
@@ -325,7 +360,11 @@
         </div>
 
     </footer>
+    
 
+    <script>
+        const unavailable = '<%= unavailable%>'
+    </script>
     <script src="/scripts/product.js"></script>
 
 </body>

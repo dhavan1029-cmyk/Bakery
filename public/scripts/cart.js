@@ -6,7 +6,18 @@ const cart = document.querySelector('#cart')
 const emptyCart = document.querySelector('#emptyCart')
 const subtotal = document.querySelector('#subtotal')
 const total = document.querySelector('#total')
+const cartWarning = document.querySelector("#cartWarning");
 
+
+function updateCartWarning() {
+
+    if (cartWarning.classList.contains('hidden')) return;
+
+    const unavailableItems = document.querySelectorAll(".unavailable")
+    if (!unavailableItems.length) {
+        cartWarning.classList.add('hidden');
+    }
+}
 
 async function removeItem (e) {
 
@@ -32,6 +43,8 @@ async function removeItem (e) {
         cart.classList.add('hidden')
         emptyCart.classList.remove('hidden')
     }
+
+    updateCartWarning()
 
 }
 

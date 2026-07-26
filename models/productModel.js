@@ -9,7 +9,8 @@ const productSchema = mongoose.Schema({
     quantity: {
         type: Number,
         default: 1
-    }
+    },
+    availability: Boolean,
 })
 
 export default mongoose.model('Product', productSchema)

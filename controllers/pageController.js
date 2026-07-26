@@ -1,6 +1,6 @@
-export function home(req, res){
-    console.log(req.cookies)
-    res.render('homepage')
+export function home(req, res){    
+    const isLoggedOut = req.query.loggedOut
+    res.render('homepage', { isLoggedOut })
 }
 
 export function about(req, res){
@@ -13,10 +13,6 @@ export function contact(req, res){
 
 export function cart(req, res) {
     res.render('cart', {error: null, cartItems: []});
-}
-
-export function checkout(req, res) {
-    res.render('checkout', {error: null, cartItems: [], subtotal: 0, deliveryFee: 0, total: 0});
 }
 
 export function orders(req, res) {

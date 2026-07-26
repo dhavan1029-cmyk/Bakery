@@ -4,7 +4,8 @@ import validator from 'validator'
 import userModel from '../models/userModel.js'
 
 export async function getLoginPage(req, res){
-    res.render('login', {error: null})
+    const loginRequired = req.query.loginRequired
+    res.render('login', {error: null, loginRequired})
 }
 
 export function getSignupPage(req, res){
@@ -12,37 +13,46 @@ export function getSignupPage(req, res){
 }
 
 export async function loginUser(req, res){
+    try{ 
+        const { email, password } = req.body
+        const user = await userModel.findOne({email})
 
-    const { email, password } = req.body
-    const user = await userModel.findOne({email})
+        if (!user) {
+            res.render('login', {error: 'Account doesn\'t exist', loginRequired: ''})
+            return
+        }
 
-    if (!user) {
-        res.render('login', {error: 'Account doesn\'t exist'})
-        return
+        if (bcrypt.compareSync(password, user.password)) {
+
+            const token = jwt.sign({email}, process.env.JWT_CODE)
+            res.cookie('userToken', token)
+            res.redirect('/menu')
+
+        } else {
+
+            res.render('login', {error: 'Incorrect password', loginRequired: ''})
+
+        }
+    } catch (err) {
+        console.log(err)
+        res.redirect('/serverError')
     }
-
-    if (bcrypt.compareSync(password, user.password)) {
-
-        const token = jwt.sign({email}, process.env.JWT_CODE)
-        res.cookie('userToken', token)
-        res.redirect('/menu')
-
-    } else {
-
-        res.render('/login', {error: 'Incorrect password'})
-
-    }
-
 }
 
 export async function signupUser(req, res){
 
-    const { username, email, password } = req.body
+    try{
 
-    const encryptedPassword = bcrypt.hashSync(password, 10)
+        const { username, email, password } = req.body
 
-    const newUser = await userModel.insertOne({username, email, password: encryptedPassword})
+        const encryptedPassword = bcrypt.hashSync(password, 10)
+        const newUser = await userModel.insertOne({username, email, password: encryptedPassword})
 
-    loginUser(req, res)
+        loginUser(req, res)
+
+    } catch (err) {
+        console.log(err)
+        res.redirect('/serverError')
+    }
 
 }

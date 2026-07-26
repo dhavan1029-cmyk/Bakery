@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Error | FLOURish</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen flex flex-col">
+
+    <!-- NAVBAR -->
+
+    <nav class="bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB]">
+
+        <div class="max-w-7xl mx-auto h-20 flex items-center">
+
+            <a href="/" class="flex items-center gap-3">
+
+                <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+                <h1 class="font-serif text-4xl">
+
+                    FLOUR<span class="italic text-[#C9A36B]">ish</span>
+
+                </h1>
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ERROR -->
+
+    <main class="flex-1 flex items-center justify-center px-6 py-16">
+
+        <div class="max-w-3xl w-full bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-12 text-center">
+
+            <div class="w-24 h-24 mx-auto rounded-full bg-[#F8EFD8] flex items-center justify-center">
+
+                <i class="fa-solid fa-server text-5xl text-[#C9A36B]"></i>
+
+            </div>
+
+            <h1 class="mt-8 font-serif text-5xl">
+
+                Something Went Wrong
+
+            </h1>
+
+            <p class="mt-6 text-lg text-[#6B5B50] leading-relaxed max-w-xl mx-auto">
+
+                We're experiencing a temporary server issue and couldn't
+                complete your request.
+
+                <br><br>
+
+                Please try again in a few moments. If the problem continues,
+                feel free to contact us.
+
+            </p>
+
+            <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+
+                <button
+                    onclick="history.back()"
+                    class="px-8 py-4 bg-[#C9A36B] text-[#2F241D] font-semibold rounded-xl hover:bg-[#B89056] transition"
+                >
+
+                    <i class="fa-solid fa-rotate-right mr-2"></i>
+
+                    Try Again
+
+                </button>
+
+                <a
+                    href="/"
+                    class="px-8 py-4 border border-[#E8DCCB] rounded-xl font-semibold hover:bg-[#F8F4EE] transition"
+                >
+
+                    <i class="fa-solid fa-house mr-2"></i>
+
+                    Back to Home
+
+                </a>
+
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-[#E8DCCB]">
+
+                <p class="text-sm text-[#8A7A6D]">
+
+                    Error Code: 500 • Internal Server Error
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="bg-gradient-to-b from-[#3A2E25] to-[#241B15] text-[#F8F4EE]">
+
+        <div class="max-w-7xl mx-auto py-8 text-center">
+
+            <p class="text-[#D6C8B8]">
+
+                © 2026 FLOURish Bakery. All rights reserved.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>

@@ -41,6 +41,61 @@
 
 
 <!-- PROFILE -->
+<!-- Logout Confirmation -->
+<div
+    id="logoutModal"
+    class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
+>
+
+    <div class="bg-[#F8EFD8] rounded-3xl shadow-xl w-[90%] max-w-md p-8">
+
+        <div class="flex justify-center">
+
+            <div class="w-20 h-20 rounded-full bg-brown-100 flex items-center justify-center">
+
+                <i class="fa-solid fa-right-from-bracket text-4xl text-brown-500"></i>
+
+            </div>
+
+        </div>
+
+        <h2 class="font-serif text-4xl text-center mt-6">
+
+            Logout?
+
+        </h2>
+
+        <p class="text-center text-[#C9A36B] mt-3">
+
+            Are you sure you want to log out of your FLOURish account?
+
+        </p>
+
+        <div class="flex gap-4 mt-8">
+
+            <button
+                id="cancelLogout"
+                class="flex-1 py-3 border border-[#E8DCCB] rounded-xl hover:bg-[#B89056] transition"
+            >
+
+                Cancel
+
+            </button>
+
+            <button
+                id="confirmLogout"
+                class="flex-1 py-3 bg-[#C9A36B] text-white rounded-xl hover:bg-[#B89056] transition"
+            >
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 <section class="py-16">
 
@@ -238,11 +293,13 @@
                     </a>
 
 
-                    <form action="/logout" method="POST">
+                    <form action="/logout" method="POST" id="logoutForm">
 
                         <button 
+                            type="button"
                             class="border border-red-300 text-red-600 
                             px-6 py-3 rounded-full hover:bg-red-50 transition"
+                            id="logoutBtn"
                         >
 
                             Logout
@@ -266,6 +323,26 @@
 
 </section>
 
+<script>
+    const logoutModal = document.querySelector('#logoutModal')
+    const cancelLogout = document.querySelector('#cancelLogout')
+    const confirmLogout = document.querySelector('#confirmLogout')
+    const logoutBtn = document.querySelector('#logoutBtn')
+    const logoutForm = document.querySelector('#logoutForm')
+
+    logoutBtn.addEventListener('click', (e) => {
+        logoutModal.classList.remove('hidden')
+    })
+
+    cancelLogout.addEventListener('click', (e) => {
+        logoutModal.classList.add('hidden')
+    })
+    
+    confirmLogout.addEventListener('click', (e) => {
+        logoutForm.submit()
+    })
+
+</script>
 
 </body>
 </html>

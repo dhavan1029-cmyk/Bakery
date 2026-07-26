@@ -246,10 +246,14 @@
             
                 <i class="fa-solid fa-bread-slice text-7xl text-[#C9A36B]"></i>
 
-                <h2 class="mt-6 text-3xl font-serif">
+                <h2 id='statusMessage' class="mt-6 text-3xl font-serif text-center">
                     No Products Found
                 </h2>
 
+                <button 
+                class="mt-10 inline-flex items-center justify-center gap-2 bg-[#C9A36B] hover:bg-[#B89056 font-serif text-xl px-8 py-3 rounded-xl transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-[#C9A36B]/30 active:scale-95"
+                onclick="location.reload()"
+                >Retry</button>
             </div>
 
             
@@ -387,7 +391,7 @@
 
     <script>
         const products = JSON.parse('<%- JSON.stringify(products) %>');
-        const user = JSON.parse('<%- JSON.stringify(user)%>')
+        const err = '<%=err %>'
     </script>
     <script src="/scripts/menu.js"></script>
 </body>

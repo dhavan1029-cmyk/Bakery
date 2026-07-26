@@ -12,6 +12,7 @@ const productSearchBar = document.querySelector('#productSearchBar');
 const searchResultsBox = document.querySelector('#searchResults');
 const loadingAnimation = document.querySelector('#loadingAnimation');
 const noSearchResults = document.querySelector('#noSearchResults');
+const statusMessage = document.querySelector('#statusMessage')
 
 // ======================
 // FILTER STYLES
@@ -28,6 +29,13 @@ let activeFilter = document.querySelector('#all');
 // ======================
 // MENU FILTERS
 // ======================
+
+if(err) {
+    noProducts.classList.remove('hidden')
+    statusMessage.innerHTML = `
+    We couldn't load our menu.<br>Please try again.
+`
+}
 
 if (!products.length) {
     noProducts.classList.remove('hidden');

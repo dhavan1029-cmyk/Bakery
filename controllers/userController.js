@@ -1,4 +1,5 @@
 import userModel from "../models/userModel.js";
+import productModel from "../models/productModel.js";
 
 const DELIVERY_FEE = 50;
 
@@ -37,12 +38,15 @@ function calculateTotal(user) {
 }
 
 
-
 // =====================
 // Account
 // =====================
 
 export function getAccount(req, res) {
+
+    if(!req.user){
+        res.redirect('/login?loginRequired=true')
+    }
 
     res.render("account");
 
@@ -55,45 +59,26 @@ export function getAccount(req, res) {
 // =====================
 
 export async function getCartItems(req, res) {
+    try {
 
-    if (!req.user) {
-        return res.render("cart", {
-            cartItems: []
-        });
-    }
+        const products = await productModel.find({})
 
-    const user = await userModel
-        .findById(req.user._id)
-        .populate("cart.product");
+        if(!req.user){
+            return res.redirect('/login?loginRequired=true')
+        }
 
-    if (user.cart.length === 0) {
-        return res.render("cart", {
-            cartItems: []
-        });
-    }
+        const user = await userModel.findOne({email: req.user.email})
+        await user.populate('cart.product')
+        const cartItems = user.cart
 
-    // Merge the product document with its quantity.
-    const cartItems = user.cart.map(cartItem => ({
-        ...cartItem.product.toObject(),
-        quantity: cartItem.quantity
-    }));
+        const {subtotal, total} = calculateTotal(user)
 
-    const subtotal = cartItems
-        .map(cartItem => cartItem.price * cartItem.quantity)
-        .reduce(
-            (previousTotal, currentTotal) =>
-                previousTotal + currentTotal
-        );
+        res.render('cart', {cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, err: false})
+        
+    } catch (err) {
+        res.render('cart', {cartItems: [], err})
 
-    const total = subtotal + DELIVERY_FEE;
-
-    res.render("cart", {
-        cartItems,
-        subtotal,
-        deliveryFee: DELIVERY_FEE,
-        total
-    });
-
+    }  
 }
 
 
@@ -138,40 +123,98 @@ export async function deleteItem(req, res) {
 
 // Add a product to the cart or increase its quantity if it already exists.
 export async function addToCart(req, res) {
-
-    const { productId, quantity } = req.body;
-
-    const user = await userModel.findOne({
-        email: req.user.email
-    });
-
-    for (const cartItem of user.cart) {
-
-        if (cartItem.product.toString() === productId) {
-
-            cartItem.quantity += quantity;
-
-            await user.save();
-
+    try{
+        if(!req.user){
             return res.json({
-                success: true
-            });
+                success: false,
+                reason: 'login_required'
+            })
+        }
+
+
+
+
+        const { productId, quantity } = req.body;
+
+
+        if(!Number.isInteger(quantity) || quantity < -1 ) {
+            return res.json({
+                success: false,
+                message: 'Invalid Quantity'
+            })
+        }
+
+        if(quantity >= 20) {
+            return res.json({ 
+                success: false,
+                reason: "preorder_required",
+                message: "Orders above 20 items require a preorder."
+            })
+        }
+
+
+        const product = await productModel.findById(productId)
+
+        if(!product.availability){
+            return res.json({
+                success: false,
+                reason: 'product_unavailable',
+                message: 'Product is currently unavailable'
+            })
+        }
+
+        const user = await userModel.findOne({
+            email: req.user.email
+        });
+
+
+
+
+        for (const cartItem of user.cart) {
+            if (cartItem.product.toString() === productId) {
+                
+                const newQuantity = cartItem.quantity + (+quantity)
+
+                if(newQuantity >= 20) {
+                    return res.json({ 
+                        success: false,
+                        reason: "preorder_required",
+                        message: "Orders above 20 items require a preorder."
+                    })
+                } else {
+                    cartItem.quantity = newQuantity;
+                }
+
+
+                await user.save();
+
+                return res.json({
+                    success: true,
+                    message: 'Product added to cart'
+                });
+
+            }
 
         }
 
+
+
+
+        user.cart.push({
+            product: productId,
+            quantity
+        });
+
+        await user.save();
+
+        res.json({
+            success: true,
+            message: 'Product added to cart'
+        });
+    } catch (err) {
+        console.log(err)
+        res.redirect('/serverError')
     }
-
-    user.cart.push({
-        product: productId,
-        quantity
-    });
-
-    await user.save();
-
-    res.json({
-        success: true
-    });
-
 }
 
 
@@ -179,64 +222,68 @@ export async function addToCart(req, res) {
 // Increase or decrease the quantity of a cart item.
 export async function changeQty(req, res) {
 
-    const { productId, updateQty } = req.body;
+    try{
+        const { productId, updateQty } = req.body;
 
-    const user = await userModel.findOne({
-        email: req.user.email
-    });
+        const user = await userModel.findOne({
+            email: req.user.email
+        });
 
-    const quantityChange = updateQty / Math.abs(updateQty);
+        const quantityChange = updateQty / Math.abs(updateQty);
 
-    for (let index = 0; index < user.cart.length; index++) {
+        for (let index = 0; index < user.cart.length; index++) {
 
-        const cartItem = user.cart[index];
+            const cartItem = user.cart[index];
 
-        if (cartItem.product.toString() !== productId) {
-            continue;
-        }
+            if (cartItem.product.toString() !== productId) {
+                continue;
+            }
 
-        // Remove the product if its quantity reaches zero.
-        if (quantityChange < 0 && cartItem.quantity <= 1) {
+            // Remove the product if its quantity reaches zero.
+            if (quantityChange < 0 && cartItem.quantity <= 1) {
 
-            user.cart.splice(index, 1);
+                user.cart.splice(index, 1);
+
+                await user.save();
+                await user.populate("cart.product");
+
+                const { subtotal, total } = calculateTotal(user);
+
+                return res.json({
+                    success: true,
+                    qty: 0,
+                    subtotal,
+                    total
+                });
+
+            }
+
+            cartItem.quantity += quantityChange;
 
             await user.save();
             await user.populate("cart.product");
 
+            const updatedCartItem = user.cart.find(cartItem =>
+                cartItem.product._id.toString() === productId
+            );
+
             const { subtotal, total } = calculateTotal(user);
+
+            const lineTotal = updatedCartItem.product.price * updatedCartItem.quantity;
 
             return res.json({
                 success: true,
-                qty: 0,
+                qty: updatedCartItem.quantity,
                 subtotal,
-                total
+                total,
+                lineTotal
             });
 
         }
-
-        cartItem.quantity += quantityChange;
-
-        await user.save();
-        await user.populate("cart.product");
-
-        const updatedCartItem = user.cart.find(cartItem =>
-            cartItem.product._id.toString() === productId
-        );
-
-        const { subtotal, total } = calculateTotal(user);
-
-        const lineTotal = updatedCartItem.product.price * updatedCartItem.quantity;
-
-        return res.json({
-            success: true,
-            qty: updatedCartItem.quantity,
-            subtotal,
-            total,
-            lineTotal
-        });
-
+    } catch (err) {
+        console.log(err)
+        res.redirect('/serverError')
     }
-
 }
 
 
@@ -247,17 +294,32 @@ export async function changeQty(req, res) {
 
 export async function getOrders(req, res) {
 
-    const user = await userModel.findOne({
-        email: req.user.email
-    }).populate({
-        path: "orders",
-        populate: {
-            path: "products.product"
+    try{
+
+        if(!req.user){
+            res.redirect('/login?loginRequired=true')
         }
-    });
 
-    res.render("orders", {
-        orders: user.orders
-    });
+        const user = await userModel.findOne({
+            email: req.user.email
+        }).populate({
+            path: "orders",
+            populate: {
+                path: "products.product"
+            }
+        });
 
+        res.render("orders", {
+            orders: user.orders
+        });
+
+    } catch (err) {
+        console.log(err)
+        res.redirect('/serverError')
+    }
+}
+
+export async function logoutUser(req, res) {
+    res.clearCookie('userToken')
+    res.redirect('/?loggedOut=true')
 }

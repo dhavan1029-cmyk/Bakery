@@ -9,187 +9,240 @@
     </head>
     <body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen flex flex-col">
 
-
-        <nav class="bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB] sticky top-0 z-50">
-
-            <div class="max-w-7xl mx-auto h-20 flex items-center justify-between px-6">
-
-                <a href="/" class="flex items-center gap-3">
-
-                    <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
-                    <h1 class="font-serif text-4xl">FLOUR<span class="italic text-[#C9A36B]">ish</span></h1>
-
-                </a>
-
-                <a href="/cart" class="hover:text-[#C9A36B] transition">‹ Back to Cart</a>
-
+        <% if(checkoutError && !formData){ %>
+            <div class="my-[20vh] max-w-3xl mx-auto bg-white border border-[#E8DCCB] rounded-3xl p-10 text-center shadow-sm">
+            
+                <div class="w-20 h-20 mx-auto rounded-full bg-[#F8EFD8] flex items-center justify-center">
+                
+                    <i class="fa-solid fa-basket-shopping text-4xl text-[#C9A36B]"></i>
+                
+                </div>
+            
+                <h2 class="mt-8 font-serif text-4xl">
+                    We Couldn't Start Your Checkout
+                </h2>
+            
+                <p class="mt-4 text-[#6B5B50] leading-relaxed max-w-lg mx-auto">
+                
+                    Something went wrong while preparing your order.
+                
+                    <br><br>
+                
+                    Your cart is safe. Please try again in a few moments.
+                
+                </p>
+            
+                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                
+                    <button
+                        onclick="location.reload()"
+                        class="px-8 py-3 bg-[#C9A36B] text-[#2F241D] font-semibold rounded-xl hover:bg-[#B89056] transition"
+                    >
+                
+                        <i class="fa-solid fa-rotate-right mr-2"></i>
+                
+                        Try Again
+                
+                    </button>
+                
+                    <a
+                        href="/cart"
+                        class="px-8 py-3 border border-[#E8DCCB] rounded-xl font-semibold hover:bg-[#F8F4EE] transition"
+                    >
+                
+                        <i class="fa-solid fa-cart-shopping mr-2"></i>
+                
+                        Back to Cart
+                
+                    </a>
+                
+                </div>
+            
             </div>
-        </nav>
+
+        <% } else { %>
+            <nav class="bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB] sticky top-0 z-50">
+
+                <div class="max-w-7xl mx-auto h-20 flex items-center justify-between px-6">
+
+                    <a href="/" class="flex items-center gap-3">
+
+                        <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+                        <h1 class="font-serif text-4xl">FLOUR<span class="italic text-[#C9A36B]">ish</span></h1>
+
+                    </a>
+
+                    <a href="/cart" class="hover:text-[#C9A36B] transition">‹ Back to Cart</a>
+
+                </div>
+            </nav>
 
 
-        <section class="py-12">
+            <section class="py-12">
 
-            <div class="max-w-7xl mx-auto px-6">
+                <div class="max-w-7xl mx-auto px-6">
 
-                <h1 class="font-serif text-6xl">Checkout</h1>
-                <p class="mt-3 text-[#6B5B50]">Complete your order and we'll start baking.</p>
+                    <h1 class="font-serif text-6xl">Checkout</h1>
+                    <p class="mt-3 text-[#6B5B50]">Complete your order and we'll start baking.</p>
 
-            </div>
+                </div>
 
-        </section>
+            </section>
 
 
-        <section class="pb-20 flex-1">
+            <section class="pb-20 flex-1">
 
-            <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-3 gap-10">
+                <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-3 gap-10">
 
-                <div class="lg:col-span-2">
+                    <div class="lg:col-span-2">
 
-                    <div class="bg-white rounded-3xl p-8 shadow-sm">
+                        <div class="bg-white rounded-3xl p-8 shadow-sm">
 
-                        <% if(error){ %>
-                            <div class="mb-6 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3"><%= error %></div>
-                        <% } %>
+                            <% if(orderError){ %>
+                                <div class="mb-6 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3"><%= orderError %></div>
+                            <% } %>
 
-                        <form action="/checkout" method="POST">
+                            <form action="/checkout" method="POST">
 
-                            <input type="text" class="hidden" name="productID" value="<%= productID%>">
-                            <input type="number" class="hidden" name="quantity" value="<%= quantity%>">
+                                <input type="text" class="hidden" name="productID" value="<%= productID%>">
+                                <input type="number" class="hidden" name="quantity" value="<%= quantity%>">
 
-                            <div class="space-y-10">
-                                <div>
-                                    <h2 class="font-serif text-3xl mb-5">Contact Information</h2>
+                                <div class="space-y-10">
+                                    <div>
+                                        <h2 class="font-serif text-3xl mb-5">Contact Information</h2>
 
-                                    <div class="grid md:grid-cols-2 gap-5">
+                                        <div class="grid md:grid-cols-2 gap-5">
 
-                                        <input type="text" name="fullName" required placeholder="Full Name" class="border border-[#E8DCCB] rounded-xl px-4 py-3">
-                                        <input type='number' name="phone" required placeholder="Phone Number" class="border border-[#E8DCCB] rounded-xl px-4 py-3">
+                                            <input type="text" name="fullName" required placeholder="Full Name" class="border border-[#E8DCCB] rounded-xl px-4 py-3" value='<%= formData?.fullName || ""%>'>
+                                            <input type='tel' name="phone" required placeholder="Phone Number" class="border border-[#E8DCCB] rounded-xl px-4 py-3" value='<%= formData?.phone || ""%>'>
+                                        </div>
+
                                     </div>
 
-                                </div>
+                                    <div>
 
-                                <div>
+                                        <h2 class="font-serif text-3xl mb-5">Delivery Address</h2>
+                                        <div class="grid md:grid-cols-2 gap-5">
+                                        <input type="text" name="house" required placeholder="House / Flat No." class="border border-[#E8DCCB] rounded-xl px-4 py-3" value='<%= formData?.house || ""%>'>
+                                        <input type="text" name="landmark" placeholder="Landmark (Optional)" class="border border-[#E8DCCB] rounded-xl px-4 py-3" value='<%= formData?.landmark || ""%>'>
+                                        
+                                    </div>
 
-                                    <h2 class="font-serif text-3xl mb-5">Delivery Address</h2>
-                                    <div class="grid md:grid-cols-2 gap-5">
-                                    <input type="text" name="house" required placeholder="House / Flat No." class="border border-[#E8DCCB] rounded-xl px-4 py-3">
-                                    <input type="text" name="landmark" placeholder="Landmark (Optional)" class="border border-[#E8DCCB] rounded-xl px-4 py-3">
+                                    <input type="text" name="address" required placeholder="Street Address" class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 mt-5" value='<%= formData?.address || ""%>'>
+
+                                        <div class="grid md:grid-cols-3 gap-5 mt-5">
+
+                                            <input type="text" name="city" required placeholder="City" class="border border-[#E8DCCB] rounded-xl px-4 py-3" value='<%= formData?.city || ""%>'>
+                                            <input type="text" name="state" required placeholder="State" class="border border-[#E8DCCB] rounded-xl px-4 py-3" value='<%= formData?.state || ""%>'>
+                                            <input type="number" name="pincode" required placeholder="PIN Code" class="border border-[#E8DCCB] rounded-xl px-4 py-3" value='<%= formData?.pincode || ""%>'>
+                                        
+                                        </div>
+
+                                    </div>
+
+                                    <div>
+
+                                        <h2 class="font-serif text-3xl mb-5">Payment Method</h2>
+
+                                        <div class="space-y-4">
+
+                                            <label class="flex gap-4 items-center border border-[#E8DCCB] rounded-2xl p-5 cursor-pointer hover:border-[#C9A36B]">
+
+                                                <input type="radio" checked name="paymentMethod" value="cod">
+                                                <i class="fa-solid fa-money-bill-wave text-2xl text-[#C9A36B]"></i>
+                                                <div><p class="font-semibold">Cash On Delivery</p><p class="text-sm text-[#6B5B50]">Pay when your order arrives.</p></div>
+                                            
+                                            </label>
+
+                                            <label class="flex gap-4 items-center border border-[#E8DCCB] rounded-2xl p-5 opacity-60">
+                                            
+                                                <input type="radio" disabled>
+                                                <i class="fa-solid fa-credit-card text-2xl text-[#C9A36B]"></i>
+                                                <div><p class="font-semibold">Online Payment</p><p class="text-sm">Coming Soon</p></div>
+                                            
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div>
+
+                                        <h2 class="font-serif text-3xl mb-5">Order Notes</h2>
+                                        <textarea name="notes" rows="4" placeholder="Delivery instructions (Optional)" class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 resize-none" value='<%= formData?.notes || ""%>'></textarea>
                                     
-                                </div>
-
-                                <input type="text" name="address" required placeholder="Street Address" class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 mt-5">
-
-                                    <div class="grid md:grid-cols-3 gap-5 mt-5">
-
-                                        <input type="text" name="city" required placeholder="City" class="border border-[#E8DCCB] rounded-xl px-4 py-3">
-                                        <input type="text" name="state" required placeholder="State" class="border border-[#E8DCCB] rounded-xl px-4 py-3">
-                                        <input type="number" name="pincode" required placeholder="PIN Code" class="border border-[#E8DCCB] rounded-xl px-4 py-3">
-                                    
                                     </div>
-
-                                </div>
-
-                                <div>
-
-                                    <h2 class="font-serif text-3xl mb-5">Payment Method</h2>
-
-                                    <div class="space-y-4">
-
-                                        <label class="flex gap-4 items-center border border-[#E8DCCB] rounded-2xl p-5 cursor-pointer hover:border-[#C9A36B]">
-                                        
-                                            <input type="radio" checked name="paymentMethod" value="cod">
-                                            <i class="fa-solid fa-money-bill-wave text-2xl text-[#C9A36B]"></i>
-                                            <div><p class="font-semibold">Cash On Delivery</p><p class="text-sm text-[#6B5B50]">Pay when your order arrives.</p></div>
-                                        
-                                        </label>
-
-                                        <label class="flex gap-4 items-center border border-[#E8DCCB] rounded-2xl p-5 opacity-60">
-                                        
-                                            <input type="radio" disabled>
-                                            <i class="fa-solid fa-credit-card text-2xl text-[#C9A36B]"></i>
-                                            <div><p class="font-semibold">Online Payment</p><p class="text-sm">Coming Soon</p></div>
-                                        
-                                        </label>
-
-                                    </div>
-
-                                </div>
-
-                                <div>
-
-                                    <h2 class="font-serif text-3xl mb-5">Order Notes</h2>
-                                    <textarea name="notes" rows="4" placeholder="Delivery instructions (Optional)" class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 resize-none"></textarea>
                                 
+                                    <button class="w-full bg-[#C9A36B] hover:bg-[#B89056] rounded-xl py-4 font-semibold">Place Order</button>
+                                    <p class="text-xs text-center text-[#6B5B50]">By placing this order you agree to our Terms and Privacy Policy.</p>
                                 </div>
-                            
-                                <button class="w-full bg-[#C9A36B] hover:bg-[#B89056] rounded-xl py-4 font-semibold">Place Order</button>
-                                <p class="text-xs text-center text-[#6B5B50]">By placing this order you agree to our Terms and Privacy Policy.</p>
-                            </div>
-                        </form>
+                            </form>
+
+                        </div>
 
                     </div>
 
-                </div>
-                            
-                <div>
-                            
-                    <div class="bg-white rounded-3xl p-8 shadow-sm sticky top-24">
-                            
-                        <h2 class="font-serif text-4xl">Order Summary</h2>
-                            
-                        <div class="mt-8 space-y-5">
-                            
-                            <% cartItems.forEach(item=>{ %>
-                            
-                                <div class="flex gap-4 border-b border-[#E8DCCB] pb-4">
-                            
-                                    <div class="w-20 h-20 rounded-xl bg-[#E8DCCB]" style="background-image:url('<%= item.product.image %>');background-size:cover;background-position:center;"></div>
-                            
-                                    <div class="flex-1">
-                            
-                                        <p class="uppercase text-xs tracking-wide text-[#C9A36B]"><%= item.product.category %></p>
-                                        <p class="font-semibold"><%= item.product.name %></p>
-                                        <p class="text-sm text-[#6B5B50]">₹<%= item.product.price %> × <%= item.quantity %></p>
-                            
+                    <div>
+
+                        <div class="bg-white rounded-3xl p-8 shadow-sm sticky top-24">
+
+                            <h2 class="font-serif text-4xl">Order Summary</h2>
+
+                            <div class="mt-8 space-y-5">
+
+                                <% cartItems.forEach(item=>{ %>
+                                
+                                    <div class="flex gap-4 border-b border-[#E8DCCB] pb-4">
+                                    
+                                        <div class="w-20 h-20 rounded-xl bg-[#E8DCCB]" style="background-image:url('<%= item.product.image %>');background-size:cover;background-position:center;"></div>
+                                    
+                                        <div class="flex-1">
+                                        
+                                            <p class="uppercase text-xs tracking-wide text-[#C9A36B]"><%= item.product.category %></p>
+                                            <p class="font-semibold"><%= item.product.name %></p>
+                                            <p class="text-sm text-[#6B5B50]">₹<%= item.product.price %> × <%= item.quantity %></p>
+                                        
+                                        </div>
+                                    
+                                        <p class="font-bold">₹<%= item.product.price * item.quantity %></p>
+                                    
                                     </div>
+                                
+                                <% }) %>
+                                
+                            </div>
+
+                            <div class="border-t border-[#E8DCCB] mt-6 pt-6 space-y-3">
+
+                                <div class="flex justify-between"><span>Subtotal</span><span>₹<%= subtotal %></span></div>
+
+                                <div class="flex justify-between"><span>Delivery</span><span>₹<%= deliveryFee %></span></div>
+
+                                <div class="flex justify-between"><span>Estimated Tax</span><span>Free</span></div>
+
+                                <div class="flex justify-between font-bold text-xl"><span>Total</span><span>₹<%= total %></span></div>
+
+                            </div>
+
+                            <div class="mt-6 rounded-2xl border border-[#E8DCCB] bg-[#F8F4EE] p-5">
+
+                                <h3 class="font-semibold">Delivery Information</h3>
+
+                                <p class="mt-2">Estimated delivery: <strong>30–45 minutes</strong></p>
+
+                                <p class="text-sm text-[#6B5B50] mt-2">Every order is freshly baked after confirmation.</p>
+
+                            </div>
+
+                            <div class="mt-6 space-y-2 text-sm">
+
+                                <p><i class="fa-solid fa-check text-[#C9A36B]"></i> Fresh ingredients every day</p>
+
+                                <p><i class="fa-solid fa-truck text-[#C9A36B]"></i> Fast local delivery</p>
+
+                                <p><i class="fa-solid fa-shield-halved text-[#C9A36B]"></i> Secure checkout</p>
                             
-                                    <p class="font-bold">₹<%= item.product.price * item.quantity %></p>
-                            
-                                </div>
-                            
-                            <% }) %>
-                            
-                        </div>
-                            
-                        <div class="border-t border-[#E8DCCB] mt-6 pt-6 space-y-3">
-                            
-                            <div class="flex justify-between"><span>Subtotal</span><span>₹<%= subtotal %></span></div>
-                            
-                            <div class="flex justify-between"><span>Delivery</span><span>₹<%= deliveryFee %></span></div>
-                            
-                            <div class="flex justify-between"><span>Estimated Tax</span><span>Free</span></div>
-                            
-                            <div class="flex justify-between font-bold text-xl"><span>Total</span><span>₹<%= total %></span></div>
-                            
-                        </div>
-                            
-                        <div class="mt-6 rounded-2xl border border-[#E8DCCB] bg-[#F8F4EE] p-5">
-                            
-                            <h3 class="font-semibold">Delivery Information</h3>
-                            
-                            <p class="mt-2">Estimated delivery: <strong>30–45 minutes</strong></p>
-                            
-                            <p class="text-sm text-[#6B5B50] mt-2">Every order is freshly baked after confirmation.</p>
-                            
-                        </div>
-                            
-                        <div class="mt-6 space-y-2 text-sm">
-                            
-                            <p><i class="fa-solid fa-check text-[#C9A36B]"></i> Fresh ingredients every day</p>
-                            
-                            <p><i class="fa-solid fa-truck text-[#C9A36B]"></i> Fast local delivery</p>
-                            
-                            <p><i class="fa-solid fa-shield-halved text-[#C9A36B]"></i> Secure checkout</p>
+                            </div>
                         
                         </div>
                     
@@ -197,10 +250,10 @@
                 
                 </div>
             
-            </div>
+            </section>
         
-        </section>
-        
+        <% } %>
+
         <footer class="bg-gradient-to-b from-[#3A2E25] to-[#241B15] text-[#F8F4EE] py-8 text-center">
         
             <p class="text-[#6B5B50]">© 2026 FLOURish Bakery. All rights reserved.</p>

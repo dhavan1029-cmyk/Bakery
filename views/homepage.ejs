@@ -10,10 +10,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
-<body class="bg-[#F8F4EE] text-[#4A3428]">
-    <!-- NAVBAR -->
+<body class="bg-[#F8F4EE] text-[#4A3428">
+    <%if(isLoggedOut) {%>
+        <div id="loggedOut" class="fixed z-10 top-[14vh] right-6 z-50
+                   translate-x-[120%] opacity-0
+                   transition-all duration-500 ease-out
+                   bg-[#3A2E25] text-white
+                   px-6 py-4
+                   rounded-2xl
+                   shadow-2xl
+                   flex items-center gap-4">
 
-    <nav class="fixed top-0 left-0 w-full z-50 bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB]">
+            <div class="w-11 h-11 rounded-full bg-[#C9A36B]/20 flex items-center justify-center">
+            
+                <i class="fa-solid fa-right-from-bracket text-[#C9A36B] text-xl"></i>
+            
+            </div>
+        
+            <div>
+            
+                <h3 class="font-semibold text-lg">
+                    Logged Out
+                </h3>
+            
+                <p class="text-sm text-white/80 mt-1">
+                    You have been securely logged out.
+                </p>
+            
+            </div>
+        
+        </div>
+    <%}%>
+    <!-- NAVBAR -->
+    
+
+    <nav class="fixed top-0 left-0 w-full z-[50] bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB]">
 
         <div class="w-[90%] mx-auto">
 
@@ -96,7 +127,6 @@
 
 
     <!-- HERO -->
-
     <section class="pt-28">
 
         <div class="max-w-7xl mx-auto px-6 lg:px-10">
@@ -840,5 +870,18 @@
 
     </footer>
 
+    <script>
+        const loggedOut = document.querySelector('#loggedOut')
+
+        if(loggedOut){
+            loggedOut.classList.replace('translate-x-[120%]', 'translate-x-0')
+            loggedOut.classList.replace('opacity-0', 'opacity-1')
+
+            setTimeout(() => {
+                loggedOut.classList.replace('translate-x-0', 'translate-x-[120%]')
+                loggedOut.classList.replace('opacity-1', 'opacity-0')
+            }, 5000)
+        }
+    </script>
 </body>
 </html>
