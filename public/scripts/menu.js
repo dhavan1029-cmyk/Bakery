@@ -157,11 +157,9 @@ async function handleSearch(searchValue) {
 
     showLoading();
 
-    console.log('sent')
 
     request = setTimeout(async () => {
         const data = await fetchSearchResults(searchValue);
-        console.log('recieved')
         hideLoading();
 
         if (!data.products.length) {

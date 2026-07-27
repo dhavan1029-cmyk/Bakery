@@ -3,6 +3,7 @@ import ordersModel from "../models/ordersModel.js";
 import productModel from '../models/productModel.js'
 import mongoose from "mongoose";
 
+
 const DELIVERY_FEE = 50
 
 async function checkAvailability(...products){

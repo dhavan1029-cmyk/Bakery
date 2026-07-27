@@ -1,5 +1,6 @@
 import userModel from "../models/userModel.js";
 import productModel from "../models/productModel.js";
+import ordersModel from "../models/ordersModel.js";
 
 const DELIVERY_FEE = 50;
 
@@ -310,6 +311,7 @@ export async function getOrders(req, res) {
         });
 
         res.render("orders", {
+            user,
             orders: user.orders
         });
 
@@ -322,4 +324,12 @@ export async function getOrders(req, res) {
 export async function logoutUser(req, res) {
     res.clearCookie('userToken')
     res.redirect('/?loggedOut=true')
+}
+
+export async function getOrder(req, res) {
+    const order = await ordersModel.findById(req.params.order)
+
+    await order.populate('products.product')
+
+    res.render('order', {order})
 }
