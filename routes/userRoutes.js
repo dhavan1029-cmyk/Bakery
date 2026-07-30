@@ -1,6 +1,9 @@
 import express from 'express'
 
-import { deleteItem, getAccount, getCartItems, getOrders, addToCart, changeQty, logoutUser, getOrder } from '../controllers/userController.js'
+import { getAccount, logoutUser } from '../controllers/userController.js'
+import { getCartItems, addToCart, changeQty, deleteItem } from '../controllers/cartController.js'
+import { getOrders, getOrder, cancelOrder } from '../controllers/orderController.js'
+
 
 const router = express.Router()
 
@@ -17,6 +20,8 @@ router.patch('/cart', changeQty)
 router.get('/orders', getOrders)
 
 router.get('/orders/:order', getOrder)
+
+router.post('/orders/:order/cancel', cancelOrder)
 
 router.post('/logout', logoutUser)
 
