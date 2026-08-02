@@ -1,6 +1,7 @@
 import userModel from "../models/userModel.js";
 import ordersModel from "../models/ordersModel.js";
 
+
 const DELIVERY_FEE = 50;
 
 // Calculate the cart subtotal and final total.
@@ -80,6 +81,7 @@ export async function getOrder(req, res) {
 
 export async function cancelOrder(req, res) {
     try{
+        // console.log(req.params)
         const order = await ordersModel.findById(req.params.order)
         order.status = 'Cancelled'
         await order.save()
@@ -89,3 +91,4 @@ export async function cancelOrder(req, res) {
         res.redirect('/serverError')
     }
 }
+

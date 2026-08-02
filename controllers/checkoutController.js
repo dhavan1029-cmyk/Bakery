@@ -1,7 +1,7 @@
 import userModel from "../models/userModel.js"
 import ordersModel from "../models/ordersModel.js";
 import productModel from '../models/productModel.js'
-import mongoose from "mongoose";
+
 
 
 const DELIVERY_FEE = 50
@@ -66,11 +66,17 @@ export async function getCheckoutPage(req, res){
         }
 
         let {productID, quantity} = req.query
-
+        const {reorderId} = req.query
         let cartItems = []
         let subtotal, total;
 
-        if(!productID) {
+        if(reorderId){
+            const order = await ordersModel.findById(reorderId)
+            await order.populate('products.product')
+            cartItems = order.products;
+            ({subtotal, total} = order)
+
+        }else if(!productID) {
 
             const user = await userModel.findOne({email: req.user.email})
 
@@ -95,11 +101,11 @@ export async function getCheckoutPage(req, res){
             }
 
             cartItems.push({product, quantity})
-            subtotal = product.price 
-            total = product.price + DELIVERY_FEE
+            subtotal = product.price * quantity
+            total = subtotal + DELIVERY_FEE
 
         }
-        res.render('checkout', {checkoutError: '', orderError: '', cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, productID, quantity, formData: {}})
+        res.render('checkout', {reorderId, checkoutError: '', orderError: '', cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, productID, quantity, formData: {}})
 
     } catch (checkoutError) {
         console.log(checkoutError)
@@ -114,10 +120,10 @@ export async function placeOrder(req, res){
 
     try{
 
-        const { fullName, phone, house, landmark, address, city, state, pincode, paymentMethod, notes, productID, quantity } = req.body
+        const { fullName, phone, house, landmark, address, city, state, pincode, paymentMethod, notes, productID, quantity, reorderId } = req.body
 
         if(!validateFields([ fullName, phone, house, landmark, address, city, state, pincode, paymentMethod ])){
-            res.redirect(`/checkout?productID=${productID}&quantity=${quantity}`)
+            res.redirect(`/checkout?productID=${productID}&quantity=${quantity}&reorderId=${reorderId}`)
         }
 
         const user = await userModel.findOne({email: req.user.email})
@@ -132,15 +138,21 @@ export async function placeOrder(req, res){
 
         const paymentStatus = paymentMethod === 'cod' ? 'Pending' : 'Paid'
 
-        let totalPrice;
         let products = [];
         let subtotal, total;
-        if(!productID){
+        
+        if(reorderId){
+
+            const order = await ordersModel.findById(reorderId);
+
+            ({products, subtotal, total} = order)
+
+        }else if(!productID){
             products = user.cart
             const product = await productModel.findById(user.cart[0].product._id)
 
             const productsAvailability = await checkAvailability(...user.cart)
-            console.log(productsAvailability)
+
             if(!productsAvailability) {
                 return res.redirect(`/cart`)
             }
@@ -149,7 +161,6 @@ export async function placeOrder(req, res){
             // await user.populate('cart.product')
 
             ({subtotal, total} = calculateTotal(user))
-            totalPrice = total
 
         } else {
 
@@ -159,19 +170,19 @@ export async function placeOrder(req, res){
                 return res.redirect(`/product/${productID}`)
             }
 
-            products.push({product, quantity})
-            subtotal = product.price 
-            totalPrice = product.price + DELIVERY_FEE
+            products.push({product: product._id, quantity})
+            subtotal = product.price * quantity
+            total = subtotal + DELIVERY_FEE
         }
 
 
 
 
-        const order = await ordersModel.insertOne({
+        const newOrder = await ordersModel.insertOne({
             userID, 
             products, 
             subtotal, 
-            totalPrice, 
+            total, 
             deliveryFee: DELIVERY_FEE, 
             orderNotes: notes, 
             deliveryAddress, 
@@ -179,14 +190,14 @@ export async function placeOrder(req, res){
             paymentStatus
         })
 
-        user.orders.push(order._id)
+        user.orders.push(newOrder._id)
         user.cart = []
         await user.save()
         
-        res.redirect(`/order-success/${order._id}`)
+        res.redirect(`/order-success/${newOrder._id}`)
     } catch (orderError) {
         console.log(orderError)
-        const { productID, quantity } = req.body
+        const { productID, quantity, reorderId } = req.body
 
         const user = await userModel.findOne({email: req.user.email})
         await user.populate('cart.product')
@@ -195,7 +206,7 @@ export async function placeOrder(req, res){
 
         const formData = req.body
         const {subtotal, total} = calculateTotal(user)
-        res.render('checkout', {orderError: 'Order not placed', checkoutError: '', formData, productID, quantity, cartItems, subtotal, total, deliveryFee: DELIVERY_FEE})
+        res.render('checkout', {orderError: 'Order not placed', checkoutError: '', formData, productID, quantity, cartItems, subtotal, total, reorderId, deliveryFee: DELIVERY_FEE})
 
     }
 }

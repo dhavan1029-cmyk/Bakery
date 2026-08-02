@@ -250,7 +250,7 @@
 
                         <p class="mt-1 text-4xl font-bold">
 
-                            ₹<%= order.totalPrice %>
+                            ₹<%= order.total %>
 
                         </p>
 
@@ -818,7 +818,7 @@
 
                             <span class="font-bold text-4xl">
 
-                                ₹<%= order.totalPrice %>
+                                ₹<%= order.total %>
 
                             </span>
 
@@ -834,7 +834,7 @@
 
     </section>
 
-    <% if(order.orderNotes) { %>
+    <% if(order.orderNotes.trim()) { %>
 
     <!-- ORDER NOTES -->
 
@@ -876,11 +876,7 @@
 
                 <div class="mt-10 rounded-2xl border border-[#E8DCCB] bg-[#FAF7F2] p-6">
 
-                    <p class="text-lg leading-relaxed whitespace-pre-wrap">
-
-                        <%= order.orderNotes %>
-
-                    </p>
+                    <p class="text-lg leading-relaxed whitespace-pre-wrap"><%= order.orderNotes %></p>
 
                 </div>
 
@@ -972,23 +968,18 @@
                             
                             
                             <% if(['Delivered', 'Cancelled'].includes(order.status)){ %>
-                            
-                                <form
-                                    action="/orders/<%= order._id %>/reorder"
-                                    method="POST"
+
+                                <a
+                                    href="/checkout?reorderId=<%= order._id%>"
+                                    class="bg-[#C9A36B] hover:bg-[#B89056] text-[#2F241D] font-semibold px-8 py-4 rounded-xl transition"
                                 >
+                        
+                                    <i class="fa-solid fa-rotate-right mr-2"></i>
+                        
+                                    Reorder
+                        
+                                </a>
                             
-                                    <button
-                                        class="bg-[#C9A36B] hover:bg-[#B89056] text-[#2F241D] font-semibold px-8 py-4 rounded-xl transition"
-                                    >
-                            
-                                        <i class="fa-solid fa-rotate-right mr-2"></i>
-                            
-                                        Reorder
-                            
-                                    </button>
-                                
-                                </form>
                             
                             <% } %>
                             

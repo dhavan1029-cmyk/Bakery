@@ -45,7 +45,7 @@ const orderSchema = mongoose.Schema({
         default: 50
     },
 
-    totalPrice: Number,
+    total: Number,
 
     paymentMethod: {
         type: String,
