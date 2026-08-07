@@ -102,7 +102,7 @@
                                 <div class="mb-6 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3"><%= orderError %></div>
                             <% } %>
 
-                            <form action="/checkout" method="POST">
+                            <form action="/checkout" method="POST" id="checkout">
 
                                 <input type="text" class="hidden" name="productID" value="<%= productID%>">
                                 <input type="number" class="hidden" name="quantity" value="<%= quantity%>">
@@ -260,6 +260,20 @@
             <p class="text-[#6B5B50]">© 2026 FLOURish Bakery. All rights reserved.</p>
         
         </footer>
+
+        <%- include('./loadAnimation')%>
+
+        <script src="/scripts/load.js"></script>
+        <script>
+            window.addEventListener('pageshow', hideLoading)
+
+            const checkoutForm = document.querySelector('#checkout')
+
+            checkoutForm.addEventListener('submit', e => {
+                showLoading('Placing your order...')
+            })
+
+        </script>
     
     </body>
 </html>

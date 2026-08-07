@@ -25,8 +25,10 @@ export async function loginUser(req, res){
         if (bcrypt.compareSync(password, user.password)) {
 
             const token = jwt.sign({email}, process.env.JWT_CODE)
+           
             res.cookie('userToken', token)
             res.redirect('/menu')
+            
 
         } else {
 

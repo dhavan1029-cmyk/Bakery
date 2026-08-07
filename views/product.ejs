@@ -65,7 +65,6 @@
         >
         <i id="successToastIcon" class="hidden fa-solid fa-circle-check text-green-400 text-xl"></i>
         <i id="errToastIcon" class="hidden fa-solid fa-circle-xmark text-red-400 text-xl"></i>
-        <i id="preorderToastIcon" class="hidden fa-solid fa-calendar-check text-[#C9A36B] text-xl"></i>
         
         <div class="flex-1">
             <p id="toastMessage" class="font-medium"></p>
@@ -134,7 +133,7 @@
 
                     </p>
 
-                    <h1 class="font-serif text-6xl mt-4">
+                    <h1 class="font-serif text-6xl mt-4" id="productName">
                         <%
                         let name = product.name
 
@@ -173,6 +172,7 @@
                         <input
                             type="number"
                             min="1"
+                            max="<%=product.maxQuantityPerOrder%>"
                             value="1"
                             class="w-24 px-4 py-3 rounded-md border border-[#E8DCCB] outline-none"
                             id="quantity"
@@ -364,6 +364,8 @@
 
     <script>
         const unavailable = '<%= unavailable%>'
+        const quantity = '<%= quantity%>'
+        
     </script>
     <script src="/scripts/product.js"></script>
 

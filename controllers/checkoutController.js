@@ -1,8 +1,17 @@
 import userModel from "../models/userModel.js"
 import ordersModel from "../models/ordersModel.js";
 import productModel from '../models/productModel.js'
+import mongoose from "mongoose";
 
 
+function isMaxOrderLimitExceeded(items){
+
+    for (const item of items) {
+        if(item.quantity > item.product.maxQuantityPerOrder) return true
+    }
+
+    return false
+}
 
 const DELIVERY_FEE = 50
 
@@ -120,7 +129,7 @@ export async function placeOrder(req, res){
 
     try{
 
-        const { fullName, phone, house, landmark, address, city, state, pincode, paymentMethod, notes, productID, quantity, reorderId } = req.body
+        let { fullName, phone, house, landmark, address, city, state, pincode, paymentMethod, notes, productID, quantity, reorderId } = req.body
 
         if(!validateFields([ fullName, phone, house, landmark, address, city, state, pincode, paymentMethod ])){
             res.redirect(`/checkout?productID=${productID}&quantity=${quantity}&reorderId=${reorderId}`)
@@ -129,6 +138,8 @@ export async function placeOrder(req, res){
         const user = await userModel.findOne({email: req.user.email})
 
         await user.populate('cart.product')
+
+
 
         const userID = user._id
 
@@ -144,30 +155,31 @@ export async function placeOrder(req, res){
         if(reorderId){
 
             const order = await ordersModel.findById(reorderId);
-
             ({products, subtotal, total} = order)
 
         }else if(!productID){
             products = user.cart
+            await user.save()
+
             const product = await productModel.findById(user.cart[0].product._id)
 
             const productsAvailability = await checkAvailability(...user.cart)
 
-            if(!productsAvailability) {
+            if(!productsAvailability || isMaxOrderLimitExceeded(products)) {
                 return res.redirect(`/cart`)
             }
-            // console.log(user instanceof mongoose.Model)
-            // console.log(typeof user.populate)
-            // await user.populate('cart.product')
+            
 
             ({subtotal, total} = calculateTotal(user))
 
+            user.cart = []
+            await user.save()
+            
         } else {
 
             const product = await productModel.findById(productID)
-            
-            if(!product.availability){
-                return res.redirect(`/product/${productID}`)
+            if(!product.availability || quantity > product.maxQuantityPerOrder){
+                return res.redirect(`/product/${productID}?quantity=${quantity}`)
             }
 
             products.push({product: product._id, quantity})
@@ -176,7 +188,7 @@ export async function placeOrder(req, res){
         }
 
 
-
+        
 
         const newOrder = await ordersModel.insertOne({
             userID, 
@@ -191,10 +203,11 @@ export async function placeOrder(req, res){
         })
 
         user.orders.push(newOrder._id)
-        user.cart = []
         await user.save()
-        
+
         res.redirect(`/order-success/${newOrder._id}`)
+
+            
     } catch (orderError) {
         console.log(orderError)
         const { productID, quantity, reorderId } = req.body
@@ -210,3 +223,4 @@ export async function placeOrder(req, res){
 
     }
 }
+

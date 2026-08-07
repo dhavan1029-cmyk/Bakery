@@ -323,7 +323,14 @@
 
 </section>
 
+<%- include('./loadAnimation')%>
+
+<script src="/scripts/load.js"></script>
+
 <script>
+
+    hideLoading()
+
     const logoutModal = document.querySelector('#logoutModal')
     const cancelLogout = document.querySelector('#cancelLogout')
     const confirmLogout = document.querySelector('#confirmLogout')
@@ -340,7 +347,10 @@
     
     confirmLogout.addEventListener('click', (e) => {
         logoutForm.submit()
+        showLoading('Signing you out...')
     })
+
+    
 
 </script>
 

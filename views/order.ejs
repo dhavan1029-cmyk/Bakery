@@ -972,6 +972,7 @@
                                 <a
                                     href="/checkout?reorderId=<%= order._id%>"
                                     class="bg-[#C9A36B] hover:bg-[#B89056] text-[#2F241D] font-semibold px-8 py-4 rounded-xl transition"
+                                    onclick='showLoading("Preparing your previous order...")'
                                 >
                         
                                     <i class="fa-solid fa-rotate-right mr-2"></i>
@@ -1012,6 +1013,10 @@
     
     </section>
     
+    <%- include('./loadAnimation')%>
+
+    <script src="/scripts/load.js"></script>
+
     <script src="/scripts/order.js" type="module"></script>
 </body>
     

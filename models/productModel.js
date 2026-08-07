@@ -11,6 +11,7 @@ const productSchema = mongoose.Schema({
         default: 1
     },
     availability: Boolean,
+    maxQuantityPerOrder: Number
 })
 
 export default mongoose.model('Product', productSchema)

@@ -1,3 +1,7 @@
+window.addEventListener('pageshow', e => {
+    hideLoading()
+})
+
 const cancelOrderBtn = document.querySelector('#cancel-order')
 const cancelOrderModal = document.querySelector('#cancel-order-modal')
 const confirmCancel = document.querySelector('#confirm-cancel-order-btn')
@@ -10,6 +14,9 @@ cancelOrderBtn?.addEventListener('click', e => {
 
 
 async function cancelOrder(e) {
+
+    showLoading('Cancelling your order...')
+
     await fetch(`/orders/${orderId}/cancel`, {
         method: 'POST', 
         headers: {
@@ -17,16 +24,7 @@ async function cancelOrder(e) {
         }
     })
 
-    window.location.reload()
-} 
-
-async function reorder(e) {
-    await fetch(`/orders/${orderId}/reorder`, {
-        method: 'POST', 
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
+    hideLoading()
 
     window.location.reload()
 } 

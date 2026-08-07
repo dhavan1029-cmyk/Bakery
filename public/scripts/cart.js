@@ -20,6 +20,7 @@ function updateCartWarning() {
 }
 
 async function removeItem (e) {
+    showLoading('Removing item from your cart...')
 
     const cartItem = e.currentTarget.closest('.items')
         
@@ -32,6 +33,8 @@ async function removeItem (e) {
             'Content-Type': 'application/json'
         }
     })
+
+    hideLoading()
 
     const updatedTotal = await res.json()
     cartItem.remove()
@@ -49,23 +52,37 @@ async function removeItem (e) {
 }
 
 async function changeQty (e) {
-    const qty = e.currentTarget.parentElement.querySelector('.quantity')
-    const item = e.currentTarget.closest('.items')
+    const qtyBtn = e.currentTarget
+    const qty = qtyBtn.parentElement.querySelector('.quantity')
+    const item = qtyBtn.closest('.items')
     const lineTotal = item.querySelector('.line-total')
-    
+    const quantityExceededWarning = item.querySelector('.quantity-exceeded-warning')
+
+    if(+qty.textContent <= 1 && qtyBtn.classList.contains('decrease-btn')) showLoading()
+
+    if(!quantityExceededWarning.classList.contains('hidden') && qtyBtn.classList.contains('decrease-btn') && +qty.textContent - 1 <= +qtyBtn.getAttribute('max')){
+        quantityExceededWarning.classList.add('hidden')
+        item.classList.remove('border-2', 'border-red-200')
+    }
+
+    if(+qty.textContent >= +qtyBtn.getAttribute('max') && qtyBtn.classList.contains('increase-btn')) return
+
+
     const res = await fetch('/cart', {
         method: 'PATCH',
         body: JSON.stringify({
-            productId: e.currentTarget.getAttribute('data-id'),
-            updateQty: e.currentTarget.classList.contains('increase-btn') ? 1 : -1
+            productId: qtyBtn.getAttribute('data-id'),
+            updateQty: qtyBtn.classList.contains('increase-btn') ? 1 : -1
         }),
         headers: {
             'Content-Type': 'application/json'
         }
     })
 
+    hideLoading()
+
     const updatedCartDetails = await res.json()
-    
+
     if(updatedCartDetails.qty <= 0) {
         item.remove()
         if(!document.querySelector('.items')){

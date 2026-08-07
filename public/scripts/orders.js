@@ -1,3 +1,7 @@
+window.addEventListener('pageshow', e => {
+    hideLoading()
+})
+
 const cancelOrderBtns = document.querySelectorAll('.cancel-order')
 const cancelOrderModal = document.querySelector('#cancel-order-modal')
 const confirmCancel = document.querySelector('#confirm-cancel-order-btn')
@@ -11,6 +15,8 @@ const noFilterResults = document.querySelector('#no-filter-results')
 const activeFilterClass = 'filters px-6 py-3 rounded-full bg-[#C9A36B] text-[#2F241D] font-semibold'
 const inactiveFilterClass = 'filters px-6 py-3 rounded-full border border-[#E8DCCB] hover:border-[#C9A36B] hover:bg-white transition'
 let activeFilter = document.querySelector('#all')
+
+
 filters.forEach(filter => {
     filter.addEventListener('click', e => {
         noFilterResults.classList.add('hidden')
@@ -59,7 +65,9 @@ keepOrder.addEventListener('click', (e) => {
 
 
 async function cancelOrder(e) {
-    // console.log(cancelOrderId)
+    
+    showLoading('Cancelling your order...')
+
     await fetch(`/orders/${cancelOrderId}/cancel`, {
         method: 'POST', 
         headers: {
@@ -67,13 +75,18 @@ async function cancelOrder(e) {
         }
     }) 
 
+    hideLoading()
+
     window.location.reload()
 } 
 
 
 
-async function reorder(e) {
+function reorder(e) {
     const reorderId = e.currentTarget.getAttribute('data-id')
+
+    showLoading('Preparing your previous order...');
+    console.log('dfdf')
     window.location.href = `/checkout?reorderId=${reorderId}`
 } 
 
@@ -83,7 +96,5 @@ confirmCancel.addEventListener('click', async (e) => {
 })
 
 reorderBtns.forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-        await reorder(e)
-    })
+    btn.addEventListener('click', reorder)
 })

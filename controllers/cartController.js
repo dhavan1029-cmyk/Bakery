@@ -204,11 +204,10 @@ export async function changeQty(req, res) {
     try{
         const { productId, updateQty } = req.body;
 
-        const user = await userModel.findOne({
-            email: req.user.email
-        });
+        const user = await userModel.findOne({email: req.user.email});
 
         const quantityChange = updateQty / Math.abs(updateQty);
+
 
         for (let index = 0; index < user.cart.length; index++) {
 
@@ -228,6 +227,8 @@ export async function changeQty(req, res) {
 
                 const { subtotal, total } = calculateTotal(user);
 
+
+                
                 return res.json({
                     success: true,
                     qty: 0,
@@ -237,14 +238,32 @@ export async function changeQty(req, res) {
 
             }
 
-            cartItem.quantity += quantityChange;
 
-            await user.save();
             await user.populate("cart.product");
 
             const updatedCartItem = user.cart.find(cartItem =>
                 cartItem.product._id.toString() === productId
             );
+
+
+            if(cartItem.quantity + quantityChange > updatedCartItem.product.maxQuantityPerOrder && quantityChange > 0) {
+
+                const { subtotal, total } = calculateTotal(user);
+
+                return res.json({
+                    success: true,
+                    qty: updatedCartItem.quantity,
+                    subtotal,
+                    total,
+                    lineTotal: updatedCartItem.product.price * updatedCartItem.quantity
+                })
+
+            }  
+            
+            
+            cartItem.quantity += quantityChange;
+
+            await user.save();
 
             const { subtotal, total } = calculateTotal(user);
 
@@ -259,6 +278,8 @@ export async function changeQty(req, res) {
             });
 
         }
+
+
     } catch (err) {
         console.log(err)
         res.redirect('/serverError')

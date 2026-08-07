@@ -5,9 +5,9 @@ const quantityInp = document.querySelector('#quantity')
 const toastMessage = document.querySelector('#toastMessage')
 const successToastIcon = document.querySelector('#successToastIcon')
 const errToastIcon = document.querySelector('#errToastIcon')
-const preorderToastIcon = document.querySelector('#preorderToastIcon')
 const productUnavailable = document.querySelector('#productUnavailable')
 const productAvailable = document.querySelector('#productAvailable')
+const productName = document.querySelector('#productName')
 
 successToastIcon.classList.add('hidden')
 
@@ -38,6 +38,10 @@ function showToast(productStatus){
         statusIcon.classList.add('hidden')
         addToCart.disabled = false
     }, 5000)
+}
+
+if(+quantity > +quantityInp.max){
+    showToast({success: false, reason: 'quantity_exceeded', message: `You can order upto ${quantityInp.max} ${productName.textContent.trim()}s per order`})
 }
 
 if(unavailable){
@@ -72,9 +76,9 @@ async function addItem(e) {
 
 function buyItem(e){
     const quantity = quantityInp.value
-    // console.log()
+    if(quantity > quantityInp.max) return
+
     if(!Number.isInteger(+quantity) || quantity < 1) showToast({success: false, message: 'Invalid Quantity'})
-    else if(quantity >= 20) showToast({success: false, reason: 'preorder_required', message: 'Orders above 20 items require a preorder.'})
     else window.location.href = `/checkout?productID=${buyNow.getAttribute('data-id')}&quantity=${quantity}`
 }
 

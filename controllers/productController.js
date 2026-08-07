@@ -39,17 +39,16 @@ export async function renderProduct(req, res){
     
     try {
         
-        const {unavailable} = req.query
+        const {unavailable, quantity} = req.query
 
         const product = await productModel.findById(req.params.id)
-        product.availability = true
-        await product.save()
+
         const relatedProducts = await productModel.find({
             category: product.category,
             _id: { $ne: product._id }
         });
 
-        res.render('product', {product, relatedProducts, unavailable})
+        res.render('product', {product, relatedProducts, unavailable, quantity})
 
     } catch (err) {
 
