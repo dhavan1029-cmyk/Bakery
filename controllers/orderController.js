@@ -70,7 +70,7 @@ export async function getOrder(req, res) {
     try{
         const order = await ordersModel.findById(req.params.order)
 
-        await order.populate('products.product')
+        if(order) await order.populate('products.product')
 
         res.render('order', {order})
     } catch (err) {

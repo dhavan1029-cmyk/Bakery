@@ -13,6 +13,10 @@ const searchResultsBox = document.querySelector('#searchResults');
 const loadingAnimation = document.querySelector('#loadingAnimation');
 const noSearchResults = document.querySelector('#noSearchResults');
 const statusMessage = document.querySelector('#statusMessage')
+const sortBtn = document.querySelector('#sort-btn')
+const filterBtn = document.querySelector('#filter-btn')
+const sortMenu = document.querySelector('#sort-menu')
+const filterMenu = document.querySelector('#filter-menu')
 
 // ======================
 // FILTER STYLES
@@ -76,6 +80,26 @@ filters.forEach(filter => {
         updateFilterStyles(filter);
     });
 });
+
+
+sortBtn.addEventListener('click', e => {
+    sortMenu.classList.toggle('hidden')
+})
+
+filterBtn.addEventListener('click', e => {
+    filterMenu.classList.toggle('hidden')
+})
+
+function updateQuery(query, value) {
+    const url = new URL(window.location.href)
+
+    url.searchParams.set(query, value)
+
+    showLoading('Updating the menu...')
+
+    window.location.href = url.toString()
+}
+
 
 // ======================
 // SEARCH

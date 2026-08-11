@@ -91,6 +91,10 @@ export async function getCheckoutPage(req, res){
 
             await user.populate('cart.product')
 
+            if(!user.cart.length){
+                return res.render('checkout', {checkoutError: 'Your Cart is empty', formData: null})
+            }
+
             const productsAvailability = checkAvailability(...user.cart)
             
 
@@ -105,6 +109,10 @@ export async function getCheckoutPage(req, res){
 
             const product = await productModel.findById(productID)
             
+            if(!product) {
+                return res.render('checkout', {checkoutError: 'Product not found', formData: null})
+            }
+
             if(!product.availability) {
                 return res.redirect(`/product/${productID}?unavailable=true`)
             }
@@ -158,6 +166,9 @@ export async function placeOrder(req, res){
             ({products, subtotal, total} = order)
 
         }else if(!productID){
+
+            if(!user.cart.length) return res.redirect('/checkout')
+
             products = user.cart
             await user.save()
 
@@ -178,6 +189,9 @@ export async function placeOrder(req, res){
         } else {
 
             const product = await productModel.findById(productID)
+            
+            if(!product) return res.redirect('/checkout')
+
             if(!product.availability || quantity > product.maxQuantityPerOrder){
                 return res.redirect(`/product/${productID}?quantity=${quantity}`)
             }

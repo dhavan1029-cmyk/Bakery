@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><%= product.name %> | FLOURish</title>
+    <title><%= product?.name || 'product not found' %> | FLOURish</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -17,350 +17,401 @@
 
 <body class="bg-[#F8F4EE] text-[#4A3428]">
 
-
-
-
-    <!-- NAVBAR -->
-
-    <nav class="sticky top-0 z-50 bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB]">
-
-        <div class="max-w-7xl mx-auto">
-
-            <div class="h-20 flex items-center justify-between">
-
-                <a href="/" class="flex items-center gap-3">
-
-                    <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
-
-                    <h1 class="font-serif text-4xl">
-
-                        FLOUR<span class="italic text-[#C9A36B]">ish</span>
-
+        <%if(!product){%>
+            <section class="h-[100vh] flex items-center justify-center px-6">
+        
+                <div class="max-w-xl w-full bg-white rounded-3xl border border-[#E8DCCB] shadow-sm p-10 text-center">
+                
+                    <div class="w-24 h-24 mx-auto rounded-full bg-[#F8F4EE] flex items-center justify-center">
+                    
+                        <i class="fa-solid fa-box-open text-5xl text-[#C9A36B]"></i>
+                    
+                    </div>
+                
+                    <h1 class="font-serif text-4xl mt-8">
+                    
+                       Product Not Found
+                    
                     </h1>
+                
+                    <p class="mt-5 text-[#6B5B50] leading-relaxed">
+                    
+                        The product you're looking for isn't available anymore.
+                    
+                    </p>
+                
+                    <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                    
+                        <a
+                            href="/menu"
+                            class="px-8 py-4 rounded-xl bg-[#C9A36B] hover:bg-[#B89056] font-semibold transition"
+                        >
 
-                </a>
+                    
+                            View menu
+                    
+                        </a>
+                    
+                        <a
+                            href="/"
+                            class="px-8 py-4 rounded-xl border border-[#E8DCCB] hover:bg-[#FAF7F2] transition"
+                        >
+                    
+                            <i class="fa-solid fa-house mr-2"></i>
+                    
+                            Back to Home
+                    
+                        </a>
+                    
+                    </div>
+                
+                </div>
+            
+            </section>
+        <%} else {%>
 
-                <div class="flex items-center gap-6">
+        <!-- NAVBAR -->
 
-                    <a href="/menu">
-                        Menu
+        <nav class="sticky top-0 z-50 bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB]">
+
+            <div class="max-w-7xl mx-auto">
+
+                <div class="h-20 flex items-center justify-between">
+
+                    <a href="/" class="flex items-center gap-3">
+
+                        <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+                        <h1 class="font-serif text-4xl">
+
+                            FLOUR<span class="italic text-[#C9A36B]">ish</span>
+
+                        </h1>
+
                     </a>
 
-                    <a href="/cart">
-                        <i class="fa-solid fa-cart-shopping text-lg"></i>
-                    </a>
+                    <div class="flex items-center gap-6">
+
+                        <a href="/menu">
+                            Menu
+                        </a>
+
+                        <a href="/cart">
+                            <i class="fa-solid fa-cart-shopping text-lg"></i>
+                        </a>
+
+                    </div>
 
                 </div>
 
             </div>
 
+        </nav>
+
+        <!-- TOAST NOTIFICATION -->
+
+        <div id="toast"
+            class="fixed z-50 top-6 right-6 translate-x-[120%] opacity-0 transition-all duration-300 bg-[#3A2E25] text-white px-6 py-4 rounded-xl shadow-xl flex items-center gap-4 z-50"
+            >
+            <i id="successToastIcon" class="hidden fa-solid fa-circle-check text-green-400 text-xl"></i>
+            <i id="errToastIcon" class="hidden fa-solid fa-circle-xmark text-red-400 text-xl"></i>
+
+            <div class="flex-1">
+                <p id="toastMessage" class="font-medium"></p>
+            </div>
+
+            <a
+                href="/cart"
+                class="whitespace-nowrap bg-[#C9A36B] hover:bg-[#B89056] text-[#3A2E25] font-semibold px-4 py-2 rounded-lg transition"
+            >
+                View Cart
+            </a>
         </div>
 
-    </nav>
+        <!-- PRODUCT -->
 
-    <!-- TOAST NOTIFICATION -->
+        <section class="py-20">
 
-    <div id="toast"
-        class="fixed z-50 top-6 right-6 translate-x-[120%] opacity-0 transition-all duration-300 bg-[#3A2E25] text-white px-6 py-4 rounded-xl shadow-xl flex items-center gap-4 z-50"
-        >
-        <i id="successToastIcon" class="hidden fa-solid fa-circle-check text-green-400 text-xl"></i>
-        <i id="errToastIcon" class="hidden fa-solid fa-circle-xmark text-red-400 text-xl"></i>
-        
-        <div class="flex-1">
-            <p id="toastMessage" class="font-medium"></p>
-        </div>
+            <div class="max-w-7xl mx-auto px-6 lg:px-10">
 
-        <a
-            href="/cart"
-            class="whitespace-nowrap bg-[#C9A36B] hover:bg-[#B89056] text-[#3A2E25] font-semibold px-4 py-2 rounded-lg transition"
-        >
-            View Cart
-        </a>
-    </div>
+                <div class="grid lg:grid-cols-2 gap-16">
 
-    <!-- PRODUCT -->
+                    <!-- IMAGE -->
 
-    <section class="py-20">
+                    <div>
 
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+                        <div
+                            class="h-[600px] rounded-3xl bg-[#E8DCCB] flex items-center justify-center overflow-hidden"
+                            style="<%= product.image ? `background-image:url('${product.image}');background-size:cover;background-position:center;` : '' %>"
+                        >
 
-            <div class="grid lg:grid-cols-2 gap-16">
+                            <% if(!product.image){ %>
 
-                <!-- IMAGE -->
+                                <% if(product.category === 'Breads'){ %>
 
-                <div>
+                                    <i class="fa-solid fa-bread-slice text-8xl text-[#C9A36B]"></i>
 
-                    <div
-                        class="h-[600px] rounded-3xl bg-[#E8DCCB] flex items-center justify-center overflow-hidden"
-                        style="<%= product.image ? `background-image:url('${product.image}');background-size:cover;background-position:center;` : '' %>"
-                    >
+                                <% } else if(product.category === 'Pastries'){ %>
 
-                        <% if(!product.image){ %>
+                                    <i class="fa-solid fa-cookie-bite text-8xl text-[#C9A36B]"></i>
 
-                            <% if(product.category === 'Breads'){ %>
+                                <% } else if(product.category === 'Cakes'){ %>
 
-                                <i class="fa-solid fa-bread-slice text-8xl text-[#C9A36B]"></i>
+                                    <i class="fa-solid fa-cake-candles text-8xl text-[#C9A36B]"></i>
 
-                            <% } else if(product.category === 'Pastries'){ %>
+                                <% } else { %>
 
-                                <i class="fa-solid fa-cookie-bite text-8xl text-[#C9A36B]"></i>
+                                    <i class="fa-solid fa-wheat-awn text-8xl text-[#C9A36B]"></i>
 
-                            <% } else if(product.category === 'Cakes'){ %>
-
-                                <i class="fa-solid fa-cake-candles text-8xl text-[#C9A36B]"></i>
-
-                            <% } else { %>
-
-                                <i class="fa-solid fa-wheat-awn text-8xl text-[#C9A36B]"></i>
+                                <% } %>
 
                             <% } %>
 
-                        <% } %>
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- INFO -->
+
+                    <div class="flex flex-col justify-center">
+
+                        <p class="uppercase tracking-widest text-[#C9A36B]">
+
+                            <%= product.category %>
+
+                        </p>
+
+                        <h1 class="font-serif text-6xl mt-4" id="productName">
+                            <%
+                            let name = product.name
+
+                            if (product.quantity > 1) name += ` (Pack of ${product.quantity})`
+                            %>
+
+
+                            <%= name %>
+
+                        </h1>
+
+                        <p class="text-4xl font-bold mt-6">
+
+                            ₹<%= product.price %>
+
+                        </p>
+
+                        <p class="mt-8 text-lg text-[#6B5B50] leading-relaxed">
+
+                            <%= product.description %>
+
+                        </p>
+
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="mt-10">
+
+                            <label class="font-semibold block mb-3">
+
+                                Quantity
+
+                            </label>
+
+                            <input
+                                type="number"
+                                min="1"
+                                max="<%=product.maxQuantityPerOrder%>"
+                                value="1"
+                                class="w-24 px-4 py-3 rounded-md border border-[#E8DCCB] outline-none"
+                                id="quantity"
+                            >
+
+                        </div>
+
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="mt-10 flex gap-4">
+                            <%
+                            let productUnavailableClass = 'mt-4 flex items-start gap-3 rounded-2xl border border-[#E8DCCB] bg-[#FDF8F0] px-5 py-4'
+
+                            productUnavailableClass += product.availability ? ' hidden' : ''
+
+                            %>
+
+                            <div id="productUnavailable" 
+                            class="<%= productUnavailableClass %>">
+
+                                <div>
+                                
+                                    <i class="fa-solid fa-box-open text-xl text-[#C9A36B]"></i>
+                                
+                                </div>
+                            
+                                <div>
+                                
+                                    <h3 class="font-semibold text-lg">
+                                    
+                                        Currently Unavailable
+                                    
+                                    </h3>
+                                
+                                    <p class="mt-1 text-[#6B5B50] leading-relaxed">
+                                    
+                                        This product is temporarily out of stock and cannot be ordered at the moment.
+                                        Please check back later.
+                                    
+                                    </p>
+                                
+                                </div>
+                            
+                            </div>
+
+                            <div id="productAvailable" class="<%= !product.availability ? 'hidden' : '' %>">
+                                <button
+                                    id="addToCart"
+                                    data-id='<%=product._id %>'
+                                    class="bg-[#C9A36B] px-8 py-4 rounded-md font-semibold hover:bg-[#B89056] transition"
+                                >
+
+                                    Add To Cart
+
+                                </button>
+
+                                <button
+                                    id="buyNow"
+                                    data-id='<%=product._id %>'
+                                    class="border border-[#C9A36B] px-8 py-4 rounded-md hover:bg-[#F2E7D8] transition"
+                                >
+
+                                    Buy Now
+
+                                </button>
+                            </div>
+                        
+                        </div>
+
+
+
+                        <!-- EXTRA INFO -->
+
+                        <div class="mt-12 grid grid-cols-2 gap-4">
+
+                            <div class="bg-white rounded-xl p-5">
+
+                                <i class="fa-solid fa-truck text-[#C9A36B]"></i>
+
+                                <h3 class="font-semibold mt-3">
+
+                                    Fresh Delivery
+
+                                </h3>
+
+                            </div>
+
+                            <div class="bg-white rounded-xl p-5">
+
+                                <i class="fa-solid fa-heart text-[#C9A36B]"></i>
+
+                                <h3 class="font-semibold mt-3">
+
+                                    Made Daily
+
+                                </h3>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
+            </div>
 
-
-                <!-- INFO -->
-
-                <div class="flex flex-col justify-center">
-
-                    <p class="uppercase tracking-widest text-[#C9A36B]">
-
-                        <%= product.category %>
-
-                    </p>
-
-                    <h1 class="font-serif text-6xl mt-4" id="productName">
-                        <%
-                        let name = product.name
-
-                        if (product.quantity > 1) name += ` (Pack of ${product.quantity})`
-                        %>
-
-
-                        <%= name %>
-
-                    </h1>
-
-                    <p class="text-4xl font-bold mt-6">
-
-                        ₹<%= product.price %>
-
-                    </p>
-
-                    <p class="mt-8 text-lg text-[#6B5B50] leading-relaxed">
-
-                        <%= product.description %>
-
-                    </p>
+        </section>
 
 
 
-                    <!-- QUANTITY -->
 
-                    <div class="mt-10">
 
-                        <label class="font-semibold block mb-3">
+        <!-- RELATED PRODUCTS -->
 
-                            Quantity
+        <section class="pb-24">
 
-                        </label>
+            <div class="max-w-7xl mx-auto px-6 lg:px-10">
 
-                        <input
-                            type="number"
-                            min="1"
-                            max="<%=product.maxQuantityPerOrder%>"
-                            value="1"
-                            class="w-24 px-4 py-3 rounded-md border border-[#E8DCCB] outline-none"
-                            id="quantity"
+                <h2 class="font-serif text-5xl mb-12">
+
+                    You May Also Like
+
+                </h2>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                    <% relatedProducts.forEach(item => { %>
+
+                        <a
+                            href="/product/<%= item._id %>"
+                            class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition"
                         >
 
-                    </div>
+                            <div class="h-52 bg-[#E8DCCB]">
 
+                                <img src="<%= item.image%>" alt="" class="h-full">
 
-
-                    <!-- BUTTONS -->
-
-                    <div class="mt-10 flex gap-4">
-                        <%
-                        let productUnavailableClass = 'mt-4 flex items-start gap-3 rounded-2xl border border-[#E8DCCB] bg-[#FDF8F0] px-5 py-4'
-
-                        productUnavailableClass += product.availability ? ' hidden' : ''
-                        
-                        %>
-
-                        <div id="productUnavailable" 
-                        class="<%= productUnavailableClass %>">
-
-                            <div>
-                            
-                                <i class="fa-solid fa-box-open text-xl text-[#C9A36B]"></i>
-                            
                             </div>
-                        
-                            <div>
-                            
-                                <h3 class="font-semibold text-lg">
-                                
-                                    Currently Unavailable
-                                
+
+                            <div class="p-5">
+
+                                <h3 class="font-serif text-2xl">
+
+                                    <%= item.name %>
+
                                 </h3>
-                            
-                                <p class="mt-1 text-[#6B5B50] leading-relaxed">
-                                
-                                    This product is temporarily out of stock and cannot be ordered at the moment.
-                                    Please check back later.
-                                
+
+                                <p class="mt-2">
+
+                                    ₹<%= item.price %>
+
                                 </p>
-                            
+
                             </div>
-                        
-                        </div>
 
-                        <div id="productAvailable" class="<%= !product.availability ? 'hidden' : '' %>">
-                            <button
-                                id="addToCart"
-                                data-id='<%=product._id %>'
-                                class="bg-[#C9A36B] px-8 py-4 rounded-md font-semibold hover:bg-[#B89056] transition"
-                            >
+                        </a>
 
-                                Add To Cart
-
-                            </button>
-
-                            <button
-                                id="buyNow"
-                                data-id='<%=product._id %>'
-                                class="border border-[#C9A36B] px-8 py-4 rounded-md hover:bg-[#F2E7D8] transition"
-                            >
-
-                                Buy Now
-
-                            </button>
-                        </div>
-            
-                    </div>
-
-
-
-                    <!-- EXTRA INFO -->
-
-                    <div class="mt-12 grid grid-cols-2 gap-4">
-
-                        <div class="bg-white rounded-xl p-5">
-
-                            <i class="fa-solid fa-truck text-[#C9A36B]"></i>
-
-                            <h3 class="font-semibold mt-3">
-
-                                Fresh Delivery
-
-                            </h3>
-
-                        </div>
-
-                        <div class="bg-white rounded-xl p-5">
-
-                            <i class="fa-solid fa-heart text-[#C9A36B]"></i>
-
-                            <h3 class="font-semibold mt-3">
-
-                                Made Daily
-
-                            </h3>
-
-                        </div>
-
-                    </div>
+                    <% }) %>
 
                 </div>
 
             </div>
 
-        </div>
-
-    </section>
+        </section>
 
 
 
 
 
-    <!-- RELATED PRODUCTS -->
+        <!-- FOOTER -->
 
-    <section class="pb-24">
+        <footer class="bg-gradient-to-b from-[#3A2E25] to-[#241B15] text-[#F8F4EE]">
 
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 text-center">
 
-            <h2 class="font-serif text-5xl mb-12">
+                <p class="text-[#6B5B50]">
 
-                You May Also Like
+                    © 2026 FLOURish Bakery
 
-            </h2>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-                <% relatedProducts.forEach(item => { %>
-
-                    <a
-                        href="/product/<%= item._id %>"
-                        class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition"
-                    >
-
-                        <div class="h-52 bg-[#E8DCCB]">
-
-                            <img src="<%= item.image%>" alt="" class="h-full">
-
-                        </div>
-
-                        <div class="p-5">
-
-                            <h3 class="font-serif text-2xl">
-
-                                <%= item.name %>
-
-                            </h3>
-
-                            <p class="mt-2">
-
-                                ₹<%= item.price %>
-
-                            </p>
-
-                        </div>
-
-                    </a>
-
-                <% }) %>
+                </p>
 
             </div>
 
-        </div>
-
-    </section>
-
-
-
-
-
-    <!-- FOOTER -->
-
-    <footer class="bg-gradient-to-b from-[#3A2E25] to-[#241B15] text-[#F8F4EE]">
-
-        <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 text-center">
-
-            <p class="text-[#6B5B50]">
-
-                © 2026 FLOURish Bakery
-
-            </p>
-
-        </div>
-
-    </footer>
+        </footer>
     
+    <% } %>
 
     <script>
         const unavailable = '<%= unavailable%>'

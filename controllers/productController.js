@@ -1,11 +1,55 @@
+import isBoolean from "validator/lib/isBoolean.js";
 import productModel from "../models/productModel.js";
 
 export async function getMenu(req, res){
     try{
 
-        const products = await productModel.find();
+        const {available, priceRange, sort} = req.query
+        const availability = available === 'false' ? false : true
+        const price = priceRange?.split(',') || [0, Infinity]
+        
+        if (    
+            typeof Number(price?.[0]) !== 'number' ||
+            typeof Number(price?.[1]) !== 'number' ||
+            !isBoolean(available || 'true') ||
+            (sort && !['price-low', 'price-high', 'A-Z', 'Z-A', 'new'].includes(sort))
+        ) {
+            return res.redirect('/menu?available=true&priceRange=0%2CInfinity&sort=new');
+        }
+        let sortParams = {};
 
-        res.render('menu', { products, err: '' });
+        if (sort === 'price-low') {
+            sortParams.price = 1;
+        }
+
+        if (sort === 'price-high') {
+            sortParams.price = -1;
+        }
+
+        if(sort === 'A-Z'){
+            sortParams.name = 1
+        }
+
+        if(sort === 'Z-A'){
+            sortParams.name = -1
+        }
+
+        if(sort === 'new'){
+            sortParams.createdAt = -1
+        }
+
+
+
+        const products = await productModel.find({
+            availability, 
+            price: {
+                $gte: +price[0] || 0,
+                $lte: +price[1] || Infinity
+            }
+        })
+        .sort(sortParams)
+
+        res.render('menu', { products, err: '' , available, price});
 
     }catch(err){
 
@@ -44,8 +88,8 @@ export async function renderProduct(req, res){
         const product = await productModel.findById(req.params.id)
 
         const relatedProducts = await productModel.find({
-            category: product.category,
-            _id: { $ne: product._id }
+            category: product?.category || '',
+            _id: { $ne: product?._id }
         });
 
         res.render('product', {product, relatedProducts, unavailable, quantity})

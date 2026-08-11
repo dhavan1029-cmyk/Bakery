@@ -202,7 +202,7 @@
 
     <!-- FILTERS -->
 
-    <section class="pb-16">
+    <section class="pb-8">
 
         <div class="max-w-7xl mx-auto px-6 lg:px-10">
 
@@ -235,6 +235,245 @@
     </section>
 
 
+    <div class="lg:w-[40vw] mb-5 m-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-6 lg:px-10">
+
+        <!-- FILTER -->
+
+        <div class="relative">
+
+            <button
+                id="filter-btn"
+                class="flex items-center justify-between gap-3 w-full sm:w-56 px-5 py-3 bg-white border border-[#E8DCCB] rounded-2xl hover:border-[#C9A36B] transition"
+            >
+
+                <div class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-filter text-[#C9A36B]"></i>
+
+                    <span class="font-medium">
+
+                        Filter By
+
+                    </span>
+
+                </div>
+
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+
+            </button>
+
+            <div
+                id="filter-menu"
+                class="hidden absolute mt-3 w-full bg-white border border-[#E8DCCB] rounded-2xl shadow-lg p-5"
+            >
+
+                <p class="text-xs uppercase tracking-widest text-[#8B7765] mb-4">
+                    Availability
+                </p>
+            
+                <label class="flex items-center gap-3 cursor-pointer" onclick="updateQuery('available', true)">
+                    <input
+                        type="checkbox"
+                        id="filter-available"
+                        class="w-4 h-4 accent-[#C9A36B]"
+                        <%= available === 'true' ? 'checked' : '' %>
+                    >
+                
+                    <span>
+                        In Stock
+                    </span>
+                </label>
+            
+                <label class="flex items-center gap-3 mt-3 cursor-pointer" onclick="updateQuery('available', false)">
+                    <input
+                        type="checkbox"
+                        id="filter-unavailable"
+                        class="w-4 h-4 accent-[#C9A36B]"
+                        <%= available === 'false' ? 'checked' : '' %>
+                    >
+                
+                    <span>
+                        Out of Stock
+                    </span>
+                </label>
+            
+                <div class="border-t border-[#E8DCCB] my-5"></div>
+            
+                <p class="text-xs uppercase tracking-widest text-[#8B7765] mb-4">
+                    Price
+                </p>
+            
+                <label class="flex items-center gap-3 cursor-pointer" onclick="updateQuery('priceRange', [0, Infinity])">
+                    <input
+                        type="radio"
+                        name="price-filter"
+                        value="all"
+                        <%= price?.[0] == 0 && price?.[1] == Infinity ? 'checked' : '' %>
+                        class="w-4 h-4 accent-[#C9A36B]"
+                    >
+                
+                    <span>
+                        All Prices
+                    </span>
+                </label>
+            
+                <label class="flex items-center gap-3 mt-3 cursor-pointer" onclick="updateQuery('priceRange', [0, 500])">
+                    <input
+                        type="radio"
+                        name="price-filter"
+                        value="under500"
+                        class="w-4 h-4 accent-[#C9A36B]"
+                        <%= price?.[0] == 0 && price?.[1] == 500 ? 'checked' : '' %>
+                    >
+                
+                    <span>
+                        Under ₹500
+                    </span>
+                </label>
+            
+                <label class="flex items-center gap-3 mt-3 cursor-pointer" onclick="updateQuery('priceRange', [500, 1000])">
+                    <input
+                        type="radio"
+                        name="price-filter"
+                        value="500-1000"
+                        class="w-4 h-4 accent-[#C9A36B]"
+                        <%= price?.[0] == 500 && price?.[1] == 1000 ? 'checked' : '' %>
+                    >
+                
+                    <span>
+                        ₹500 – ₹1,000
+                    </span>
+                </label>
+            
+                <label class="flex items-center gap-3 mt-3 cursor-pointer" onclick="updateQuery('priceRange', [1000, Infinity])">
+                    <input
+                        type="radio"
+                        name="price-filter"
+                        value="over1000"
+                        class="w-4 h-4 accent-[#C9A36B]"
+                        <%= price?.[0] == 1000 && price?.[1] == Infinity ? 'checked' : '' %>                    >
+                
+                    <span>
+                        Above ₹1,000
+                    </span>
+                </label>
+            
+            </div>
+
+        </div>
+
+
+
+        <!-- SORT -->
+
+        <div class="relative">
+
+            <button
+                id="sort-btn"
+                class="flex items-center justify-between gap-3 w-full sm:w-56 px-5 py-3 bg-white border border-[#E8DCCB] rounded-2xl hover:border-[#C9A36B] transition"
+            >
+
+                <div class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-arrow-up-wide-short text-[#C9A36B]"></i>
+
+                    <span class="font-medium">
+
+                        Sort By
+
+                    </span>
+
+                </div>
+
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+
+            </button>
+
+            <div
+                id="sort-menu"
+                class="hidden absolute mt-3 w-full bg-white border border-[#E8DCCB] rounded-2xl shadow-lg overflow-hidden"
+            >
+            
+                <button
+                    type="button"
+                    data-sort="price-low"
+                    class="sort-option w-full text-left px-5 py-4 hover:bg-[#FAF7F2] transition flex items-center gap-3"
+                    onclick="updateQuery('sort', 'price-low')"
+                >
+            
+                    <i class="fa-solid fa-arrow-down-wide-short text-[#C9A36B] w-5"></i>
+            
+                    <span>
+                        Price: Low to High
+                    </span>
+                
+                </button>
+            
+                <button
+                    type="button"
+                    data-sort="price-high"
+                    class="sort-option w-full text-left px-5 py-4 hover:bg-[#FAF7F2] transition flex items-center gap-3"
+                    onclick="updateQuery('sort', 'price-high')"
+                >
+            
+                    <i class="fa-solid fa-arrow-up-wide-short text-[#C9A36B] w-5"></i>
+            
+                    <span>
+                        Price: High to Low
+                    </span>
+                
+                </button>
+            
+                <button
+                    type="button"
+                    data-sort="name-az"
+                    class="sort-option w-full text-left px-5 py-4 hover:bg-[#FAF7F2] transition flex items-center gap-3"
+                    onclick="updateQuery('sort', 'A-Z')"
+                >
+            
+                    <i class="fa-solid fa-arrow-down-a-z text-[#C9A36B] w-5"></i>
+            
+                    <span>
+                        Name: A–Z
+                    </span>
+                
+                </button>
+            
+                <button
+                    type="button"
+                    data-sort="name-za"
+                    class="sort-option w-full text-left px-5 py-4 hover:bg-[#FAF7F2] transition flex items-center gap-3"
+                    onclick="updateQuery('sort', 'Z-A')"
+                >
+            
+                    <i class="fa-solid fa-arrow-down-z-a text-[#C9A36B] w-5"></i>
+            
+                    <span>
+                        Name: Z–A
+                    </span>
+                
+                </button>
+            
+                <button
+                    type="button"
+                    data-sort="newest"
+                    class="sort-option w-full text-left px-5 py-4 hover:bg-[#FAF7F2] transition flex items-center gap-3"
+                    onclick="updateQuery('sort', 'new')"
+                >
+            
+                    <i class="fa-solid fa-clock text-[#C9A36B] w-5"></i>
+            
+                    <span>
+                        Newest
+                    </span>
+                
+                </button>
+            
+            </div>
+
+        </div>
+
+    </div>
 
 
     <!-- PRODUCTS -->

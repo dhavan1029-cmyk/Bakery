@@ -24,11 +24,7 @@
             
                 <p class="mt-4 text-[#6B5B50] leading-relaxed max-w-lg mx-auto">
                 
-                    Something went wrong while preparing your order.
-                
-                    <br><br>
-                
-                    Your cart is safe. Please try again in a few moments.
+                    <%= checkoutError %>
                 
                 </p>
             
@@ -265,7 +261,9 @@
 
         <script src="/scripts/load.js"></script>
         <script>
-            window.addEventListener('pageshow', hideLoading)
+            window.addEventListener('pageshow', e => {
+                hideLoading()
+            })
 
             const checkoutForm = document.querySelector('#checkout')
 

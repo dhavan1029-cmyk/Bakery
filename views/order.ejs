@@ -20,99 +20,212 @@
 
 <body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen flex flex-col">
 
-
-    <div
-        id="cancel-order-modal"
-        class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center px-6"
-    >
-    
-        <div class="m-auto my-[20vh] w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden">
+    <%if(!order) {%>
+        <section class="h-[100vh] flex items-center justify-center px-6">
         
-            <!-- HEADER -->
-        
-            <div class="px-8 pt-8">
+            <div class="max-w-xl w-full bg-white rounded-3xl border border-[#E8DCCB] shadow-sm p-10 text-center">
             
-                <div class="w-16 h-16 rounded-2xl bg-red-100 flex items-center justify-center">
+                <div class="w-24 h-24 mx-auto rounded-full bg-[#F8F4EE] flex items-center justify-center">
                 
-                    <i class="fa-solid fa-triangle-exclamation text-3xl text-red-500"></i>
+                    <i class="fa-solid fa-box-open text-5xl text-[#C9A36B]"></i>
                 
                 </div>
             
-                <h2 class="font-serif text-4xl mt-6">
+                <h1 class="font-serif text-4xl mt-8">
                 
-                    Cancel Order?
+                    Order Not Found
                 
-                </h2>
+                </h1>
             
-                <p class="mt-4 text-[#6B5B50] leading-relaxed">
+                <p class="mt-5 text-[#6B5B50] leading-relaxed">
                 
-                    Are you sure you want to cancel this order?
-                    Once cancelled, the bakery will stop processing it and
-                    this action cannot be undone.
+                    The order you're looking for doesn't exist or may have been removed.
+                    Please check the link or return to your orders.
                 
                 </p>
             
+                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                
+                    <a
+                        href="/orders"
+                        class="px-8 py-4 rounded-xl bg-[#C9A36B] hover:bg-[#B89056] font-semibold transition"
+                    >
+                
+                        <i class="fa-solid fa-box mr-2"></i>
+                
+                        View Orders
+                
+                    </a>
+                
+                    <a
+                        href="/"
+                        class="px-8 py-4 rounded-xl border border-[#E8DCCB] hover:bg-[#FAF7F2] transition"
+                    >
+                
+                        <i class="fa-solid fa-house mr-2"></i>
+                
+                        Back to Home
+                
+                    </a>
+                
+                </div>
+            
             </div>
         
-        
-        
-        
-        
-            <!-- BUTTONS -->
-        
-            <div class="px-8 py-8 mt-8 border-t border-[#E8DCCB] bg-[#FAF7F2]">
+        </section>
+    <%} else { %>
+        <div
+            id="cancel-order-modal"
+            class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center px-6"
+        >
+
+            <div class="m-auto my-[20vh] w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden">
             
-                <div class="flex flex-col sm:flex-row gap-4 justify-end">
+                <!-- HEADER -->
+            
+                <div class="px-8 pt-8">
                 
-                    <button
-                        id="keep-order-btn"
-                        type="button"
-                        class="px-8 py-4 rounded-xl border border-[#E8DCCB] font-semibold hover:bg-white transition"
-                    >
+                    <div class="w-16 h-16 rounded-2xl bg-red-100 flex items-center justify-center">
+                    
+                        <i class="fa-solid fa-triangle-exclamation text-3xl text-red-500"></i>
+                    
+                    </div>
                 
-                        Keep Order
+                    <h2 class="font-serif text-4xl mt-6">
+                    
+                        Cancel Order?
+                    
+                    </h2>
                 
-                    </button>
+                    <p class="mt-4 text-[#6B5B50] leading-relaxed">
+                    
+                        Are you sure you want to cancel this order?
+                        Once cancelled, the bakery will stop processing it and
+                        this action cannot be undone.
+                    
+                    </p>
                 
-                    <button
-                        id="confirm-cancel-order-btn"
-                        type="button"
-                        class="px-8 py-4 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold transition"
-                    >
+                </div>
+            
+            
+            
+            
+            
+                <!-- BUTTONS -->
+            
+                <div class="px-8 py-8 mt-8 border-t border-[#E8DCCB] bg-[#FAF7F2]">
                 
-                        <i class="fa-solid fa-ban mr-2"></i>
-                
-                        Cancel Order
-                
-                    </button>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-end">
+                    
+                        <button
+                            id="keep-order-btn"
+                            type="button"
+                            class="px-8 py-4 rounded-xl border border-[#E8DCCB] font-semibold hover:bg-white transition"
+                        >
+                    
+                            Keep Order
+                    
+                        </button>
+                    
+                        <button
+                            id="confirm-cancel-order-btn"
+                            type="button"
+                            class="px-8 py-4 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold transition"
+                        >
+                    
+                            <i class="fa-solid fa-ban mr-2"></i>
+                    
+                            Cancel Order
+                    
+                        </button>
+                    
+                    </div>
                 
                 </div>
             
             </div>
         
         </div>
-    
-    </div>
 
-    <!-- NAVBAR -->
+        <!-- NAVBAR -->
 
-    <nav class="sticky top-0 z-40 bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB]">
+        <nav class="sticky top-0 z-40 bg-[#F8F4EE]/80 backdrop-blur-md border-b border-[#E8DCCB]">
 
-        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-7xl mx-auto px-6">
 
-            <div class="h-20 flex items-center justify-between">
+                <div class="h-20 flex items-center justify-between">
 
-                <!-- LOGO -->
+                    <!-- LOGO -->
 
-                <a href="/" class="flex items-center gap-3">
+                    <a href="/" class="flex items-center gap-3">
 
-                    <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+                        <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
 
-                    <h1 class="font-serif text-4xl">
+                        <h1 class="font-serif text-4xl">
 
-                        FLOUR<span class="italic text-[#C9A36B]">ish</span>
+                            FLOUR<span class="italic text-[#C9A36B]">ish</span>
 
-                    </h1>
+                        </h1>
+
+                    </a>
+
+
+
+
+
+                    <!-- NAVIGATION -->
+
+                    <div class="flex items-center gap-8">
+
+                        <a
+                            href="/menu"
+                            class="hover:text-[#C9A36B] transition"
+                        >
+
+                            Menu
+
+                        </a>
+
+                        <a
+                            href="/cart"
+                            class="hover:text-[#C9A36B] transition"
+                        >
+
+                            <i class="fa-solid fa-cart-shopping text-xl"></i>
+
+                        </a>
+
+                        <a
+                            href="/orders"
+                            class="hover:text-[#C9A36B] transition"
+                        >
+
+                            <i class="fa-solid fa-box text-xl"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+        <!-- ORDER HEADER -->
+
+        <section class="py-14">
+
+            <div class="max-w-7xl mx-auto px-6">
+
+                <a
+                    href="/orders"
+                    class="inline-flex items-center gap-3 text-[#6B5B50] hover:text-[#C9A36B] transition"
+                >
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Back to Orders
 
                 </a>
 
@@ -120,605 +233,30 @@
 
 
 
-                <!-- NAVIGATION -->
+                <div class="mt-8 bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
 
-                <div class="flex items-center gap-8">
-
-                    <a
-                        href="/menu"
-                        class="hover:text-[#C9A36B] transition"
-                    >
-
-                        Menu
-
-                    </a>
-
-                    <a
-                        href="/cart"
-                        class="hover:text-[#C9A36B] transition"
-                    >
-
-                        <i class="fa-solid fa-cart-shopping text-xl"></i>
-
-                    </a>
-
-                    <a
-                        href="/orders"
-                        class="hover:text-[#C9A36B] transition"
-                    >
-
-                        <i class="fa-solid fa-box text-xl"></i>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </nav>
-
-    <!-- ORDER HEADER -->
-
-    <section class="py-14">
-
-        <div class="max-w-7xl mx-auto px-6">
-
-            <a
-                href="/orders"
-                class="inline-flex items-center gap-3 text-[#6B5B50] hover:text-[#C9A36B] transition"
-            >
-
-                <i class="fa-solid fa-arrow-left"></i>
-
-                Back to Orders
-
-            </a>
-
-
-
-
-
-            <div class="mt-8 bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
-
-                <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-10">
-
-                    <div>
-
-                        <p class="uppercase tracking-widest text-xs text-[#8B7765]">
-
-                            Order ID
-
-                        </p>
-
-                        <h1 class="mt-2 font-serif text-5xl break-all">
-
-                            #<%= order._id %>
-
-                        </h1>
-
-                        <p class="mt-5 text-[#6B5B50]">
-
-                            Placed on
-                            <strong class="text-[#4A3428]">
-                                <%= new Date(order.createdAt).toLocaleDateString() %>
-                            </strong>
-
-                        </p>
-
-                    </div>
-
-
-
-
-
-                    <div class="text-left lg:text-right">
-
-                        <p class="uppercase tracking-widest text-xs text-[#8B7765]">
-
-                            Status
-
-                        </p>
-
-                        <span
-                            class="
-                                inline-flex items-center mt-4 px-6 py-3 rounded-full font-semibold
-
-                                <%= order.status === 'Delivered'
-                                    ? 'bg-green-100 text-green-700'
-                                    : order.status === 'Cancelled'
-                                    ? 'bg-red-100 text-red-700'
-                                    : order.status === 'Preparing'
-                                    ? 'bg-yellow-100 text-yellow-700'
-                                    : order.status === 'Out for Delivery'
-                                    ? 'bg-blue-100 text-blue-700'
-                                    : 'bg-gray-100 text-gray-700'
-                                %>
-                            "
-                        >
-
-                            <%= order.status %>
-
-                        </span>
-
-                        <p class="mt-5 text-[#6B5B50]">
-
-                            Total
-
-                        </p>
-
-                        <p class="mt-1 text-4xl font-bold">
-
-                            ₹<%= order.total %>
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- ORDER TIMELINE -->
-
-    <section class="pb-12">
-
-        <div class="max-w-7xl mx-auto px-6">
-
-            <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
-
-                <h2 class="font-serif text-4xl">
-
-                    Order Progress
-
-                </h2>
-
-                <p class="mt-2 text-[#6B5B50]">
-
-                    Follow your order from confirmation to delivery.
-
-                </p>
-
-
-
-
-
-                <div class="mt-12 flex items-center justify-between">
-
-                    <%
-                        const steps = [
-                            "Placed",
-                            "Confirmed",
-                            "Preparing",
-                            "Out for Delivery",
-                            "Delivered"
-                        ];
-
-                        const currentStep = steps.indexOf(order.status);
-                    %>
-
-                    <% steps.forEach((step, index) => { %>
-
-                        <div class="flex flex-col items-center flex-1">
-
-                            <!-- Circle -->
-
-                            <div
-                                class="
-                                    w-14 h-14 rounded-full flex items-center justify-center font-semibold border-2
-
-                                    <%= index < currentStep
-                                        ? 'bg-[#C9A36B] border-[#C9A36B] text-white'
-                                        : index === currentStep
-                                        ? 'bg-white border-[#C9A36B] text-[#C9A36B]'
-                                        : 'bg-white border-[#E8DCCB] text-[#B8A89A]'
-                                    %>
-                                "
-                            >
-
-                                <% if(index < currentStep){ %>
-
-                                    <i class="fa-solid fa-check"></i>
-
-                                <% } else { %>
-
-                                    <%= index + 1 %>
-
-                                <% } %>
-
-                            </div>
-
-                            <!-- Step Name -->
-
-                            <p class="mt-4 text-center text-sm font-medium">
-
-                                <%= step %>
-
-                            </p>
-
-                        </div>
-
-                        <% if(index !== steps.length - 1){ %>
-
-                            <div
-                                class="
-                                    h-1 flex-1 mb-12
-
-                                    <%= index < currentStep
-                                        ? 'bg-[#C9A36B]'
-                                        : 'bg-[#E8DCCB]'
-                                    %>
-                                "
-                            ></div>
-
-                        <% } %>
-
-                    <% }) %>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- PRODUCTS -->
-
-    <section class="pb-12">
-
-        <div class="max-w-7xl mx-auto px-6">
-
-            <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
-
-                <div class="flex items-center justify-between">
-
-                    <div>
-
-                        <h2 class="font-serif text-4xl">
-
-                            Products
-
-                        </h2>
-
-                        <p class="mt-2 text-[#6B5B50]">
-
-                            <%= order.products.length %> item<%= order.products.length !== 1 ? "s" : "" %> in this order
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-
-
-                <div class="mt-10 space-y-6">
-
-                    <% order.products.forEach(item => { %>
-
-                        <div class="flex flex-col md:flex-row gap-6 border border-[#E8DCCB] rounded-2xl p-5">
-
-
-
-
-                            <!-- IMAGE -->
-
-                            <div
-                                class="w-full md:w-28 h-28 rounded-2xl bg-[#E8DCCB] shrink-0 flex items-center justify-center"
-                                style="<%= item.product.image ? `background-image:url('${item.product.image}');background-size:cover;background-position:center;` : '' %>"
-                            >
-
-                                <% if(!item.product.image){ %>
-
-                                    <% if(item.product.category === 'Breads'){ %>
-
-                                        <i class="fa-solid fa-bread-slice text-4xl text-[#C9A36B]"></i>
-
-                                    <% } else if(item.product.category === 'Cookies'){ %>
-
-                                        <i class="fa-solid fa-cookie-bite text-4xl text-[#C9A36B]"></i>
-
-                                    <% } else if(item.product.category === 'Cakes'){ %>
-
-                                        <i class="fa-solid fa-cake-candles text-4xl text-[#C9A36B]"></i>
-
-                                    <% } else { %>
-
-                                        <i class="fa-solid fa-wheat-awn text-4xl text-[#C9A36B]"></i>
-
-                                    <% } %>
-
-                                <% } %>
-
-                            </div>
-
-
-
-
-
-                            <!-- PRODUCT INFO -->
-
-                            <div class="flex-1">
-
-                                <p class="uppercase tracking-wide text-xs text-[#C9A36B]">
-
-                                    <%= item.product.category %>
-
-                                </p>
-
-                                <%
-                                    let name = item.product.name;
-
-                                    if(item.product.quantity > 1){
-                                        name += ` (Pack of ${item.product.quantity})`;
-                                    }
-                                %>
-
-                                <h3 class="font-serif text-3xl mt-2">
-
-                                    <%= name %>
-
-                                </h3>
-
-                                <p class="mt-3 text-[#6B5B50]">
-
-                                    ₹<%= item.product.price %> each
-
-                                </p>
-
-                            </div>
-
-
-
-
-
-                            <!-- PRICE -->
-
-                            <div class="flex md:flex-col justify-between md:items-end">
-
-                                <div>
-
-                                    <p class="text-sm text-[#6B5B50]">
-
-                                        Quantity
-
-                                    </p>
-
-                                    <p class="font-semibold text-xl mt-1">
-
-                                        × <%= item.quantity %>
-
-                                    </p>
-
-                                </div>
-
-                                <div class="text-right">
-
-                                    <p class="text-sm text-[#6B5B50]">
-
-                                        Total
-
-                                    </p>
-
-                                    <p class="font-bold text-2xl mt-1">
-
-                                        ₹<%= item.product.price * item.quantity %>
-
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    <% }) %>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- DELIVERY ADDRESS -->
-
-    <section class="pb-12">
-
-        <div class="max-w-7xl mx-auto px-6">
-
-            <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
-
-                <div class="flex items-center gap-4">
-
-                    <div class="w-14 h-14 rounded-2xl bg-[#F8F4EE] flex items-center justify-center">
-
-                        <i class="fa-solid fa-location-dot text-2xl text-[#C9A36B]"></i>
-
-                    </div>
-
-                    <div>
-
-                        <h2 class="font-serif text-4xl">
-
-                            Delivery Address
-
-                        </h2>
-
-                        <p class="mt-2 text-[#6B5B50]">
-
-                            The address where this order will be delivered.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-
-
-                <div class="mt-10 grid md:grid-cols-2 gap-8">
-
-                    <div>
-
-                        <p class="text-sm uppercase tracking-widest text-[#8B7765]">
-
-                            Recipient
-
-                        </p>
-
-                        <p class="mt-3 text-2xl font-semibold">
-
-                            <%= order.deliveryAddress.fullName %>
-
-                        </p>
-
-                    </div>
-
-
-
-
-
-                    <div>
-
-                        <p class="text-sm uppercase tracking-widest text-[#8B7765]">
-
-                            Phone Number
-
-                        </p>
-
-                        <p class="mt-3 text-2xl font-semibold">
-
-                            <%= order.deliveryAddress.phone %>
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-
-
-                <div class="mt-10">
-
-                    <p class="text-sm uppercase tracking-widest text-[#8B7765]">
-
-                        Address
-
-                    </p>
-
-                    <div class="mt-4 space-y-2 text-lg leading-relaxed">
-
-                        <p>
-
-                            <%= order.deliveryAddress.house %>
-
-                        </p>
-
-                        <p>
-
-                            <%= order.deliveryAddress.landmark %>
-
-                        </p>
-
-                        <p>
-
-                            <%= order.deliveryAddress.address %>
-
-                        </p>
-
-                        <p>
-
-                            <%= order.deliveryAddress.city %>,
-                            <%= order.deliveryAddress.state %>
-
-                        </p>
-
-                        <p>
-
-                            PIN - <%= order.deliveryAddress.pincode %>
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- PAYMENT DETAILS -->
-
-    <section class="pb-12">
-
-        <div class="max-w-7xl mx-auto px-6">
-
-            <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
-
-                <div class="flex items-center gap-4">
-
-                    <div class="w-14 h-14 rounded-2xl bg-[#F8F4EE] flex items-center justify-center">
-
-                        <i class="fa-solid fa-credit-card text-2xl text-[#C9A36B]"></i>
-
-                    </div>
-
-                    <div>
-
-                        <h2 class="font-serif text-4xl">
-
-                            Payment Details
-
-                        </h2>
-
-                        <p class="mt-2 text-[#6B5B50]">
-
-                            Payment method and billing summary.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-
-
-                <div class="mt-10 grid lg:grid-cols-2 gap-12">
-
-                    <!-- PAYMENT INFO -->
-
-                    <div class="space-y-8">
+                    <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-10">
 
                         <div>
 
                             <p class="uppercase tracking-widest text-xs text-[#8B7765]">
 
-                                Payment Method
+                                Order ID
 
                             </p>
 
-                            <p class="mt-3 text-2xl font-semibold">
+                            <h1 class="mt-2 font-serif text-5xl break-all">
 
-                                <%= order.paymentMethod === 'cod' ? 'Cash On Delivery' : 'Online Payment' %>
+                                #<%= order._id %>
+
+                            </h1>
+
+                            <p class="mt-5 text-[#6B5B50]">
+
+                                Placed on
+                                <strong class="text-[#4A3428]">
+                                    <%= new Date(order.createdAt).toLocaleDateString() %>
+                                </strong>
 
                             </p>
 
@@ -728,99 +266,46 @@
 
 
 
-                        <div>
+                        <div class="text-left lg:text-right">
 
                             <p class="uppercase tracking-widest text-xs text-[#8B7765]">
 
-                                Payment Status
+                                Status
 
                             </p>
 
                             <span
                                 class="
-                                    inline-flex items-center mt-3 px-5 py-2 rounded-full font-semibold
+                                    inline-flex items-center mt-4 px-6 py-3 rounded-full font-semibold
 
-                                    <%= order.paymentStatus === 'Paid'
+                                    <%= order.status === 'Delivered'
                                         ? 'bg-green-100 text-green-700'
-                                        : 'bg-yellow-100 text-yellow-700'
+                                        : order.status === 'Cancelled'
+                                        ? 'bg-red-100 text-red-700'
+                                        : order.status === 'Preparing'
+                                        ? 'bg-yellow-100 text-yellow-700'
+                                        : order.status === 'Out for Delivery'
+                                        ? 'bg-blue-100 text-blue-700'
+                                        : 'bg-gray-100 text-gray-700'
                                     %>
                                 "
                             >
 
-                                <%= order.paymentStatus %>
+                                <%= order.status %>
 
                             </span>
 
-                        </div>
+                            <p class="mt-5 text-[#6B5B50]">
 
-                    </div>
+                                Total
 
+                            </p>
 
-
-
-
-                    <!-- BILL -->
-
-                    <div class="bg-[#FAF7F2] rounded-2xl border border-[#E8DCCB] p-6">
-
-                        <div class="flex justify-between text-lg">
-
-                            <span>
-
-                                Subtotal
-
-                            </span>
-
-                            <span>
-
-                                ₹<%= order.subtotal %>
-
-                            </span>
-
-                        </div>
-
-
-
-
-
-                        <div class="flex justify-between text-lg mt-5">
-
-                            <span>
-
-                                Delivery Fee
-
-                            </span>
-
-                            <span>
-
-                                ₹<%= order.deliveryFee %>
-
-                            </span>
-
-                        </div>
-
-
-
-
-
-                        <hr class="my-6 border-[#E8DCCB]">
-
-
-
-
-                        <div class="flex justify-between items-center">
-
-                            <span class="font-semibold text-xl">
-
-                                Total Paid
-
-                            </span>
-
-                            <span class="font-bold text-4xl">
+                            <p class="mt-1 text-4xl font-bold">
 
                                 ₹<%= order.total %>
 
-                            </span>
+                            </p>
 
                         </div>
 
@@ -830,189 +315,759 @@
 
             </div>
 
-        </div>
+        </section>
 
-    </section>
+        <!-- ORDER TIMELINE -->
 
-    <% if(order.orderNotes.trim()) { %>
+        <section class="pb-12">
 
-    <!-- ORDER NOTES -->
+            <div class="max-w-7xl mx-auto px-6">
 
-    <section class="pb-12">
+                <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
 
-        <div class="max-w-7xl mx-auto px-6">
+                    <h2 class="font-serif text-4xl">
 
-            <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
+                        Order Progress
 
-                <div class="flex items-center gap-4">
+                    </h2>
 
-                    <div class="w-14 h-14 rounded-2xl bg-[#F8F4EE] flex items-center justify-center">
+                    <p class="mt-2 text-[#6B5B50]">
 
-                        <i class="fa-solid fa-note-sticky text-2xl text-[#C9A36B]"></i>
+                        Follow your order from confirmation to delivery.
+
+                    </p>
+
+
+
+
+
+                    <div class="mt-12 flex items-center justify-between">
+
+                        <%
+                            const steps = [
+                                "Placed",
+                                "Confirmed",
+                                "Preparing",
+                                "Out for Delivery",
+                                "Delivered"
+                            ];
+
+                            const currentStep = steps.indexOf(order.status);
+                        %>
+
+                        <% steps.forEach((step, index) => { %>
+
+                            <div class="flex flex-col items-center flex-1">
+
+                                <!-- Circle -->
+
+                                <div
+                                    class="
+                                        w-14 h-14 rounded-full flex items-center justify-center font-semibold border-2
+
+                                        <%= index < currentStep
+                                            ? 'bg-[#C9A36B] border-[#C9A36B] text-white'
+                                            : index === currentStep
+                                            ? 'bg-white border-[#C9A36B] text-[#C9A36B]'
+                                            : 'bg-white border-[#E8DCCB] text-[#B8A89A]'
+                                        %>
+                                    "
+                                >
+
+                                    <% if(index < currentStep){ %>
+
+                                        <i class="fa-solid fa-check"></i>
+
+                                    <% } else { %>
+
+                                        <%= index + 1 %>
+
+                                    <% } %>
+
+                                </div>
+
+                                <!-- Step Name -->
+
+                                <p class="mt-4 text-center text-sm font-medium">
+
+                                    <%= step %>
+
+                                </p>
+
+                            </div>
+
+                            <% if(index !== steps.length - 1){ %>
+
+                                <div
+                                    class="
+                                        h-1 flex-1 mb-12
+
+                                        <%= index < currentStep
+                                            ? 'bg-[#C9A36B]'
+                                            : 'bg-[#E8DCCB]'
+                                        %>
+                                    "
+                                ></div>
+
+                            <% } %>
+
+                        <% }) %>
 
                     </div>
 
-                    <div>
+                </div>
 
-                        <h2 class="font-serif text-4xl">
+            </div>
 
-                            Order Notes
+        </section>
 
-                        </h2>
+        <!-- PRODUCTS -->
 
-                        <p class="mt-2 text-[#6B5B50]">
+        <section class="pb-12">
 
-                            Special instructions you provided while placing the order.
+            <div class="max-w-7xl mx-auto px-6">
+
+                <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
+
+                    <div class="flex items-center justify-between">
+
+                        <div>
+
+                            <h2 class="font-serif text-4xl">
+
+                                Products
+
+                            </h2>
+
+                            <p class="mt-2 text-[#6B5B50]">
+
+                                <%= order.products.length %> item<%= order.products.length !== 1 ? "s" : "" %> in this order
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    <div class="mt-10 space-y-6">
+
+                        <% order.products.forEach(item => { %>
+
+                            <div class="flex flex-col md:flex-row gap-6 border border-[#E8DCCB] rounded-2xl p-5">
+
+
+
+
+                                <!-- IMAGE -->
+
+                                <div
+                                    class="w-full md:w-28 h-28 rounded-2xl bg-[#E8DCCB] shrink-0 flex items-center justify-center"
+                                    style="<%= item.product.image ? `background-image:url('${item.product.image}');background-size:cover;background-position:center;` : '' %>"
+                                >
+
+                                    <% if(!item.product.image){ %>
+
+                                        <% if(item.product.category === 'Breads'){ %>
+
+                                            <i class="fa-solid fa-bread-slice text-4xl text-[#C9A36B]"></i>
+
+                                        <% } else if(item.product.category === 'Cookies'){ %>
+
+                                            <i class="fa-solid fa-cookie-bite text-4xl text-[#C9A36B]"></i>
+
+                                        <% } else if(item.product.category === 'Cakes'){ %>
+
+                                            <i class="fa-solid fa-cake-candles text-4xl text-[#C9A36B]"></i>
+
+                                        <% } else { %>
+
+                                            <i class="fa-solid fa-wheat-awn text-4xl text-[#C9A36B]"></i>
+
+                                        <% } %>
+
+                                    <% } %>
+
+                                </div>
+
+
+
+
+
+                                <!-- PRODUCT INFO -->
+
+                                <div class="flex-1">
+
+                                    <p class="uppercase tracking-wide text-xs text-[#C9A36B]">
+
+                                        <%= item.product.category %>
+
+                                    </p>
+
+                                    <%
+                                        let name = item.product.name;
+
+                                        if(item.product.quantity > 1){
+                                            name += ` (Pack of ${item.product.quantity})`;
+                                        }
+                                    %>
+
+                                    <h3 class="font-serif text-3xl mt-2">
+
+                                        <%= name %>
+
+                                    </h3>
+
+                                    <p class="mt-3 text-[#6B5B50]">
+
+                                        ₹<%= item.product.price %> each
+
+                                    </p>
+
+                                </div>
+
+
+
+
+
+                                <!-- PRICE -->
+
+                                <div class="flex md:flex-col justify-between md:items-end">
+
+                                    <div>
+
+                                        <p class="text-sm text-[#6B5B50]">
+
+                                            Quantity
+
+                                        </p>
+
+                                        <p class="font-semibold text-xl mt-1">
+
+                                            × <%= item.quantity %>
+
+                                        </p>
+
+                                    </div>
+
+                                    <div class="text-right">
+
+                                        <p class="text-sm text-[#6B5B50]">
+
+                                            Total
+
+                                        </p>
+
+                                        <p class="font-bold text-2xl mt-1">
+
+                                            ₹<%= item.product.price * item.quantity %>
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        <% }) %>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DELIVERY ADDRESS -->
+
+        <section class="pb-12">
+
+            <div class="max-w-7xl mx-auto px-6">
+
+                <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-14 h-14 rounded-2xl bg-[#F8F4EE] flex items-center justify-center">
+
+                            <i class="fa-solid fa-location-dot text-2xl text-[#C9A36B]"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h2 class="font-serif text-4xl">
+
+                                Delivery Address
+
+                            </h2>
+
+                            <p class="mt-2 text-[#6B5B50]">
+
+                                The address where this order will be delivered.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    <div class="mt-10 grid md:grid-cols-2 gap-8">
+
+                        <div>
+
+                            <p class="text-sm uppercase tracking-widest text-[#8B7765]">
+
+                                Recipient
+
+                            </p>
+
+                            <p class="mt-3 text-2xl font-semibold">
+
+                                <%= order.deliveryAddress.fullName %>
+
+                            </p>
+
+                        </div>
+
+
+
+
+
+                        <div>
+
+                            <p class="text-sm uppercase tracking-widest text-[#8B7765]">
+
+                                Phone Number
+
+                            </p>
+
+                            <p class="mt-3 text-2xl font-semibold">
+
+                                <%= order.deliveryAddress.phone %>
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    <div class="mt-10">
+
+                        <p class="text-sm uppercase tracking-widest text-[#8B7765]">
+
+                            Address
 
                         </p>
 
+                        <div class="mt-4 space-y-2 text-lg leading-relaxed">
+
+                            <p>
+
+                                <%= order.deliveryAddress.house %>
+
+                            </p>
+
+                            <p>
+
+                                <%= order.deliveryAddress.landmark %>
+
+                            </p>
+
+                            <p>
+
+                                <%= order.deliveryAddress.address %>
+
+                            </p>
+
+                            <p>
+
+                                <%= order.deliveryAddress.city %>,
+                                <%= order.deliveryAddress.state %>
+
+                            </p>
+
+                            <p>
+
+                                PIN - <%= order.deliveryAddress.pincode %>
+
+                            </p>
+
+                        </div>
+
                     </div>
-
-                </div>
-
-
-
-
-
-                <div class="mt-10 rounded-2xl border border-[#E8DCCB] bg-[#FAF7F2] p-6">
-
-                    <p class="text-lg leading-relaxed whitespace-pre-wrap"><%= order.orderNotes %></p>
 
                 </div>
 
             </div>
 
-        </div>
+        </section>
 
-    </section>
+        <!-- PAYMENT DETAILS -->
 
-    <% } %>
+        <section class="pb-12">
 
-    <!-- ACTIONS -->
+            <div class="max-w-7xl mx-auto px-6">
 
-    <section class="pb-24">
+                <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
 
-        <div class="max-w-7xl mx-auto px-6">
-        
-            <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm overflow-hidden">
-            
-                <div class="p-8">
-                
-                    <h2 class="font-serif text-4xl">
-                    
-                        Need anything else?
-                    
-                    </h2>
-                
-                    <p class="mt-3 text-[#6B5B50] max-w-2xl leading-relaxed">
-                    
-                        Manage your order or get in touch if you have any questions.
-                        We're happy to help.
-                    
-                    </p>
-                
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-14 h-14 rounded-2xl bg-[#F8F4EE] flex items-center justify-center">
+
+                            <i class="fa-solid fa-credit-card text-2xl text-[#C9A36B]"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h2 class="font-serif text-4xl">
+
+                                Payment Details
+
+                            </h2>
+
+                            <p class="mt-2 text-[#6B5B50]">
+
+                                Payment method and billing summary.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    <div class="mt-10 grid lg:grid-cols-2 gap-12">
+
+                        <!-- PAYMENT INFO -->
+
+                        <div class="space-y-8">
+
+                            <div>
+
+                                <p class="uppercase tracking-widest text-xs text-[#8B7765]">
+
+                                    Payment Method
+
+                                </p>
+
+                                <p class="mt-3 text-2xl font-semibold">
+
+                                    <%= order.paymentMethod === 'cod' ? 'Cash On Delivery' : 'Online Payment' %>
+
+                                </p>
+
+                            </div>
+
+
+
+
+
+                            <div>
+
+                                <p class="uppercase tracking-widest text-xs text-[#8B7765]">
+
+                                    Payment Status
+
+                                </p>
+
+                                <span
+                                    class="
+                                        inline-flex items-center mt-3 px-5 py-2 rounded-full font-semibold
+
+                                        <%= order.paymentStatus === 'Paid'
+                                            ? 'bg-green-100 text-green-700'
+                                            : 'bg-yellow-100 text-yellow-700'
+                                        %>
+                                    "
+                                >
+
+                                    <%= order.paymentStatus %>
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+
+
+                        <!-- BILL -->
+
+                        <div class="bg-[#FAF7F2] rounded-2xl border border-[#E8DCCB] p-6">
+
+                            <div class="flex justify-between text-lg">
+
+                                <span>
+
+                                    Subtotal
+
+                                </span>
+
+                                <span>
+
+                                    ₹<%= order.subtotal %>
+
+                                </span>
+
+                            </div>
+
+
+
+
+
+                            <div class="flex justify-between text-lg mt-5">
+
+                                <span>
+
+                                    Delivery Fee
+
+                                </span>
+
+                                <span>
+
+                                    ₹<%= order.deliveryFee %>
+
+                                </span>
+
+                            </div>
+
+
+
+
+
+                            <hr class="my-6 border-[#E8DCCB]">
+
+
+
+
+                            <div class="flex justify-between items-center">
+
+                                <span class="font-semibold text-xl">
+
+                                    Total Paid
+
+                                </span>
+
+                                <span class="font-bold text-4xl">
+
+                                    ₹<%= order.total %>
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
+            </div>
+
+        </section>
+
+        <% if(order.orderNotes.trim()) { %>
+
+        <!-- ORDER NOTES -->
+
+        <section class="pb-12">
+
+            <div class="max-w-7xl mx-auto px-6">
+
+                <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm p-8">
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-14 h-14 rounded-2xl bg-[#F8F4EE] flex items-center justify-center">
+
+                            <i class="fa-solid fa-note-sticky text-2xl text-[#C9A36B]"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h2 class="font-serif text-4xl">
+
+                                Order Notes
+
+                            </h2>
+
+                            <p class="mt-2 text-[#6B5B50]">
+
+                                Special instructions you provided while placing the order.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    <div class="mt-10 rounded-2xl border border-[#E8DCCB] bg-[#FAF7F2] p-6">
+
+                        <p class="text-lg leading-relaxed whitespace-pre-wrap"><%= order.orderNotes %></p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <% } %>
+
+        <!-- ACTIONS -->
+
+        <section class="pb-24">
+
+            <div class="max-w-7xl mx-auto px-6">
             
-            
-            
-            
-            
-                <div class="border-t border-[#E8DCCB] bg-[#FAF7F2] p-8">
+                <div class="bg-white border border-[#E8DCCB] rounded-3xl shadow-sm overflow-hidden">
                 
-                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+                    <div class="p-8">
                     
-                    
-                    
-                    
-                        <!-- PRIMARY ACTION -->
-                    
-                        <div class="flex flex-wrap gap-4">
+                        <h2 class="font-serif text-4xl">
                         
-                            <% if(['Placed', 'Confirmed', 'Preparing'].includes(order.status)){ %>
+                            Need anything else?
+                        
+                        </h2>
+                    
+                        <p class="mt-3 text-[#6B5B50] max-w-2xl leading-relaxed">
+                        
+                            Manage your order or get in touch if you have any questions.
+                            We're happy to help.
+                        
+                        </p>
+                    
+                    </div>
+                
+                
+                
+                
+                
+                    <div class="border-t border-[#E8DCCB] bg-[#FAF7F2] p-8">
+                    
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+                        
+                        
+                        
+                        
+                            <!-- PRIMARY ACTION -->
+                        
+                            <div class="flex flex-wrap gap-4">
                             
-                                <button
-                                    id="cancel-order"
-                                    class="bg-red-500 hover:bg-red-600 text-white font-semibold px-8 py-4 rounded-xl transition"
-                                >
-                        
-                                    <i class="fa-solid fa-ban mr-2"></i>
-                        
-                                    Cancel Order
-                        
-                                </button>
+                                <% if(['Placed', 'Confirmed', 'Preparing'].includes(order.status)){ %>
+                                
+                                    <button
+                                        id="cancel-order"
+                                        class="bg-red-500 hover:bg-red-600 text-white font-semibold px-8 py-4 rounded-xl transition"
+                                    >
+                                
+                                        <i class="fa-solid fa-ban mr-2"></i>
+                                
+                                        Cancel Order
+                                
+                                    </button>
 
-                            
-                            <% } %>
-                            
-                            
-                            
-                            
-                            
-                            <% if(order.status === 'Out for Delivery'){ %>
-                            
-                                <a
-                                    href="/orders/<%= order._id %>/track"
-                                    class="bg-[#C9A36B] hover:bg-[#B89056] text-[#2F241D] font-semibold px-8 py-4 rounded-xl transition"
-                                >
-                            
-                                    <i class="fa-solid fa-truck-fast mr-2"></i>
-                            
-                                    Track Order
-                            
-                                </a>
-                            
-                            <% } %>
-                            
-                            
-                            
-                            
-                            
-                            <% if(['Delivered', 'Cancelled'].includes(order.status)){ %>
+                                
+                                <% } %>
+                                
+                                
+                                
+                                
+                                
+                                <% if(order.status === 'Out for Delivery'){ %>
+                                
+                                    <a
+                                        href="/orders/<%= order._id %>/track"
+                                        class="bg-[#C9A36B] hover:bg-[#B89056] text-[#2F241D] font-semibold px-8 py-4 rounded-xl transition"
+                                    >
+                                
+                                        <i class="fa-solid fa-truck-fast mr-2"></i>
+                                
+                                        Track Order
+                                
+                                    </a>
+                                
+                                <% } %>
+                                
+                                
+                                
+                                
+                                
+                                <% if(['Delivered', 'Cancelled'].includes(order.status)){ %>
 
-                                <a
-                                    href="/checkout?reorderId=<%= order._id%>"
-                                    class="bg-[#C9A36B] hover:bg-[#B89056] text-[#2F241D] font-semibold px-8 py-4 rounded-xl transition"
-                                    onclick='showLoading("Preparing your previous order...")'
-                                >
+                                    <a
+                                        href="/checkout?reorderId=<%= order._id%>"
+                                        class="bg-[#C9A36B] hover:bg-[#B89056] text-[#2F241D] font-semibold px-8 py-4 rounded-xl transition"
+                                        onclick='showLoading("Preparing your previous order...")'
+                                    >
+                                
+                                        <i class="fa-solid fa-rotate-right mr-2"></i>
+                                
+                                        Reorder
+                                
+                                    </a>
+                                
+                                
+                                <% } %>
+                                
+                            </div>
                         
-                                    <i class="fa-solid fa-rotate-right mr-2"></i>
                         
-                                    Reorder
                         
-                                </a>
-                            
-                            
-                            <% } %>
-                            
+                        
+                        
+                            <!-- SECONDARY ACTION -->
+                        
+                            <a
+                                href="/support"
+                                class="inline-flex items-center gap-3 text-[#6B5B50] hover:text-[#C9A36B] transition font-medium"
+                            >
+                        
+                                <i class="fa-solid fa-headset text-xl"></i>
+                        
+                                Contact Support
+                        
+                            </a>
+                        
                         </div>
                     
-                    
-                    
-                    
-                    
-                        <!-- SECONDARY ACTION -->
-                    
-                        <a
-                            href="/support"
-                            class="inline-flex items-center gap-3 text-[#6B5B50] hover:text-[#C9A36B] transition font-medium"
-                        >
-                    
-                            <i class="fa-solid fa-headset text-xl"></i>
-                    
-                            Contact Support
-                    
-                        </a>
-                    
                     </div>
                 
                 </div>
             
             </div>
         
-        </div>
+        </section>
     
-    </section>
-    
+    <% } %>
+
     <%- include('./loadAnimation')%>
 
     <script src="/scripts/load.js"></script>
