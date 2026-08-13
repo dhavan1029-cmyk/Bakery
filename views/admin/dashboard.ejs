@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard | FLOURish</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+
+</head>
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen">
+
+
+<!-- MOBILE HEADER -->
+
+<header class="lg:hidden bg-white border-b border-[#E8DCCB] h-16 px-5 flex items-center justify-between">
+
+    <a href="/admin/dashboard" class="flex items-center gap-2">
+
+        <i class="fa-solid fa-wheat-awn text-2xl text-[#C9A36B]"></i>
+
+        <h1 class="font-serif text-2xl">
+            FLOUR<span class="italic text-[#C9A36B]">ish</span>
+        </h1>
+
+    </a>
+
+    <button
+        id="mobile-menu-button"
+        class="w-10 h-10 rounded-xl hover:bg-[#F8F4EE] transition"
+    >
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+</header>
+
+
+<!-- SIDEBAR -->
+
+<aside
+    id="sidebar"
+    class="fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-[#E8DCCB] z-50
+           -translate-x-full lg:translate-x-0 transition-transform duration-300"
+>
+
+    <!-- LOGO -->
+
+    <div class="h-20 px-6 flex items-center border-b border-[#E8DCCB]">
+
+        <a href="/admin/dashboard" class="flex items-center gap-3">
+
+            <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+            <h1 class="font-serif text-3xl">
+                FLOUR<span class="italic text-[#C9A36B]">ish</span>
+            </h1>
+
+        </a>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="p-4 space-y-2">
+
+        <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
+            Management
+        </p>
+
+
+        <a
+            href="/admin/dashboard"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#F8EFD8] text-[#4A3428] font-semibold"
+        >
+
+            <i class="fa-solid fa-chart-line w-5 text-[#C9A36B]"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a
+            href="/admin/orders"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+
+            <i class="fa-solid fa-bag-shopping w-5 text-[#8B7765]"></i>
+
+            Orders
+
+        </a>
+
+
+        <a
+            href="/admin/products"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+
+            <i class="fa-solid fa-box w-5 text-[#8B7765]"></i>
+
+            Products
+
+        </a>
+
+
+        <a
+            href="/admin/customers"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+
+            <i class="fa-solid fa-users w-5 text-[#8B7765]"></i>
+
+            Customers
+
+        </a>
+
+
+        <div class="pt-5">
+
+            <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
+                Website
+            </p>
+
+
+            <a
+                href="/"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+            >
+
+                <i class="fa-solid fa-arrow-up-right-from-square w-5 text-[#8B7765]"></i>
+
+                View Website
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- SIDEBAR FOOTER -->
+
+    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-[#E8DCCB]">
+
+        <div class="flex items-center gap-3 px-3 py-3">
+
+            <div class="w-10 h-10 rounded-full bg-[#F8EFD8] flex items-center justify-center">
+
+                <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
+
+            </div>
+
+
+            <div class="flex-1 min-w-0">
+
+                <p class="font-semibold text-sm truncate">
+                    Admin
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form action="/admin/logout" method="POST">
+
+            <button
+                type="submit"
+                class="w-full flex items-center gap-3 px-4 py-3 rounded-xl
+                       text-red-600 hover:bg-red-50 transition"
+            >
+
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
+
+                Logout
+
+            </button>
+
+        </form>
+
+    </div>
+
+</aside>
+
+
+<!-- MOBILE OVERLAY -->
+
+<div
+    id="sidebar-overlay"
+    class="fixed inset-0 bg-black/30 z-40 hidden lg:hidden"
+></div>
+
+
+<!-- MAIN -->
+
+<main class="lg:ml-64 min-h-screen">
+
+
+    <!-- TOP BAR -->
+
+    <header class="hidden lg:flex h-20 bg-white border-b border-[#E8DCCB] px-8 items-center justify-between">
+
+        <div>
+
+            <p class="text-sm text-[#8B7765]">
+                Administration
+            </p>
+
+            <h2 class="font-serif text-2xl">
+                Dashboard
+            </h2>
+
+        </div>
+
+
+        <div class="flex items-center gap-3">
+
+            <div class="w-10 h-10 rounded-full bg-[#F8EFD8] flex items-center justify-center">
+
+                <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
+
+            </div>
+
+            <div>
+
+                <p class="font-semibold text-sm">
+                    Admin
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <section class="p-5 sm:p-8 max-w-7xl mx-auto">
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="mb-8">
+
+            <p class="text-[#8B7765]">
+                Welcome back.
+            </p>
+
+            <h1 class="font-serif text-4xl sm:text-5xl mt-1">
+                Overview
+            </h1>
+
+        </div>
+
+
+        <!-- STAT CARDS -->
+
+        <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-5">
+
+
+            <!-- ORDERS -->
+
+            <div class="bg-white border border-[#E8DCCB] rounded-2xl p-6 shadow-sm">
+
+                <div class="flex items-start justify-between">
+
+                    <div>
+
+                        <p class="text-sm text-[#8B7765]">
+                            Total Orders
+                        </p>
+
+                        <p class="font-serif text-4xl mt-2">
+                            <%= totalOrders || 0 %>
+                        </p>
+
+                    </div>
+
+
+                    <div class="w-12 h-12 rounded-xl bg-[#F8EFD8] flex items-center justify-center">
+
+                        <i class="fa-solid fa-bag-shopping text-xl text-[#C9A36B]"></i>
+
+                    </div>
+
+                </div>
+
+                <p class="text-xs text-[#8B7765] mt-4">
+                    All time
+                </p>
+
+            </div>
+
+
+            <!-- REVENUE -->
+
+            <div class="bg-white border border-[#E8DCCB] rounded-2xl p-6 shadow-sm">
+
+                <div class="flex items-start justify-between">
+
+                    <div>
+
+                        <p class="text-sm text-[#8B7765]">
+                            Revenue
+                        </p>
+
+                        <p class="font-serif text-4xl mt-2">
+                            ₹<%= totalRevenue || 0 %>
+                        </p>
+
+                    </div>
+
+
+                    <div class="w-12 h-12 rounded-xl bg-[#F8EFD8] flex items-center justify-center">
+
+                        <i class="fa-solid fa-indian-rupee-sign text-xl text-[#C9A36B]"></i>
+
+                    </div>
+
+                </div>
+
+                <p class="text-xs text-[#8B7765] mt-4">
+                    From completed orders
+                </p>
+
+            </div>
+
+
+            <!-- PRODUCTS -->
+
+            <div class="bg-white border border-[#E8DCCB] rounded-2xl p-6 shadow-sm">
+
+                <div class="flex items-start justify-between">
+
+                    <div>
+
+                        <p class="text-sm text-[#8B7765]">
+                            Products
+                        </p>
+
+                        <p class="font-serif text-4xl mt-2">
+                            <%= totalProducts || 0 %>
+                        </p>
+
+                    </div>
+
+
+                    <div class="w-12 h-12 rounded-xl bg-[#F8EFD8] flex items-center justify-center">
+
+                        <i class="fa-solid fa-box text-xl text-[#C9A36B]"></i>
+
+                    </div>
+
+                </div>
+
+                <p class="text-xs text-[#8B7765] mt-4">
+                    In your catalogue
+                </p>
+
+            </div>
+
+
+            <!-- CUSTOMERS -->
+
+            <div class="bg-white border border-[#E8DCCB] rounded-2xl p-6 shadow-sm">
+
+                <div class="flex items-start justify-between">
+
+                    <div>
+
+                        <p class="text-sm text-[#8B7765]">
+                            Customers
+                        </p>
+
+                        <p class="font-serif text-4xl mt-2">
+                            <%= totalCustomers || 0 %>
+                        </p>
+
+                    </div>
+
+
+                    <div class="w-12 h-12 rounded-xl bg-[#F8EFD8] flex items-center justify-center">
+
+                        <i class="fa-solid fa-users text-xl text-[#C9A36B]"></i>
+
+                    </div>
+
+                </div>
+
+                <p class="text-xs text-[#8B7765] mt-4">
+                    Registered users
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- LOWER SECTION -->
+
+        <div class="grid xl:grid-cols-3 gap-6 mt-6">
+
+
+            <!-- RECENT ORDERS -->
+
+            <div class="xl:col-span-2 bg-white border border-[#E8DCCB] rounded-2xl shadow-sm">
+
+
+                <div class="p-6 border-b border-[#E8DCCB] flex items-center justify-between">
+
+                    <div>
+
+                        <h2 class="font-serif text-2xl">
+                            Recent Orders
+                        </h2>
+
+                        <p class="text-sm text-[#8B7765] mt-1">
+                            Latest customer orders
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="/admin/orders"
+                        class="text-sm font-semibold text-[#A07842] hover:text-[#C9A36B]"
+                    >
+                        View all
+                    </a>
+
+                </div>
+
+
+                <div class="overflow-x-auto">
+
+                    <% if (recentOrders?.length) { %>
+
+                        <table class="w-full text-sm">
+
+                            <thead>
+
+                                <tr class="text-left text-[#8B7765] border-b border-[#E8DCCB]">
+
+                                    <th class="px-6 py-4 font-medium">
+                                        Order
+                                    </th>
+
+                                    <th class="px-6 py-4 font-medium">
+                                        Customer
+                                    </th>
+
+                                    <th class="px-6 py-4 font-medium">
+                                        Total
+                                    </th>
+
+                                    <th class="px-6 py-4 font-medium">
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <% recentOrders.forEach(order => { %>
+
+                                    <tr class="border-b border-[#F0E9DF] last:border-0 hover:bg-[#FCFAF7]">
+
+                                        <td class="px-6 py-4 font-semibold">
+                                            #<%= order._id.toString().slice(-6).toUpperCase() %>
+                                        </td>
+
+                                        <td class="px-6 py-4">
+                                            <%= order.deliveryAddress?.fullName || 'Unknown' %>
+                                        </td>
+
+                                        <td class="px-6 py-4 font-semibold">
+                                            ₹<%= order.total %>
+                                        </td>
+
+                                        <td class="px-6 py-4">
+
+                                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#F8EFD8] text-[#7A5A2D]">
+                                                <%= order.status %>
+                                            </span>
+
+                                        </td>
+
+                                    </tr>
+
+                                <% }) %>
+
+                            </tbody>
+
+                        </table>
+
+                    <% } else { %>
+
+                        <div class="py-16 text-center">
+
+                            <div class="w-14 h-14 mx-auto rounded-full bg-[#F8EFD8] flex items-center justify-center">
+
+                                <i class="fa-solid fa-bag-shopping text-xl text-[#C9A36B]"></i>
+
+                            </div>
+
+                            <p class="font-semibold mt-4">
+                                No orders yet
+                            </p>
+
+                            <p class="text-sm text-[#8B7765] mt-1">
+                                New orders will appear here.
+                            </p>
+
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="bg-white border border-[#E8DCCB] rounded-2xl shadow-sm">
+
+
+                <div class="p-6 border-b border-[#E8DCCB]">
+
+                    <h2 class="font-serif text-2xl">
+                        Quick Actions
+                    </h2>
+
+                    <p class="text-sm text-[#8B7765] mt-1">
+                        Manage your store
+                    </p>
+
+                </div>
+
+
+                <div class="p-5 space-y-3">
+
+
+                    <a
+                        href="/admin/products/new"
+                        class="flex items-center gap-4 p-4 rounded-xl border border-[#E8DCCB]
+                               hover:bg-[#F8F4EE] hover:border-[#C9A36B] transition"
+                    >
+
+                        <div class="w-10 h-10 rounded-lg bg-[#F8EFD8] flex items-center justify-center">
+
+                            <i class="fa-solid fa-plus text-[#C9A36B]"></i>
+
+                        </div>
+
+                        <div>
+
+                            <p class="font-semibold">
+                                Add Product
+                            </p>
+
+                            <p class="text-xs text-[#8B7765]">
+                                Add a new bakery item
+                            </p>
+
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        href="/admin/orders"
+                        class="flex items-center gap-4 p-4 rounded-xl border border-[#E8DCCB]
+                               hover:bg-[#F8F4EE] hover:border-[#C9A36B] transition"
+                    >
+
+                        <div class="w-10 h-10 rounded-lg bg-[#F8EFD8] flex items-center justify-center">
+
+                            <i class="fa-solid fa-list-check text-[#C9A36B]"></i>
+
+                        </div>
+
+                        <div>
+
+                            <p class="font-semibold">
+                                Manage Orders
+                            </p>
+
+                            <p class="text-xs text-[#8B7765]">
+                                View and update orders
+                            </p>
+
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        href="/admin/products"
+                        class="flex items-center gap-4 p-4 rounded-xl border border-[#E8DCCB]
+                               hover:bg-[#F8F4EE] hover:border-[#C9A36B] transition"
+                    >
+
+                        <div class="w-10 h-10 rounded-lg bg-[#F8EFD8] flex items-center justify-center">
+
+                            <i class="fa-solid fa-boxes-stacked text-[#C9A36B]"></i>
+
+                        </div>
+
+                        <div>
+
+                            <p class="font-semibold">
+                                Manage Products
+                            </p>
+
+                            <p class="text-xs text-[#8B7765]">
+                                Edit your catalogue
+                            </p>
+
+                        </div>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+<script>
+
+    const sidebar = document.querySelector('#sidebar');
+    const mobileMenuButton = document.querySelector('#mobile-menu-button');
+    const sidebarOverlay = document.querySelector('#sidebar-overlay');
+
+
+    mobileMenuButton?.addEventListener('click', () => {
+
+        sidebar.classList.toggle('-translate-x-full');
+        sidebarOverlay.classList.toggle('hidden');
+
+    });
+
+
+    sidebarOverlay?.addEventListener('click', () => {
+
+        sidebar.classList.add('-translate-x-full');
+        sidebarOverlay.classList.add('hidden');
+
+    });
+
+</script>
+
+
+</body>
+
+</html>
