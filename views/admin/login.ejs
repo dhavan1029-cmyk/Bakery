@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Login | FLOURish</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+
+</head>
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen flex items-center justify-center px-6">
+
+    <div class="w-full max-w-md">
+
+        <!-- LOGO -->
+
+        <div class="text-center mb-10">
+
+            <h1 class="font-serif text-5xl mt-5">
+                FLOUR<span class="italic text-[#C9A36B]">ish</span>
+            </h1>
+
+            <p class="text-[#8B7765] mt-2">
+                Administration Portal
+            </p>
+
+        </div>
+
+
+        <!-- LOGIN CARD -->
+
+        <div class="bg-white rounded-3xl border border-[#E8DCCB] shadow-sm p-8">
+
+            <div class="mb-8">
+
+                <h2 class="font-serif text-3xl">
+                    Admin Login
+                </h2>
+
+                <p class="text-sm text-[#6B5B50] mt-2">
+                    Sign in to manage your bakery.
+                </p>
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            <% if (error) { %>
+
+                <div class="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+
+                    <div class="flex items-start gap-3">
+
+                        <i class="fa-solid fa-circle-exclamation text-red-500 mt-1"></i>
+
+                        <p class="text-sm text-red-700">
+                            <%= error %>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            <% } %>
+
+
+            <!-- FORM -->
+
+            <form action="/admin/login" method="POST" class="space-y-5">
+
+                <!-- EMAIL -->
+
+                <div>
+
+                    <label
+                        for="email"
+                        class="block text-sm font-semibold mb-2"
+                    >
+                        Email Address
+                    </label>
+
+                    <div class="relative">
+
+                        <i
+                            class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-[#8B7765]"
+                        ></i>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            autocomplete="username"
+                            placeholder="admin@example.com"
+                            value="<%= formData?.email || '' %>"
+                            class="w-full border border-[#E8DCCB] rounded-xl pl-11 pr-4 py-3 outline-none focus:border-[#C9A36B] focus:ring-2 focus:ring-[#C9A36B]/20 transition"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div>
+
+                    <div class="flex justify-between items-center mb-2">
+
+                        <label
+                            for="password"
+                            class="text-sm font-semibold"
+                        >
+                            Password
+                        </label>
+
+                    </div>
+
+                    <div class="relative">
+
+                        <i
+                            class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-[#8B7765]"
+                        ></i>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            required
+                            autocomplete="current-password"
+                            placeholder="Enter your password"
+                            class="w-full border border-[#E8DCCB] rounded-xl pl-11 pr-12 py-3 outline-none focus:border-[#C9A36B] focus:ring-2 focus:ring-[#C9A36B]/20 transition"
+                        >
+
+                        <button
+                            type="button"
+                            id="toggle-password"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-[#8B7765] hover:text-[#4A3428]"
+                        >
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="w-full bg-[#C9A36B] hover:bg-[#B89056] text-[#2F241D] rounded-xl py-4 font-semibold transition"
+                >
+
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i>
+
+                    Sign In
+
+                </button>
+
+            </form>
+
+
+            <!-- SECURITY NOTE -->
+
+            <div class="mt-6 pt-6 border-t border-[#E8DCCB]">
+
+                <p class="text-xs text-[#8B7765] text-center">
+
+                    <i class="fa-solid fa-shield-halved mr-1"></i>
+
+                    Authorized personnel only
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- BACK TO WEBSITE -->
+
+        <div class="text-center mt-6">
+
+            <a
+                href="/"
+                class="text-sm text-[#6B5B50] hover:text-[#C9A36B] transition"
+            >
+
+                <i class="fa-solid fa-arrow-left mr-2"></i>
+
+                Back to FLOURish
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const passwordInput = document.querySelector('#password');
+        const togglePassword = document.querySelector('#toggle-password');
+
+        togglePassword.addEventListener('click', () => {
+
+            const isPassword = passwordInput.type === 'password';
+
+            passwordInput.type = isPassword ? 'text' : 'password';
+
+            togglePassword.innerHTML = isPassword
+                ? '<i class="fa-solid fa-eye-slash"></i>'
+                : '<i class="fa-solid fa-eye"></i>';
+
+        });
+
+    </script>
+
+</body>
+
+</html>
