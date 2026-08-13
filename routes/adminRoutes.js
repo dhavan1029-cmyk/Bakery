@@ -1,13 +1,8 @@
 import express from 'express'
-import userModel from '../models/userModel.js'
-import bcrypt from 'bcrypt'
+import { getLoginPage } from '../controllers/adminController.js'
 
 const router = express.Router()
 
-router.get('/admin/login', async (req, res) => { 
-    
-    res.render('admin/login', {error: '', formData: {}})
-
-})
+router.get('/admin/login', getLoginPage)
 
 export default router
