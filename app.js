@@ -7,6 +7,7 @@ import productRoutes from './routes/productRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import checkoutRoutes from './routes/checkoutRoutes.js'
+import adminRoutes from './routes/adminRoutes.js'
 import cookieParser from 'cookie-parser'
 import { checkAuth } from './middlewares/authMiddleware.js'
 
@@ -27,6 +28,7 @@ app.use(pageRoutes)
 app.use(productRoutes)
 app.use(authRoutes)
 app.use(checkoutRoutes)
+app.use(adminRoutes)
 
 app.listen(process.env.PORT)
 // console.log(process.env)

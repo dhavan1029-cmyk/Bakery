@@ -48,7 +48,7 @@ export async function signupUser(req, res){
         const { username, email, password } = req.body
 
         const encryptedPassword = bcrypt.hashSync(password, 10)
-        const newUser = await userModel.insertOne({username, email, password: encryptedPassword})
+        const newUser = await userModel.insertOne({username, email, password: encryptedPassword, role: 'customer'})
 
         loginUser(req, res)
 
