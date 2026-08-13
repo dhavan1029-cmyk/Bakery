@@ -10,6 +10,7 @@ import checkoutRoutes from './routes/checkoutRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
 import cookieParser from 'cookie-parser'
 import { checkAuth } from './middlewares/authMiddleware.js'
+import { checkAdminAuth } from './middlewares/adminMiddleware.js'
 
 const app = express()
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(process.cwd(), 'public')))
 
 app.use(checkAuth)
+app.use(checkAdminAuth)
 app.use(userRoutes)
 app.use(pageRoutes)
 app.use(productRoutes)

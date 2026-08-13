@@ -17,11 +17,18 @@ export async function checkAuth (req, res, next) {
         res.locals.user = user
         req.user = user
 
+        if(!user){
+            res.clearCookie('userToken')
+            return next()
+        }
+
         next()
 
     } catch (err) {
         res.locals.user = null
         req.user = null
+
+        res.clearCookie('userToken')
 
         res.redirect('/serverError')
 
