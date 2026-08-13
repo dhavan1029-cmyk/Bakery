@@ -1,7 +1,6 @@
 import userModel from "../models/userModel.js";
 import ordersModel from "../models/ordersModel.js";
 
-
 const DELIVERY_FEE = 50;
 
 // Calculate the cart subtotal and final total.

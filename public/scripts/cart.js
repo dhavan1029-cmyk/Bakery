@@ -7,6 +7,7 @@ const emptyCart = document.querySelector('#emptyCart')
 const subtotal = document.querySelector('#subtotal')
 const total = document.querySelector('#total')
 const cartWarning = document.querySelector("#cartWarning");
+const checkoutBtn = document.querySelector('#checkoutBtn')
 
 
 function updateCartWarning() {
@@ -16,6 +17,7 @@ function updateCartWarning() {
     const unavailableItems = document.querySelectorAll(".unavailable")
     if (!unavailableItems.length) {
         cartWarning.classList.add('hidden');
+        checkoutBtn.disabled = false
     }
 }
 
@@ -57,14 +59,13 @@ async function changeQty (e) {
     const item = qtyBtn.closest('.items')
     const lineTotal = item.querySelector('.line-total')
     const quantityExceededWarning = item.querySelector('.quantity-exceeded-warning')
-
     if(+qty.textContent <= 1 && qtyBtn.classList.contains('decrease-btn')) showLoading()
 
     if(!quantityExceededWarning.classList.contains('hidden') && qtyBtn.classList.contains('decrease-btn') && +qty.textContent - 1 <= +qtyBtn.getAttribute('max')){
         quantityExceededWarning.classList.add('hidden')
         item.classList.remove('border-2', 'border-red-200')
+        checkoutBtn.disabled = false
     }
-
     if(+qty.textContent >= +qtyBtn.getAttribute('max') && qtyBtn.classList.contains('increase-btn')) return
 
 

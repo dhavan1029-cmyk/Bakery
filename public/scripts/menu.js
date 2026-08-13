@@ -83,11 +83,23 @@ filters.forEach(filter => {
 
 
 sortBtn.addEventListener('click', e => {
-    sortMenu.classList.toggle('hidden')
+    e.stopPropagation()
+    sortMenu.classList.remove('hidden')
+
+    window.addEventListener('click', e => {
+        sortMenu.classList.add('hidden')
+    })
+
 })
 
 filterBtn.addEventListener('click', e => {
-    filterMenu.classList.toggle('hidden')
+    e.stopPropagation()
+    filterMenu.classList.remove('hidden')
+
+    window.addEventListener('click', e => {
+        filterMenu.classList.add('hidden')
+    })
+
 })
 
 function updateQuery(query, value) {

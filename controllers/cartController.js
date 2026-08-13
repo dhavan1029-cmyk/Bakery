@@ -40,6 +40,8 @@ function calculateTotal(user) {
 export async function getCartItems(req, res) {
     try {
 
+        const changedPrices = req.query.changedPrices || '[]'
+        const prices = JSON.parse(changedPrices)
         const products = await productModel.find({})
 
         if(!req.user){
@@ -51,12 +53,12 @@ export async function getCartItems(req, res) {
         const cartItems = user.cart
 
         const {subtotal, total} = calculateTotal(user)
-
-        res.render('cart', {cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, err: false})
+        console.log(prices)
+        res.render('cart', {cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, err: false, prices})
         
     } catch (err) {
         res.render('cart', {cartItems: [], err})
-
+        console.log(err)
     }  
 }
 

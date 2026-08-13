@@ -196,7 +196,9 @@
                     <div class="grid lg:grid-cols-3 gap-10">
 
 
-
+                        <%
+                        let quantityExceeded = false
+                        %>
 
                         <!-- ITEMS -->
 
@@ -204,45 +206,48 @@
 
                         <% cartItems.forEach(item => { %>
 
-                            <div 
-                                class="
-                                    <%= !item.product.availability ? 'unavailable' : 'available' %>
-                                    <%= item.quantity > item.product.maxQuantityPerOrder ? 'quantity-exceeded' : '' %>
-                                                    
-                                    items bg-white rounded-3xl p-6 shadow-sm
-                                                    
-                                    <%= !item.product.availability || item.quantity > item.product.maxQuantityPerOrder
-                                        ? 'border-2 border-red-200'
+                            <%
+                                const priceChange = prices?.find(
+                                    price => price[0].toString() === item.product._id.toString()
+                                );
+                            %>
+                                                
+                            <div
+                                class="<%= !item.product.availability || priceChange
+                                    ? 'unavailable'
+                                    : 'available'
+                                %> items bg-white rounded-3xl p-6 shadow-sm
+                                <%= !item.product.availability
+                                    ? 'border-2 border-red-200 opacity-80'
+                                    : priceChange
+                                        ? 'border-2 border-amber-200'
                                         : ''
-                                    %>
-                                                    
-                                    <%= !item.product.availability
-                                        ? 'opacity-80'
-                                        : ''
-                                    %>
-                                "
+                                %>"
                             >
-                                                    
+                                                
                                 <div class="flex flex-col md:flex-row gap-6">
                                 
                                     <!-- IMAGE -->
                                 
                                     <div
                                         class="w-full md:w-36 h-36 rounded-2xl bg-[#E8DCCB] flex items-center justify-center shrink-0 relative overflow-hidden"
-                                        style="<%= item.product.image ? `background-image:url('${item.product.image}');background-size:cover;background-position:center;` : '' %>"
+                                        style="<%= item.product.image
+                                            ? `background-image:url('${item.product.image}');background-size:cover;background-position:center;`
+                                            : ''
+                                        %>"
                                     >
                                 
-                                        <% if(!item.product.image){ %>
+                                        <% if (!item.product.image) { %>
                                         
-                                            <% if(item.product.category === 'Breads'){ %>
+                                            <% if (item.product.category === 'Breads') { %>
                                             
                                                 <i class="fa-solid fa-bread-slice text-5xl text-[#C9A36B]"></i>
                                             
-                                            <% } else if(item.product.category === 'Cookies'){ %>
+                                            <% } else if (item.product.category === 'Cookies') { %>
                                             
                                                 <i class="fa-solid fa-cookie-bite text-5xl text-[#C9A36B]"></i>
                                             
-                                            <% } else if(item.product.category === 'Cakes'){ %>
+                                            <% } else if (item.product.category === 'Cakes') { %>
                                             
                                                 <i class="fa-solid fa-cake-candles text-5xl text-[#C9A36B]"></i>
                                             
@@ -257,24 +262,23 @@
                                     </div>
                                 
                                 
-                                
                                     <!-- INFO -->
                                 
                                     <div class="flex-1">
                                     
                                         <p class="uppercase tracking-wide text-xs text-[#C9A36B]">
-                                        
                                             <%= item.product.category %>
-                                        
                                         </p>
                                     
                                         <h2 class="font-serif text-3xl mt-2">
                                         
                                             <%
-                                                let name = item.product.name
+                                                let name = item.product.name;
                                                 let isQuantityExceeded = item.quantity > item.product.maxQuantityPerOrder ? true : false
-                                                if(item.product.quantity > 1){
-                                                    name += ` (Pack of ${item.product.quantity})`
+
+                                                if(isQuantityExceeded) quantityExceeded = true
+                                                if (item.product.quantity > 1) {
+                                                    name += ` (Pack of ${item.product.quantity})`;
                                                 }
                                             %>
                                             
@@ -282,7 +286,10 @@
                                             
                                         </h2>
                                     
-                                        <% if(item.product.availability){ %>
+                                    
+                                        <!-- AVAILABILITY -->
+                                    
+                                        <% if (item.product.availability) { %>
                                         
                                             <div class="mt-3 inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
                                             
@@ -304,60 +311,39 @@
                                         
                                         <% } %>
                                         
+                                        
+                                        <!-- PRICE -->
+                                        
                                         <p class="font-bold text-xl mt-4">
-                                        
                                             ₹<%= item.product.price %>
-                                        
                                         </p>
                                     
-                                        <div class="mt-5 flex items-center gap-3">
-                                        
-                                            <button
-                                                class="decrease-btn w-10 h-10 rounded-full border border-[#E8DCCB] disabled:opacity-40 disabled:cursor-not-allowed"
-                                                data-id="<%= item.product._id %>"
-                                                max="<%= item.product.maxQuantityPerOrder %>"
-                                                <%= !item.product.availability ? 'disabled' : '' %>
-                                            >
-                                                -
-                                            </button>
-                                        
-                                            <span class="quantity font-medium">
-                                            
-                                                <%= item.quantity %>
-                                            
-                                            </span>
-                                        
-                                            <button
-                                                class="increase-btn w-10 h-10 rounded-full border border-[#E8DCCB] disabled:opacity-40 disabled:cursor-not-allowed"
-                                                data-id="<%= item.product._id %>"
-                                                max="<%= item.product.maxQuantityPerOrder %>"
-                                                <%= !item.product.availability ? 'disabled' : '' %>
-                                            >
-                                                +
-                                            </button>
-                                        
-                                        </div>
                                     
-                                        <% if(!item.product.availability){ %>
+                                        <!-- PRICE CHANGE WARNING -->
+                                    
+                                        <% if (priceChange) { %>
                                         
-                                            <div class="mt-5 rounded-2xl border border-red-200 bg-[#FFF7F5] px-5 py-4">
+                                            <div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4">
                                             
                                                 <div class="flex gap-3">
                                                 
-                                                    <i class="fa-solid fa-triangle-exclamation text-red-500 mt-1"></i>
+                                                    <i class="fa-solid fa-triangle-exclamation text-amber-500 mt-1"></i>
                                                 
                                                     <div>
                                                     
                                                         <p class="font-semibold text-[#4A3428]">
-                                                        
-                                                            This product is currently unavailable.
-                                                        
+                                                            Price updated
                                                         </p>
                                                     
                                                         <p class="text-sm text-[#6B5B50] mt-1">
-                                                        
-                                                            Remove this item from your cart before proceeding to checkout.
-                                                        
+                                                            The price of this product changed from
+                                                            <strong>₹<%= priceChange[1] %></strong>
+                                                            to
+                                                            <strong>₹<%= item.product.price %></strong>.
+                                                        </p>
+                                                    
+                                                        <p class="text-sm text-[#6B5B50] mt-1">
+                                                            Your cart has been updated to the current price.
                                                         </p>
                                                     
                                                     </div>
@@ -397,8 +383,65 @@
                                         
                                         </div>
                                         
+                                        
+                                        <!-- QUANTITY -->
+                                        
+                                        <div class="mt-5 flex items-center gap-3">
+                                        
+                                            <button
+                                                class="decrease-btn w-10 h-10 rounded-full border border-[#E8DCCB] disabled:opacity-40 disabled:cursor-not-allowed"
+                                                data-id="<%= item.product._id %>"
+                                                max="<%= item.product.maxQuantityPerOrder %>"
+                                                <%= !item.product.availability ? 'disabled' : '' %>
+                                            >
+                                                -
+                                            </button>
+                                        
+                                            <span class="quantity font-medium">
+                                                <%= item.quantity %>
+                                            </span>
+                                        
+                                            <button
+                                                class="increase-btn w-10 h-10 rounded-full border border-[#E8DCCB] disabled:opacity-40 disabled:cursor-not-allowed"
+                                                data-id="<%= item.product._id %>"
+                                                max="<%= item.product.maxQuantityPerOrder %>"
+                                                <%= !item.product.availability ? 'disabled' : '' %>
+                                            >
+                                                +
+                                            </button>
+                                        
+                                        </div>
+                                    
+                                    
+                                        <!-- OUT OF STOCK -->
+                                    
+                                        <% if (!item.product.availability) { %>
+                                        
+                                            <div class="mt-5 rounded-2xl border border-red-200 bg-[#FFF7F5] px-5 py-4">
+                                            
+                                                <div class="flex gap-3">
+                                                
+                                                    <i class="fa-solid fa-triangle-exclamation text-red-500 mt-1"></i>
+                                                
+                                                    <div>
+                                                    
+                                                        <p class="font-semibold text-[#4A3428]">
+                                                            This product is currently unavailable.
+                                                        </p>
+                                                    
+                                                        <p class="text-sm text-[#6B5B50] mt-1">
+                                                            Remove this item from your cart before proceeding to checkout.
+                                                        </p>
+                                                    
+                                                    </div>
+                                                
+                                                </div>
+                                            
+                                            </div>
+                                        
+                                        <% } %>
+                                        
                                     </div>
-                                
                                 
                                 
                                     <!-- RIGHT -->
@@ -406,18 +449,14 @@
                                     <div class="flex md:flex-col justify-between items-end">
                                     
                                         <p class="line-total font-bold text-xl">
-                                        
                                             ₹<%= item.product.price * item.quantity %>
-                                        
                                         </p>
                                     
                                         <button
                                             class="remove-btn text-red-500 hover:text-red-700 transition"
                                             data-id="<%= item.product._id %>"
                                         >
-                                    
                                             <i class="fa-solid fa-trash"></i>
-                                    
                                         </button>
                                     
                                     </div>
@@ -427,7 +466,7 @@
                             </div>
                         
                         <% }) %>
-                        
+                                                
                         </div>
                                             
                                             
@@ -473,15 +512,16 @@
 
                                 </div>
 
-                                <a
-                                    href="/checkout"
+                                <button
+                                    id="checkoutBtn"
+                                    onclick="window.location.href = '/checkout'"
                                     class="block text-center w-full mt-8 bg-[#C9A36B] py-4 rounded-xl font-semibold hover:bg-[#B89056] transition"
-                                    <%= hasUnavailableProducts ? 'disabled' : '' %>
+                                    <%= hasUnavailableProducts || quantityExceeded ? 'disabled' : '' %>
                                 >
 
                                     Proceed To Checkout
 
-                                </a>
+                                </button>
 
                             </div>
 

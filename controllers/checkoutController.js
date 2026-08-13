@@ -13,6 +13,21 @@ function isMaxOrderLimitExceeded(items){
     return false
 }
 
+async function comparePrices(prevPrices, userId){
+
+    const currPrices = await userModel.findById(userId)
+    await currPrices.populate('cart.product')
+    const priceChanges = []
+
+    currPrices.cart.forEach(item => {
+        if(item.product.price !== prevPrices[item.product._id]) priceChanges.push([item.product._id, prevPrices[item.product._id]])
+    })
+
+    return priceChanges
+}
+
+
+
 const DELIVERY_FEE = 50
 
 async function checkAvailability(...products){
@@ -76,6 +91,7 @@ export async function getCheckoutPage(req, res){
 
         let {productID, quantity} = req.query
         const {reorderId} = req.query
+        const changedPrices = JSON.parse(req.query.changedPrices || '[]') 
         let cartItems = []
         let subtotal, total;
 
@@ -122,7 +138,7 @@ export async function getCheckoutPage(req, res){
             total = subtotal + DELIVERY_FEE
 
         }
-        res.render('checkout', {reorderId, checkoutError: '', orderError: '', cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, productID, quantity, formData: {}})
+        res.render('checkout', {reorderId, checkoutError: '', orderError: '', cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, productID, quantity, formData: {}, changedPrices})
 
     } catch (checkoutError) {
         console.log(checkoutError)
@@ -137,7 +153,7 @@ export async function placeOrder(req, res){
 
     try{
 
-        let { fullName, phone, house, landmark, address, city, state, pincode, paymentMethod, notes, productID, quantity, reorderId } = req.body
+        let { fullName, phone, house, landmark, address, city, state, pincode, paymentMethod, notes, productID, quantity, reorderId, pricesAtCheckout } = req.body
 
         if(!validateFields([ fullName, phone, house, landmark, address, city, state, pincode, paymentMethod ])){
             res.redirect(`/checkout?productID=${productID}&quantity=${quantity}&reorderId=${reorderId}`)
@@ -147,6 +163,11 @@ export async function placeOrder(req, res){
 
         await user.populate('cart.product')
 
+        const comparedPrices = await comparePrices(JSON.parse(pricesAtCheckout), user._id);
+
+        if(comparedPrices.length){
+            return res.redirect(`/checkout?changedPrices=${JSON.stringify(comparedPrices)}`)
+        }
 
 
         const userID = user._id
@@ -169,17 +190,14 @@ export async function placeOrder(req, res){
 
             if(!user.cart.length) return res.redirect('/checkout')
 
-            products = user.cart
-            await user.save()
-
-            const product = await productModel.findById(user.cart[0].product._id)
+            products = user.cart.map(item => ({product: item.product._id, orderPrice: item.product.price, quantity: item.quantity}))
+            // await user.save()
 
             const productsAvailability = await checkAvailability(...user.cart)
 
             if(!productsAvailability || isMaxOrderLimitExceeded(products)) {
                 return res.redirect(`/cart`)
             }
-            
 
             ({subtotal, total} = calculateTotal(user))
 
@@ -195,8 +213,7 @@ export async function placeOrder(req, res){
             if(!product.availability || quantity > product.maxQuantityPerOrder){
                 return res.redirect(`/product/${productID}?quantity=${quantity}`)
             }
-
-            products.push({product: product._id, quantity})
+            products.push({product: product._id, quantity, orderPrice: product.price})
             subtotal = product.price * quantity
             total = subtotal + DELIVERY_FEE
         }
