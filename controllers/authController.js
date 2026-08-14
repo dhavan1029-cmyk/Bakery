@@ -36,7 +36,7 @@ export async function loginUser(req, res){
 
         }
     } catch (err) {
-        console.log(err)
+        
         res.redirect('/serverError')
     }
 }
@@ -53,7 +53,7 @@ export async function signupUser(req, res){
         loginUser(req, res)
 
     } catch (err) {
-        console.log(err)
+        
         res.redirect('/serverError')
     }
 

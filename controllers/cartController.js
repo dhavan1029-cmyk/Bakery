@@ -53,12 +53,12 @@ export async function getCartItems(req, res) {
         const cartItems = user.cart
 
         const {subtotal, total} = calculateTotal(user)
-        console.log(prices)
+        (prices)
         res.render('cart', {cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, err: false, prices})
         
     } catch (err) {
         res.render('cart', {cartItems: [], err})
-        console.log(err)
+        (err)
     }  
 }
 
@@ -193,7 +193,7 @@ export async function addToCart(req, res) {
             message: 'Product added to cart'
         });
     } catch (err) {
-        console.log(err)
+        (err)
         res.redirect('/serverError')
     }
 }
@@ -283,7 +283,7 @@ export async function changeQty(req, res) {
 
 
     } catch (err) {
-        console.log(err)
+        (err)
         res.redirect('/serverError')
     }
 }

@@ -33,4 +33,4 @@ app.use(checkoutRoutes)
 app.use(adminRoutes)
 
 app.listen(process.env.PORT)
-// console.log(process.env)
+// (process.env)

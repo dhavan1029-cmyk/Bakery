@@ -4,6 +4,7 @@ import userModel from '../models/userModel.js'
 import ordersModel from '../models/ordersModel.js'
 import productModel from '../models/productModel.js'
 
+
 export async function getLoginPage(req, res) {
     res.render('admin/login', {error: null, formData: {}})
 }
@@ -33,7 +34,7 @@ export async function loginAdmin(req, res) {
         }
 
     } catch (err) {
-        console.log(err)
+        (err)
         res.redirect('/serverError')
     }
 
@@ -42,7 +43,6 @@ export async function loginAdmin(req, res) {
 export async function renderDashboard(req, res){
 
     const orders = await ordersModel.find({})
-    await ordersModel.deleteMany({})
     const products = await productModel.find({})
     const users = await userModel.find( {role: { $ne: 'admin' }} )
 
@@ -56,4 +56,22 @@ export async function renderDashboard(req, res){
             recentOrders: []
     })
         
+}
+
+export async function getOrders(req, res) {
+    if(!req.admin){
+
+        return res.redirect('/admin/login')
+
+    }else{
+
+        const orders = await ordersModel
+            .find()
+            .populate('userID', 'username email')
+            .populate('products.product')
+            .sort({ createdAt: -1 });
+
+        res.render('admin/orders', {orders})
+
+    }
 }

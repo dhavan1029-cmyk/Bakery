@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Orders | FLOURish Admin</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+
+</head>
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen">
+
+
+<!-- MOBILE HEADER -->
+
+<header class="lg:hidden bg-white border-b border-[#E8DCCB] h-16 px-5 flex items-center justify-between">
+
+    <a href="/admin/dashboard" class="flex items-center gap-2">
+
+        <i class="fa-solid fa-wheat-awn text-2xl text-[#C9A36B]"></i>
+
+        <h1 class="font-serif text-2xl">
+            FLOUR<span class="italic text-[#C9A36B]">ish</span>
+        </h1>
+
+    </a>
+
+    <button
+        id="mobile-menu-button"
+        class="w-10 h-10 rounded-xl hover:bg-[#F8F4EE]"
+    >
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+</header>
+
+
+<!-- SIDEBAR -->
+
+<aside
+    id="sidebar"
+    class="fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-[#E8DCCB]
+           z-50 -translate-x-full lg:translate-x-0 transition-transform duration-300"
+>
+
+    <!-- LOGO -->
+
+    <div class="h-20 px-6 flex items-center border-b border-[#E8DCCB]">
+
+        <a href="/admin/dashboard" class="flex items-center gap-3">
+
+            <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+            <h1 class="font-serif text-3xl">
+                FLOUR<span class="italic text-[#C9A36B]">ish</span>
+            </h1>
+
+        </a>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="p-4 space-y-2">
+
+        <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
+            Management
+        </p>
+
+
+        <a
+            href="/admin/dashboard"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+            <i class="fa-solid fa-chart-line w-5 text-[#8B7765]"></i>
+            Dashboard
+        </a>
+
+
+        <a
+            href="/admin/orders"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl
+                   bg-[#F8EFD8] font-semibold"
+        >
+            <i class="fa-solid fa-bag-shopping w-5 text-[#C9A36B]"></i>
+            Orders
+        </a>
+
+
+        <a
+            href="/admin/products"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+            <i class="fa-solid fa-box w-5 text-[#8B7765]"></i>
+            Products
+        </a>
+
+
+        <a
+            href="/admin/customers"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+            <i class="fa-solid fa-users w-5 text-[#8B7765]"></i>
+            Customers
+        </a>
+
+
+        <div class="pt-5">
+
+            <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
+                Website
+            </p>
+
+
+            <a
+                href="/"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+            >
+                <i class="fa-solid fa-arrow-up-right-from-square w-5 text-[#8B7765]"></i>
+                View Website
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ADMIN -->
+
+    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-[#E8DCCB]">
+
+        <div class="flex items-center gap-3 px-3 py-3">
+
+            <div class="w-10 h-10 rounded-full bg-[#F8EFD8] flex items-center justify-center">
+
+                <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
+
+            </div>
+
+
+            <div class="min-w-0">
+
+                <p class="font-semibold text-sm">
+                    Admin
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form action="/admin/logout" method="POST">
+
+            <button
+                type="submit"
+                class="w-full flex items-center gap-3 px-4 py-3 rounded-xl
+                       text-red-600 hover:bg-red-50 transition"
+            >
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
+                Logout
+            </button>
+
+        </form>
+
+    </div>
+
+</aside>
+
+
+<!-- MOBILE OVERLAY -->
+
+<div
+    id="sidebar-overlay"
+    class="fixed inset-0 bg-black/30 z-40 hidden lg:hidden"
+></div>
+
+
+<!-- MAIN -->
+
+<main class="lg:ml-64 min-h-screen">
+
+
+    <!-- TOP BAR -->
+
+    <header class="hidden lg:flex h-20 bg-white border-b border-[#E8DCCB]
+                   px-8 items-center justify-between">
+
+        <div>
+
+            <p class="text-sm text-[#8B7765]">
+                Administration
+            </p>
+
+            <h2 class="font-serif text-2xl">
+                Orders
+            </h2>
+
+        </div>
+
+
+        <div class="flex items-center gap-3">
+
+            <div class="w-10 h-10 rounded-full bg-[#F8EFD8] flex items-center justify-center">
+
+                <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
+
+            </div>
+
+            <div>
+
+                <p class="font-semibold text-sm">
+                    Admin
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <section class="p-5 sm:p-8 max-w-7xl mx-auto">
+
+
+        <!-- TITLE -->
+
+        <div class="mb-8">
+
+            <p class="text-[#8B7765]">
+                Manage customer orders
+            </p>
+
+            <h1 class="font-serif text-4xl sm:text-5xl mt-1">
+                Orders
+            </h1>
+
+        </div>
+
+
+        <!-- TOOLBAR -->
+
+        <div class="bg-white border border-[#E8DCCB] rounded-2xl p-5 shadow-sm mb-6">
+
+            <div class="flex flex-col md:flex-row gap-4">
+
+
+                <!-- SEARCH -->
+
+                <div class="relative flex-1">
+
+                    <i class="fa-solid fa-magnifying-glass
+                              absolute left-4 top-1/2 -translate-y-1/2
+                              text-[#A18D7B]"></i>
+
+                    <input
+                        id="order-search"
+                        type="text"
+                        placeholder="Search by order ID or customer..."
+                        class="w-full border border-[#E8DCCB] rounded-xl
+                               pl-11 pr-4 py-3 outline-none
+                               focus:border-[#C9A36B]"
+                    >
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <select
+                    id="status-filter"
+                    class="border border-[#E8DCCB] rounded-xl px-4 py-3
+                           bg-white outline-none focus:border-[#C9A36B]"
+                >
+
+                    <option value="">All Statuses</option>
+
+                    <option value="Preparing">
+                        Preparing
+                    </option>
+
+                    <option value="Baking">
+                        Baking
+                    </option>
+
+                    <option value="Out for Delivery">
+                        Out for Delivery
+                    </option>
+
+                    <option value="Delivered">
+                        Delivered
+                    </option>
+
+                    <option value="Cancelled">
+                        Cancelled
+                    </option>
+
+                </select>
+
+
+                <!-- SORT -->
+
+                <select
+                    id="order-sort"
+                    class="border border-[#E8DCCB] rounded-xl px-4 py-3
+                           bg-white outline-none focus:border-[#C9A36B]"
+                >
+
+                    <option value="newest">
+                        Newest First
+                    </option>
+
+                    <option value="oldest">
+                        Oldest First
+                    </option>
+
+                    <option value="highest">
+                        Highest Total
+                    </option>
+
+                    <option value="lowest">
+                        Lowest Total
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDERS -->
+
+        <div class="bg-white border border-[#E8DCCB] rounded-2xl shadow-sm overflow-hidden">
+
+
+            <% if (orders?.length) { %>
+
+
+                <!-- DESKTOP TABLE -->
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full text-sm">
+
+                        <thead>
+
+                            <tr class="bg-[#FCFAF7] border-b border-[#E8DCCB]
+                                       text-left text-[#8B7765]">
+
+                                <th class="px-6 py-4 font-medium">
+                                    Order
+                                </th>
+
+                                <th class="px-6 py-4 font-medium">
+                                    Customer
+                                </th>
+
+                                <th class="px-6 py-4 font-medium">
+                                    Items
+                                </th>
+
+                                <th class="px-6 py-4 font-medium">
+                                    Total
+                                </th>
+
+                                <th class="px-6 py-4 font-medium">
+                                    Payment
+                                </th>
+
+                                <th class="px-6 py-4 font-medium">
+                                    Status
+                                </th>
+
+                                <th class="px-6 py-4">
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="orders-table">
+
+
+                            <% orders.forEach(order => { %>
+
+
+                                <tr
+                                    class="order-row border-b border-[#F0E9DF]
+                                           last:border-0 hover:bg-[#FCFAF7] transition"
+                                    data-status="<%= order.status %>"
+                                    data-search="
+                                        <%= order._id %>
+                                        <%= order.deliveryAddress?.fullName || '' %>
+                                    "
+                                    data-total="<%= order.total %>"
+                                    data-date="<%= new Date(order.createdAt).getTime() %>"
+                                >
+
+
+                                    <!-- ORDER -->
+
+                                    <td class="px-6 py-5">
+
+                                        <p class="font-semibold">
+                                            #<%= order._id.toString().slice(-6).toUpperCase() %>
+                                        </p>
+
+                                        <p class="text-xs text-[#8B7765] mt-1">
+                                            <%= new Date(order.createdAt).toLocaleDateString() %>
+                                        </p>
+
+                                    </td>
+
+
+                                    <!-- CUSTOMER -->
+
+                                    <td class="px-6 py-5">
+
+                                        <p class="font-medium">
+                                            <%= order.deliveryAddress?.fullName || 'Unknown' %>
+                                        </p>
+
+                                        <p class="text-xs text-[#8B7765] mt-1">
+                                            <%= order.deliveryAddress?.phone || '' %>
+                                        </p>
+
+                                    </td>
+
+
+                                    <!-- ITEMS -->
+
+                                    <td class="px-6 py-5">
+
+                                        <span class="px-3 py-1 rounded-full
+                                                     bg-[#F8F4EE] text-[#6B5B50]">
+                                            <%= order.products?.length || 0 %>
+                                            <%= order.products?.length === 1 ? 'item' : 'items' %>
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- TOTAL -->
+
+                                    <td class="px-6 py-5 font-semibold">
+
+                                        ₹<%= order.total %>
+
+                                    </td>
+
+
+                                    <!-- PAYMENT -->
+
+                                    <td class="px-6 py-5">
+
+                                        <p class="font-medium uppercase text-xs">
+                                            <%= order.paymentMethod || '—' %>
+                                        </p>
+
+                                        <p class="text-xs text-[#8B7765] mt-1">
+                                            <%= order.paymentStatus || '—' %>
+                                        </p>
+
+                                    </td>
+
+
+                                    <!-- STATUS -->
+
+                                    <td class="px-6 py-5">
+
+                                        <% if (order.status === 'Delivered') { %>
+
+                                            <span class="px-3 py-1.5 rounded-full
+                                                         text-xs font-semibold
+                                                         bg-green-100 text-green-700">
+                                                Delivered
+                                            </span>
+
+                                        <% } else if (order.status === 'Cancelled') { %>
+
+                                            <span class="px-3 py-1.5 rounded-full
+                                                         text-xs font-semibold
+                                                         bg-red-100 text-red-700">
+                                                Cancelled
+                                            </span>
+
+                                        <% } else if (order.status === 'Out for Delivery') { %>
+
+                                            <span class="px-3 py-1.5 rounded-full
+                                                         text-xs font-semibold
+                                                         bg-blue-100 text-blue-700">
+                                                Out for Delivery
+                                            </span>
+
+                                        <% } else if (order.status === 'Baking') { %>
+
+                                            <span class="px-3 py-1.5 rounded-full
+                                                         text-xs font-semibold
+                                                         bg-orange-100 text-orange-700">
+                                                Baking
+                                            </span>
+
+                                        <% } else { %>
+
+                                            <span class="px-3 py-1.5 rounded-full
+                                                         text-xs font-semibold
+                                                         bg-[#F8EFD8] text-[#7A5A2D]">
+                                                Preparing
+                                            </span>
+
+                                        <% } %>
+
+                                    </td>
+
+
+                                    <!-- VIEW -->
+
+                                    <td class="px-6 py-5 text-right">
+
+                                        <a
+                                            href="/admin/orders/<%= order._id %>"
+                                            class="inline-flex items-center justify-center
+                                                   w-9 h-9 rounded-lg
+                                                   hover:bg-[#F8EFD8] transition
+                                                   text-[#8B7765] hover:text-[#4A3428]"
+                                            title="View Order"
+                                        >
+
+                                            <i class="fa-solid fa-chevron-right"></i>
+
+                                        </a>
+
+                                    </td>
+
+
+                                </tr>
+
+
+                            <% }) %>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- NO FILTER RESULTS -->
+
+                <div
+                    id="no-results"
+                    class="hidden py-16 text-center"
+                >
+
+                    <div class="w-14 h-14 mx-auto rounded-full
+                                bg-[#F8EFD8] flex items-center justify-center">
+
+                        <i class="fa-solid fa-magnifying-glass
+                                  text-xl text-[#C9A36B]"></i>
+
+                    </div>
+
+                    <p class="font-semibold mt-4">
+                        No matching orders
+                    </p>
+
+                    <p class="text-sm text-[#8B7765] mt-1">
+                        Try changing your search or filter.
+                    </p>
+
+                </div>
+
+
+            <% } else {%>
+
+
+                <!-- EMPTY -->
+
+                <div class="py-20 text-center">
+
+                    <div class="w-16 h-16 mx-auto rounded-full
+                                bg-[#F8EFD8] flex items-center justify-center">
+
+                        <i class="fa-solid fa-bag-shopping
+                                  text-2xl text-[#C9A36B]"></i>
+
+                    </div>
+
+                    <h2 class="font-serif text-3xl mt-6">
+                        No Orders Yet
+                    </h2>
+
+                    <p class="text-[#8B7765] mt-2">
+                        Customer orders will appear here.
+                    </p>
+
+                </div>
+
+
+            <% } %>
+
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+<!-- SCRIPT -->
+
+<script>
+
+    const searchInput = document.querySelector('#order-search')
+    const statusFilter = document.querySelector('#status-filter')
+    const sortSelect = document.querySelector('#order-sort')
+
+    const rowsContainer = document.querySelector('#orders-table')
+    const noResults = document.querySelector('#no-results')
+
+
+    function updateOrders() {
+
+        if (!rowsContainer) return
+
+        const search = searchInput.value.trim().toLowerCase()
+        const status = statusFilter.value
+
+        const rows = [...rowsContainer.querySelectorAll('.order-row')]
+
+
+        let visibleRows = rows.filter(row => {
+
+            const rowSearch = row.dataset.search.toLowerCase()
+            const rowStatus = row.dataset.status
+
+            const matchesSearch =
+                !search || rowSearch.includes(search)
+
+            const matchesStatus =
+                !status || rowStatus === status
+
+            return matchesSearch && matchesStatus
+
+        })
+
+
+        // SORT
+
+        const sort = sortSelect.value
+
+        visibleRows.sort((a, b) => {
+
+            if (sort === 'highest') {
+
+                return Number(b.dataset.total) - Number(a.dataset.total)
+
+            }
+
+            if (sort === 'lowest') {
+
+                return Number(a.dataset.total) - Number(b.dataset.total)
+
+            }
+
+            if (sort === 'oldest') {
+
+                return Number(a.dataset.date) - Number(b.dataset.date)
+
+            }
+
+            return Number(b.dataset.date) - Number(a.dataset.date)
+
+        })
+
+
+        rows.forEach(row => {
+
+            row.classList.add('hidden')
+
+        })
+
+
+        visibleRows.forEach(row => {
+
+            row.classList.remove('hidden')
+            rowsContainer.appendChild(row)
+
+        })
+
+
+        noResults?.classList.toggle(
+            'hidden',
+            visibleRows.length !== 0
+        )
+
+    }
+
+
+    searchInput?.addEventListener('input', updateOrders)
+    statusFilter?.addEventListener('change', updateOrders)
+    sortSelect?.addEventListener('change', updateOrders)
+
+
+    // MOBILE SIDEBAR
+
+    const sidebar = document.querySelector('#sidebar')
+    const mobileMenuButton = document.querySelector('#mobile-menu-button')
+    const sidebarOverlay = document.querySelector('#sidebar-overlay')
+
+
+    mobileMenuButton?.addEventListener('click', () => {
+
+        sidebar.classList.toggle('-translate-x-full')
+        sidebarOverlay.classList.toggle('hidden')
+
+    })
+
+
+    sidebarOverlay?.addEventListener('click', () => {
+
+        sidebar.classList.add('-translate-x-full')
+        sidebarOverlay.classList.add('hidden')
+
+    })
+
+</script>
+
+
+</body>
+
+</html>

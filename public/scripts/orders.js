@@ -86,7 +86,7 @@ function reorder(e) {
     const reorderId = e.currentTarget.getAttribute('data-id')
 
     showLoading('Preparing your previous order...');
-    console.log('dfdf')
+    ('dfdf')
     window.location.href = `/checkout?reorderId=${reorderId}`
 } 
 
