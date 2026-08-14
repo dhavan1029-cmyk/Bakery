@@ -126,3 +126,38 @@ export function renderAddProduct(req, res) {
     })
 
 }
+
+export async function renderEditProduct(req, res) {
+
+    try {
+
+        const { id } = req.params;
+
+        const product = await productModel.findById(id);
+
+        if (!product) {
+            return res.status(404).render('admin/products/edit', {
+                product: null,
+                error: 'Product not found.',
+                formData: null
+            });
+        }
+
+        res.render('admin/products/edit', {
+            product,
+            error: '',
+            formData: null
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        return res.status(500).render('admin/products/edit', {
+            product: null,
+            error: 'Unable to load the product.',
+            formData: null
+        });
+
+    }
+}
