@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Order Details | FLOURish Admin</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+
+</head>
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen">
+
+
+<!-- MOBILE HEADER -->
+
+<header class="lg:hidden bg-white border-b border-[#E8DCCB] h-16 px-5 flex items-center justify-between">
+
+    <a href="/admin/dashboard" class="flex items-center gap-2">
+
+        <i class="fa-solid fa-wheat-awn text-2xl text-[#C9A36B]"></i>
+
+        <h1 class="font-serif text-2xl">
+            FLOUR<span class="italic text-[#C9A36B]">ish</span>
+        </h1>
+
+    </a>
+
+    <button
+        id="mobile-menu-button"
+        class="w-10 h-10 rounded-xl hover:bg-[#F8F4EE]"
+    >
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+</header>
+
+
+<!-- SIDEBAR -->
+
+<aside
+    id="sidebar"
+    class="fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-[#E8DCCB]
+           z-50 -translate-x-full lg:translate-x-0 transition-transform duration-300"
+>
+
+    <div class="h-20 px-6 flex items-center border-b border-[#E8DCCB]">
+
+        <a href="/admin/dashboard" class="flex items-center gap-3">
+
+            <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+            <h1 class="font-serif text-3xl">
+                FLOUR<span class="italic text-[#C9A36B]">ish</span>
+            </h1>
+
+        </a>
+
+    </div>
+
+
+    <nav class="p-4 space-y-2">
+
+        <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
+            Management
+        </p>
+
+
+        <a
+            href="/admin/dashboard"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE]"
+        >
+            <i class="fa-solid fa-chart-line w-5 text-[#8B7765]"></i>
+            Dashboard
+        </a>
+
+
+        <a
+            href="/admin/orders"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl
+                   bg-[#F8EFD8] font-semibold"
+        >
+            <i class="fa-solid fa-bag-shopping w-5 text-[#C9A36B]"></i>
+            Orders
+        </a>
+
+
+        <a
+            href="/admin/products"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE]"
+        >
+            <i class="fa-solid fa-box w-5 text-[#8B7765]"></i>
+            Products
+        </a>
+
+
+        <a
+            href="/admin/customers"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE]"
+        >
+            <i class="fa-solid fa-users w-5 text-[#8B7765]"></i>
+            Customers
+        </a>
+
+
+        <div class="pt-5">
+
+            <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
+                Website
+            </p>
+
+
+            <a
+                href="/"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE]"
+            >
+                <i class="fa-solid fa-arrow-up-right-from-square w-5 text-[#8B7765]"></i>
+                View Website
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-[#E8DCCB]">
+
+        <div class="flex items-center gap-3 px-3 py-3">
+
+            <div class="w-10 h-10 rounded-full bg-[#F8EFD8] flex items-center justify-center">
+
+                <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
+
+            </div>
+
+
+            <div>
+
+                <p class="font-semibold text-sm">
+                    Admin
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form action="/admin/logout" method="POST">
+
+            <button
+                class="w-full flex items-center gap-3 px-4 py-3 rounded-xl
+                       text-red-600 hover:bg-red-50 transition"
+            >
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
+                Logout
+            </button>
+
+        </form>
+
+    </div>
+
+</aside>
+
+
+<!-- MOBILE OVERLAY -->
+
+<div
+    id="sidebar-overlay"
+    class="fixed inset-0 bg-black/30 z-40 hidden lg:hidden"
+></div>
+
+
+<!-- MAIN -->
+
+<main class="lg:ml-64 min-h-screen">
+
+
+    <!-- TOP BAR -->
+
+    <header class="hidden lg:flex h-20 bg-white border-b border-[#E8DCCB]
+                   px-8 items-center justify-between">
+
+        <div>
+
+            <p class="text-sm text-[#8B7765]">
+                Administration
+            </p>
+
+            <h2 class="font-serif text-2xl">
+                Order Details
+            </h2>
+
+        </div>
+
+
+        <div class="flex items-center gap-3">
+
+            <div class="w-10 h-10 rounded-full bg-[#F8EFD8] flex items-center justify-center">
+
+                <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
+
+            </div>
+
+            <div>
+
+                <p class="font-semibold text-sm">
+                    Admin
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <section class="p-5 sm:p-8 max-w-7xl mx-auto">
+
+
+        <!-- BACK -->
+
+        <a
+            href="/admin/orders"
+            class="inline-flex items-center gap-2 text-[#8B7765]
+                   hover:text-[#4A3428] transition mb-6"
+        >
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Orders
+
+        </a>
+
+
+        <!-- ORDER HEADER -->
+
+        <div class="flex flex-col md:flex-row md:items-center
+                    justify-between gap-5 mb-8">
+
+
+            <div>
+
+                <p class="text-sm text-[#8B7765]">
+                    Order
+                </p>
+
+                <h1 class="font-serif text-4xl sm:text-5xl">
+
+                    #<%= order._id.toString().slice(-6).toUpperCase() %>
+
+                </h1>
+
+
+                <p class="text-sm text-[#8B7765] mt-2">
+
+                    Placed on
+                    <%= new Date(order.createdAt).toLocaleString() %>
+
+                </p>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="bg-white border border-[#E8DCCB]
+                        rounded-2xl p-4">
+
+                <p class="text-xs uppercase tracking-widest
+                          text-[#8B7765] mb-2">
+                    Order Status
+                </p>
+
+
+                <form
+                    action="/admin/orders/<%= order._id %>/status"
+                    method="POST"
+                >
+
+                    <div class="flex gap-2">
+
+                        <select
+                            name="status"
+                            class="border border-[#E8DCCB] rounded-xl
+                                   px-4 py-2.5 bg-white outline-none
+                                   focus:border-[#C9A36B]"
+                        >
+
+                            <option
+                                value="Preparing"
+                                <%= order.status === 'Preparing' ? 'selected' : '' %>
+                            >
+                                Preparing
+                            </option>
+
+                            <option
+                                value="Baking"
+                                <%= order.status === 'Baking' ? 'selected' : '' %>
+                            >
+                                Baking
+                            </option>
+
+                            <option
+                                value="Out for Delivery"
+                                <%= order.status === 'Out for Delivery' ? 'selected' : '' %>
+                            >
+                                Out for Delivery
+                            </option>
+
+                            <option
+                                value="Delivered"
+                                <%= order.status === 'Delivered' ? 'selected' : '' %>
+                            >
+                                Delivered
+                            </option>
+
+                            <option
+                                value="Cancelled"
+                                <%= order.status === 'Cancelled' ? 'selected' : '' %>
+                            >
+                                Cancelled
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="submit"
+                            class="px-4 py-2.5 bg-[#C9A36B]
+                                   hover:bg-[#B89056] rounded-xl
+                                   font-semibold transition"
+                        >
+                            Update
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- GRID -->
+
+        <div class="grid lg:grid-cols-3 gap-6">
+
+
+            <!-- LEFT -->
+
+            <div class="lg:col-span-2 space-y-6">
+
+
+                <!-- PRODUCTS -->
+
+                <div class="bg-white border border-[#E8DCCB]
+                            rounded-2xl shadow-sm overflow-hidden">
+
+
+                    <div class="px-6 py-5 border-b border-[#E8DCCB]">
+
+                        <h2 class="font-serif text-2xl">
+                            Ordered Items
+                        </h2>
+
+                    </div>
+
+
+                    <div class="divide-y divide-[#F0E9DF]">
+
+
+                        <% order.products.forEach(item => { %>
+
+
+                            <div class="p-6 flex gap-5">
+
+
+                                <!-- IMAGE -->
+
+                                <div
+                                    class="w-24 h-24 rounded-xl bg-[#E8DCCB]
+                                           shrink-0 bg-cover bg-center"
+                                    <% if (item.product?.image) { %>
+                                        style="background-image:url('<%= item.product.image %>')"
+                                    <% } %>
+                                ></div>
+
+
+                                <!-- INFO -->
+
+                                <div class="flex-1 min-w-0">
+
+                                    <p class="text-xs uppercase tracking-wide
+                                              text-[#C9A36B]">
+                                        <%= item.product?.category || 'Product' %>
+                                    </p>
+
+
+                                    <h3 class="font-semibold text-lg mt-1">
+
+                                        <%= item.product?.name || 'Product unavailable' %>
+
+                                    </h3>
+
+
+                                    <p class="text-sm text-[#8B7765] mt-1">
+
+                                        ₹<%= item.orderPrice %>
+                                        ×
+                                        <%= item.quantity %>
+
+                                    </p>
+
+                                </div>
+
+
+                                <!-- TOTAL -->
+
+                                <div class="text-right">
+
+                                    <p class="font-bold text-lg">
+
+                                        ₹<%= item.orderPrice * item.quantity %>
+
+                                    </p>
+
+                                </div>
+
+
+                            </div>
+
+
+                        <% }) %>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- ORDER NOTES -->
+
+                <% if (order.orderNotes) { %>
+
+                    <div class="bg-white border border-[#E8DCCB]
+                                rounded-2xl shadow-sm p-6">
+
+                        <div class="flex gap-4">
+
+                            <div class="w-10 h-10 rounded-full
+                                        bg-[#F8EFD8] flex items-center
+                                        justify-center shrink-0">
+
+                                <i class="fa-solid fa-note-sticky text-[#C9A36B]"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <h2 class="font-semibold">
+                                    Order Notes
+                                </h2>
+
+                                <p class="text-[#6B5B50] mt-2 leading-relaxed">
+
+                                    <%= order.orderNotes %>
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <% } %>
+
+
+            </div>
+
+
+            <!-- RIGHT -->
+
+            <div class="space-y-6">
+
+
+                <!-- CUSTOMER -->
+
+                <div class="bg-white border border-[#E8DCCB]
+                            rounded-2xl shadow-sm p-6">
+
+                    <h2 class="font-serif text-2xl mb-5">
+                        Customer
+                    </h2>
+
+
+                    <div class="space-y-4">
+
+
+                        <div class="flex gap-3">
+
+                            <i class="fa-solid fa-user text-[#C9A36B] mt-1 w-5"></i>
+
+                            <div>
+
+                                <p class="text-xs text-[#8B7765]">
+                                    Name
+                                </p>
+
+                                <p class="font-medium">
+                                    <%= order.deliveryAddress?.fullName || '—' %>
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="flex gap-3">
+
+                            <i class="fa-solid fa-phone text-[#C9A36B] mt-1 w-5"></i>
+
+                            <div>
+
+                                <p class="text-xs text-[#8B7765]">
+                                    Phone
+                                </p>
+
+                                <p class="font-medium">
+                                    <%= order.deliveryAddress?.phone || '—' %>
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- DELIVERY -->
+
+                <div class="bg-white border border-[#E8DCCB]
+                            rounded-2xl shadow-sm p-6">
+
+                    <h2 class="font-serif text-2xl mb-5">
+                        Delivery Address
+                    </h2>
+
+
+                    <div class="text-[#6B5B50] leading-relaxed">
+
+                        <p>
+                            <%= order.deliveryAddress?.house || '' %>
+                        </p>
+
+                        <p>
+                            <%= order.deliveryAddress?.address || '' %>
+                        </p>
+
+
+                        <% if (order.deliveryAddress?.landmark) { %>
+
+                            <p>
+                                <%= order.deliveryAddress.landmark %>
+                            </p>
+
+                        <% } %>
+
+
+                        <p>
+
+                            <%= order.deliveryAddress?.city || '' %>,
+                            <%= order.deliveryAddress?.state || '' %>
+
+                        </p>
+
+
+                        <p>
+                            <%= order.deliveryAddress?.pincode || '' %>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAYMENT -->
+
+                <div class="bg-white border border-[#E8DCCB]
+                            rounded-2xl shadow-sm p-6">
+
+                    <h2 class="font-serif text-2xl mb-5">
+                        Payment
+                    </h2>
+
+
+                    <div class="space-y-4">
+
+
+                        <div class="flex justify-between">
+
+                            <span class="text-[#8B7765]">
+                                Method
+                            </span>
+
+                            <span class="font-semibold uppercase">
+                                <%= order.paymentMethod || '—' %>
+                            </span>
+
+                        </div>
+
+
+                        <div class="flex justify-between">
+
+                            <span class="text-[#8B7765]">
+                                Status
+                            </span>
+
+                            <span
+                                class="<%= order.paymentStatus === 'Paid'
+                                    ? 'text-green-600'
+                                    : 'text-amber-600' %>
+                                       font-semibold"
+                            >
+                                <%= order.paymentStatus || '—' %>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="bg-white border border-[#E8DCCB]
+                            rounded-2xl shadow-sm p-6">
+
+                    <h2 class="font-serif text-2xl mb-5">
+                        Order Total
+                    </h2>
+
+
+                    <div class="space-y-3 text-sm">
+
+
+                        <div class="flex justify-between">
+
+                            <span class="text-[#8B7765]">
+                                Subtotal
+                            </span>
+
+                            <span>
+                                ₹<%= order.subtotal %>
+                            </span>
+
+                        </div>
+
+
+                        <div class="flex justify-between">
+
+                            <span class="text-[#8B7765]">
+                                Delivery
+                            </span>
+
+                            <span>
+                                ₹<%= order.deliveryFee %>
+                            </span>
+
+                        </div>
+
+
+                        <div class="border-t border-[#E8DCCB]
+                                    pt-4 mt-4 flex justify-between
+                                    font-bold text-xl">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <span>
+                                ₹<%= order.total %>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+<script>
+
+    const sidebar = document.querySelector('#sidebar')
+    const mobileMenuButton = document.querySelector('#mobile-menu-button')
+    const sidebarOverlay = document.querySelector('#sidebar-overlay')
+
+
+    mobileMenuButton?.addEventListener('click', () => {
+
+        sidebar.classList.toggle('-translate-x-full')
+        sidebarOverlay.classList.toggle('hidden')
+
+    })
+
+
+    sidebarOverlay?.addEventListener('click', () => {
+
+        sidebar.classList.add('-translate-x-full')
+        sidebarOverlay.classList.add('hidden')
+
+    })
+
+</script>
+
+
+</body>
+
+</html>

@@ -9,7 +9,7 @@ export async function checkAdminAuth (req, res, next) {
 
         if(!token){
             res.locals.admin = null
-            return next()
+            return res.redirect('/admin/login')
         }
 
         const decodedToken = jwt.verify(token, process.env.JWT_CODE)
@@ -19,7 +19,7 @@ export async function checkAdminAuth (req, res, next) {
 
         if(!admin){
             res.clearCookie('admin')
-            return next()
+            return res.redirect('/admin/login')
         }
 
         next()

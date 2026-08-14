@@ -1,14 +1,17 @@
 import express from 'express'
-import { getLoginPage, getOrders, loginAdmin, renderDashboard } from '../controllers/adminController.js'
+import { getLoginPage, getOrder, getOrders, loginAdmin, renderDashboard } from '../controllers/adminController.js'
+import { checkAdminAuth } from '../middlewares/adminMiddleware.js'
 
 const router = express.Router()
 
 router.get('/admin/login', getLoginPage)
 
-router.get('/admin/dashboard', renderDashboard)
+router.get('/admin/dashboard', checkAdminAuth, renderDashboard)
 
 router.post('/admin/login', loginAdmin)
 
-router.get('/admin/orders', getOrders)
+router.get('/admin/orders', checkAdminAuth, getOrders)
+
+router.get('/admin/orders/:id', checkAdminAuth, getOrder)
 
 export default router

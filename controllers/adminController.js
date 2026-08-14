@@ -75,3 +75,25 @@ export async function getOrders(req, res) {
 
     }
 }
+
+export async function getOrder(req, res) {
+    try {
+
+        const order = await ordersModel
+            .findById(req.params.id)
+            .populate('products.product')
+            .populate('userID', 'username email');
+
+        if (!order) {
+            return res.redirect('/admin/orders');
+        }
+
+        res.render('admin/order', { order });
+
+    } catch (err) {
+
+        console.error(err);
+        res.redirect('/serverError');
+
+    }
+}
