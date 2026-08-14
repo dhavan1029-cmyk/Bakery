@@ -53,12 +53,12 @@ export async function getCartItems(req, res) {
         const cartItems = user.cart
 
         const {subtotal, total} = calculateTotal(user)
-        (prices)
+        
         res.render('cart', {cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, err: false, prices})
         
     } catch (err) {
         res.render('cart', {cartItems: [], err})
-        (err)
+        console.log(err)
     }  
 }
 

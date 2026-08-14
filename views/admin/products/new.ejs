@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Product | FLOURish Admin</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+</head>
+
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen flex flex-col">
+
+
+    <!-- NAVBAR -->
+
+    <nav class="bg-white border-b border-[#E8DCCB] sticky top-0 z-50">
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="h-20 flex items-center justify-between">
+
+                <a href="/admin/dashboard" class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+                    <h1 class="font-serif text-4xl">
+                        FLOUR<span class="italic text-[#C9A36B]">ish</span>
+                    </h1>
+
+                </a>
+
+
+                <div class="flex items-center gap-6">
+
+                    <a
+                        href="/admin/products"
+                        class="text-sm hover:text-[#C9A36B] transition"
+                    >
+                        <i class="fa-solid fa-arrow-left mr-2"></i>
+                        Products
+                    </a>
+
+
+                    <a
+                        href="/admin/logout"
+                        class="text-sm hover:text-[#C9A36B] transition"
+                    >
+                        Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- MAIN -->
+
+    <main class="flex-1 max-w-5xl w-full mx-auto px-6 py-12">
+
+
+        <!-- HEADER -->
+
+        <div class="mb-10">
+
+            <p class="text-sm uppercase tracking-widest text-[#C9A36B] font-semibold">
+                Product Management
+            </p>
+
+            <h1 class="font-serif text-5xl mt-2">
+                Add Product
+            </h1>
+
+            <p class="mt-3 text-[#6B5B50]">
+                Add a new product to your bakery menu.
+            </p>
+
+        </div>
+
+
+
+        <!-- ERROR -->
+
+        <% if (error) { %>
+
+            <div class="mb-8 bg-red-50 border border-red-200 text-red-700 rounded-xl px-5 py-4">
+
+                <div class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-circle-exclamation"></i>
+
+                    <p>
+                        <%= error %>
+                    </p>
+
+                </div>
+
+            </div>
+
+        <% } %>
+
+
+
+        <!-- FORM -->
+
+        <form
+            action="/admin/products/new"
+            method="POST"
+            class="bg-white rounded-3xl shadow-sm border border-[#E8DCCB] p-8"
+        >
+
+            <div class="space-y-10">
+
+
+                <!-- BASIC INFORMATION -->
+
+                <section>
+
+                    <h2 class="font-serif text-3xl">
+                        Basic Information
+                    </h2>
+
+                    <p class="text-sm text-[#6B5B50] mt-1 mb-6">
+                        Enter the details customers will see on the menu.
+                    </p>
+
+
+                    <!-- NAME -->
+
+                    <div>
+
+                        <label
+                            for="name"
+                            class="block mb-2 font-medium"
+                        >
+                            Product Name
+                        </label>
+
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            required
+                            value="<%= formData?.name || '' %>"
+                            placeholder="Chocolate Cake"
+                            class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 outline-none focus:border-[#C9A36B]"
+                        >
+
+                    </div>
+
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="mt-6">
+
+                        <label
+                            for="category"
+                            class="block mb-2 font-medium"
+                        >
+                            Category
+                        </label>
+
+                        <input
+                            id="category"
+                            type="text"
+                            name="category"
+                            required
+                            value="<%= formData?.category || '' %>"
+                            placeholder="Cakes"
+                            class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 outline-none focus:border-[#C9A36B]"
+                        >
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="mt-6">
+
+                        <label
+                            for="description"
+                            class="block mb-2 font-medium"
+                        >
+                            Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="5"
+                            required
+                            placeholder="Describe the product..."
+                            class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 outline-none focus:border-[#C9A36B] resize-none"
+                        ><%= formData?.description || '' %></textarea>
+
+                    </div>
+
+                </section>
+
+
+
+                <div class="border-t border-[#E8DCCB]"></div>
+
+
+
+                <!-- IMAGE -->
+
+                <section>
+
+                    <h2 class="font-serif text-3xl">
+                        Product Image
+                    </h2>
+
+                    <p class="text-sm text-[#6B5B50] mt-1 mb-6">
+                        Provide the image URL for this product.
+                    </p>
+
+
+                    <label
+                        for="image"
+                        class="block mb-2 font-medium"
+                    >
+                        Image URL
+                    </label>
+
+
+                    <input
+                        id="image"
+                        type="url"
+                        name="image"
+                        required
+                        value="<%= formData?.image || '' %>"
+                        placeholder="https://example.com/product.jpg"
+                        class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 outline-none focus:border-[#C9A36B]"
+                    >
+
+                </section>
+
+
+
+                <div class="border-t border-[#E8DCCB]"></div>
+
+
+
+                <!-- PRICE -->
+
+                <section>
+
+                    <h2 class="font-serif text-3xl">
+                        Pricing
+                    </h2>
+
+                    <p class="text-sm text-[#6B5B50] mt-1 mb-6">
+                        Set the current selling price.
+                    </p>
+
+
+                    <label
+                        for="price"
+                        class="block mb-2 font-medium"
+                    >
+                        Price
+                    </label>
+
+
+                    <div class="relative">
+
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[#8B7765]">
+                            ₹
+                        </span>
+
+                        <input
+                            id="price"
+                            type="number"
+                            name="price"
+                            required
+                            min="0"
+                            step="0.01"
+                            value="<%= formData?.price || '' %>"
+                            placeholder="499"
+                            class="w-full border border-[#E8DCCB] rounded-xl pl-9 pr-4 py-3 outline-none focus:border-[#C9A36B]"
+                        >
+
+                    </div>
+
+                </section>
+
+
+
+                <div class="border-t border-[#E8DCCB]"></div>
+
+
+
+                <!-- PRODUCT UNIT & ORDERING -->
+
+                <section>
+                
+                    <h2 class="font-serif text-3xl">
+                        Product Unit & Ordering
+                    </h2>
+                
+                    <p class="text-sm text-[#6B5B50] mt-1 mb-6">
+                        Define how the product is sold and how many units a customer can order.
+                    </p>
+                
+                
+                    <div class="grid md:grid-cols-2 gap-6">
+                    
+                    
+                        <!-- ITEMS PER UNIT -->
+                    
+                        <div>
+                        
+                            <label
+                                for="quantity"
+                                class="block mb-2 font-medium"
+                            >
+                                Items Per Unit
+                            </label>
+                        
+                            <input
+                                id="quantity"
+                                type="number"
+                                name="quantity"
+                                required
+                                min="1"
+                                step="1"
+                                value="<%= formData?.quantity ?? 1 %>"
+                                class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 outline-none focus:border-[#C9A36B]"
+                            >
+                        
+                            <p class="text-xs text-[#8B7765] mt-2">
+                                Number of individual items included in one purchasable unit.
+                            </p>
+                        
+                        </div>
+                    
+                    
+                        <!-- MAX UNITS PER ORDER -->
+                    
+                        <div>
+                        
+                            <label
+                                for="maxQuantityPerOrder"
+                                class="block mb-2 font-medium"
+                            >
+                                Maximum Units Per Order
+                            </label>
+                        
+                            <input
+                                id="maxQuantityPerOrder"
+                                type="number"
+                                name="maxQuantityPerOrder"
+                                required
+                                min="1"
+                                step="1"
+                                value="<%= formData?.maxQuantityPerOrder ?? 1 %>"
+                                class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 outline-none focus:border-[#C9A36B]"
+                            >
+                        
+                            <p class="text-xs text-[#8B7765] mt-2">
+                                Maximum number of units a customer can purchase in one order.
+                            </p>
+                        
+                        </div>
+                    
+                    </div>
+                
+                </section>
+
+
+
+                <div class="border-t border-[#E8DCCB]"></div>
+
+
+
+                <!-- AVAILABILITY -->
+
+                <section>
+
+                    <h2 class="font-serif text-3xl">
+                        Availability
+                    </h2>
+
+                    <p class="text-sm text-[#6B5B50] mt-1 mb-6">
+                        Control whether customers can currently purchase this product.
+                    </p>
+
+
+                    <label class="flex items-center gap-4 border border-[#E8DCCB] rounded-2xl p-5 cursor-pointer hover:border-[#C9A36B] transition">
+
+                        <input
+                            type="checkbox"
+                            name="availability"
+                            value="true"
+                            <%= formData?.availability !== false ? 'checked' : '' %>
+                            class="w-5 h-5 accent-[#C9A36B]"
+                        >
+
+
+                        <div>
+
+                            <p class="font-semibold">
+                                Product Available
+                            </p>
+
+                            <p class="text-sm text-[#6B5B50] mt-1">
+                                Customers can order this product.
+                            </p>
+
+                        </div>
+
+                    </label>
+
+                </section>
+
+
+
+                <!-- ACTIONS -->
+
+                <div class="flex flex-col sm:flex-row gap-4 pt-2">
+
+
+                    <button
+                        type="submit"
+                        class="flex-1 bg-[#C9A36B] hover:bg-[#B89056] rounded-xl py-4 font-semibold transition"
+                    >
+
+                        <i class="fa-solid fa-plus mr-2"></i>
+
+                        Add Product
+
+                    </button>
+
+
+                    <a
+                        href="/admin/products"
+                        class="flex-1 border border-[#E8DCCB] hover:bg-[#F8F4EE] rounded-xl py-4 font-semibold text-center transition"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </main>
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="bg-gradient-to-b from-[#3A2E25] to-[#241B15] text-[#F8F4EE] py-8 text-center">
+
+        <p class="text-[#6B5B50]">
+            © 2026 FLOURish Bakery. All rights reserved.
+        </p>
+
+    </footer>
+
+
+
+    <%- include('../../loadAnimation') %>
+
+    <script src="/scripts/load.js"></script>
+
+    <script>
+
+        window.addEventListener('pageshow', () => {
+            hideLoading()
+        })
+
+
+        const productForm = document.querySelector('form')
+
+        productForm.addEventListener('submit', () => {
+            showLoading('Adding product...')
+        })
+
+    </script>
+
+</body>
+
+</html>

@@ -97,3 +97,32 @@ export async function getOrder(req, res) {
 
     }
 }
+
+export async function getProducts(req, res) {
+    try {
+
+        const products = await productModel
+            .find()
+            .sort({ createdAt: -1 });
+
+        res.render('admin/products', {
+            products
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.redirect('/serverError');
+
+    }
+}
+
+export function renderAddProduct(req, res) {
+
+    res.render('admin/products/new', {
+        error: '',
+        formData: {}
+    })
+
+}

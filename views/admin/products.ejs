@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Products | FLOURish Admin</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+
+</head>
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen">
+
+
+<!-- MOBILE HEADER -->
+
+<header class="lg:hidden bg-white border-b border-[#E8DCCB] h-16 px-5 flex items-center justify-between">
+
+    <a href="/admin/dashboard" class="flex items-center gap-2">
+
+        <i class="fa-solid fa-wheat-awn text-2xl text-[#C9A36B]"></i>
+
+        <h1 class="font-serif text-2xl">
+            FLOUR<span class="italic text-[#C9A36B]">ish</span>
+        </h1>
+
+    </a>
+
+    <button
+        id="mobile-menu-button"
+        class="w-10 h-10 rounded-xl hover:bg-[#F8F4EE]"
+    >
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+</header>
+
+
+<!-- SIDEBAR -->
+
+<aside
+    id="sidebar"
+    class="fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-[#E8DCCB]
+           z-50 -translate-x-full lg:translate-x-0 transition-transform duration-300"
+>
+
+    <div class="h-20 px-6 flex items-center border-b border-[#E8DCCB]">
+
+        <a href="/admin/dashboard" class="flex items-center gap-3">
+
+            <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+            <h1 class="font-serif text-3xl">
+                FLOUR<span class="italic text-[#C9A36B]">ish</span>
+            </h1>
+
+        </a>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="p-4 space-y-2">
+
+        <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
+            Management
+        </p>
+
+
+        <a
+            href="/admin/dashboard"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+            <i class="fa-solid fa-chart-line w-5 text-[#8B7765]"></i>
+            Dashboard
+        </a>
+
+
+        <a
+            href="/admin/orders"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+            <i class="fa-solid fa-bag-shopping w-5 text-[#8B7765]"></i>
+            Orders
+        </a>
+
+
+        <a
+            href="/admin/products"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl
+                   bg-[#F8EFD8] font-semibold"
+        >
+            <i class="fa-solid fa-box w-5 text-[#C9A36B]"></i>
+            Products
+        </a>
+
+
+        <a
+            href="/admin/customers"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+            <i class="fa-solid fa-users w-5 text-[#8B7765]"></i>
+            Customers
+        </a>
+
+
+        <div class="pt-5">
+
+            <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
+                Website
+            </p>
+
+
+            <a
+                href="/"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+            >
+                <i class="fa-solid fa-arrow-up-right-from-square w-5 text-[#8B7765]"></i>
+                View Website
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ADMIN -->
+
+    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-[#E8DCCB]">
+
+        <div class="flex items-center gap-3 px-3 py-3">
+
+            <div class="w-10 h-10 rounded-full bg-[#F8EFD8] flex items-center justify-center">
+
+                <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
+
+            </div>
+
+
+            <div>
+
+                <p class="font-semibold text-sm">
+                    Admin
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form action="/admin/logout" method="POST">
+
+            <button
+                type="submit"
+                class="w-full flex items-center gap-3 px-4 py-3 rounded-xl
+                       text-red-600 hover:bg-red-50 transition"
+            >
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
+                Logout
+            </button>
+
+        </form>
+
+    </div>
+
+</aside>
+
+
+<!-- MOBILE OVERLAY -->
+
+<div
+    id="sidebar-overlay"
+    class="fixed inset-0 bg-black/30 z-40 hidden lg:hidden"
+></div>
+
+
+<!-- MAIN -->
+
+<main class="lg:ml-64 min-h-screen">
+
+
+    <!-- DESKTOP HEADER -->
+
+    <header class="hidden lg:flex h-20 bg-white border-b border-[#E8DCCB]
+                   px-8 items-center justify-between">
+
+        <div>
+
+            <p class="text-sm text-[#8B7765]">
+                Administration
+            </p>
+
+            <h2 class="font-serif text-2xl">
+                Products
+            </h2>
+
+        </div>
+
+
+        <div class="flex items-center gap-3">
+
+            <div class="w-10 h-10 rounded-full bg-[#F8EFD8]
+                        flex items-center justify-center">
+
+                <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
+
+            </div>
+
+            <div>
+
+                <p class="font-semibold text-sm">
+                    Admin
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <section class="p-5 sm:p-8 max-w-7xl mx-auto">
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="flex flex-col sm:flex-row sm:items-end
+                    justify-between gap-5 mb-8">
+
+
+            <div>
+
+                <p class="text-[#8B7765]">
+                    Manage your bakery menu
+                </p>
+
+                <h1 class="font-serif text-4xl sm:text-5xl mt-1">
+                    Products
+                </h1>
+
+            </div>
+
+
+            <!-- ADD PRODUCT -->
+
+            <a
+                href="/admin/products/new"
+                class="inline-flex items-center justify-center gap-2
+                       bg-[#C9A36B] hover:bg-[#B89056]
+                       text-[#2F241D] font-semibold
+                       px-5 py-3 rounded-xl transition"
+            >
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Product
+
+            </a>
+
+        </div>
+
+
+        <!-- TOOLBAR -->
+
+        <div class="bg-white border border-[#E8DCCB]
+                    rounded-2xl p-5 shadow-sm mb-6">
+
+            <div class="flex flex-col md:flex-row gap-4">
+
+
+                <!-- SEARCH -->
+
+                <div class="relative flex-1">
+
+                    <i
+                        class="fa-solid fa-magnifying-glass
+                               absolute left-4 top-1/2
+                               -translate-y-1/2
+                               text-[#A18D7B]"
+                    ></i>
+
+                    <input
+                        id="product-search"
+                        type="text"
+                        placeholder="Search products..."
+                        class="w-full border border-[#E8DCCB]
+                               rounded-xl pl-11 pr-4 py-3
+                               outline-none
+                               focus:border-[#C9A36B]"
+                    >
+
+                </div>
+
+
+                <!-- AVAILABILITY -->
+
+                <select
+                    id="availability-filter"
+                    class="border border-[#E8DCCB]
+                           rounded-xl px-4 py-3
+                           bg-white outline-none
+                           focus:border-[#C9A36B]"
+                >
+
+                    <option value="">
+                        All Products
+                    </option>
+
+                    <option value="true">
+                        Available
+                    </option>
+
+                    <option value="false">
+                        Unavailable
+                    </option>
+
+                </select>
+
+
+                <!-- CATEGORY -->
+
+                <select
+                    id="category-filter"
+                    class="border border-[#E8DCCB]
+                           rounded-xl px-4 py-3
+                           bg-white outline-none
+                           focus:border-[#C9A36B]"
+                >
+
+                    <option value="">
+                        All Categories
+                    </option>
+
+                    <option value="cakes">
+                        Cakes
+                    </option>
+
+                    <option value="pastries">
+                        Pastries
+                    </option>
+
+                    <option value="breads">
+                        Breads
+                    </option>
+
+                    <option value="cookies">
+                        Cookies
+                    </option>
+
+                </select>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        <div
+            id="products-grid"
+            class="grid sm:grid-cols-2 xl:grid-cols-3
+                   gap-6"
+        >
+
+
+            <% if (products?.length) { %>
+
+
+                <% products.forEach(product => { %>
+
+
+                    <article
+                        class="product-card bg-white border border-[#E8DCCB]
+                               rounded-2xl overflow-hidden shadow-sm
+                               hover:shadow-md transition"
+                        data-name="<%= product.name %>"
+                        data-category="<%= product.category %>"
+                        data-available="<%= product.availability %>"
+                    >
+
+
+                        <!-- IMAGE -->
+
+                        <div class="relative h-52 bg-[#E8DCCB]">
+
+
+                            <% if (product.image) { %>
+
+                                <img
+                                    src="<%= product.image %>"
+                                    alt="<%= product.name %>"
+                                    class="w-full h-full object-cover"
+                                >
+
+                            <% } else { %>
+
+                                <div
+                                    class="w-full h-full flex items-center
+                                           justify-center text-[#A18D7B]"
+                                >
+
+                                    <i class="fa-solid fa-image text-4xl"></i>
+
+                                </div>
+
+                            <% } %>
+
+
+                            <!-- AVAILABILITY -->
+
+                            <div class="absolute top-4 right-4">
+
+                                <% if (product.availability) { %>
+
+                                    <span
+                                        class="px-3 py-1.5 rounded-full
+                                               bg-green-100 text-green-700
+                                               text-xs font-semibold"
+                                    >
+                                        Available
+                                    </span>
+
+                                <% } else { %>
+
+                                    <span
+                                        class="px-3 py-1.5 rounded-full
+                                               bg-red-100 text-red-700
+                                               text-xs font-semibold"
+                                    >
+                                        Unavailable
+                                    </span>
+
+                                <% } %>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- INFORMATION -->
+
+                        <div class="p-5">
+
+
+                            <p
+                                class="text-xs uppercase tracking-widest
+                                       text-[#C9A36B]"
+                            >
+                                <%= product.category %>
+                            </p>
+
+
+                            <h2 class="font-serif text-2xl mt-1">
+
+                                <%= product.name %>
+
+                            </h2>
+
+
+                            <div
+                                class="flex items-center
+                                       justify-between mt-4"
+                            >
+
+                                <p class="font-bold text-xl">
+
+                                    ₹<%= product.price %>
+
+                                </p>
+
+
+                                <p class="text-sm text-[#8B7765]">
+
+                                    Max:
+                                    <%= product.maxQuantityPerOrder %>
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- ACTIONS -->
+
+                            <div
+                                class="flex gap-3 mt-5 pt-5
+                                       border-t border-[#E8DCCB]"
+                            >
+
+
+                                <a
+                                    href="/admin/products/<%= product._id %>/edit"
+                                    class="flex-1 flex items-center
+                                           justify-center gap-2
+                                           border border-[#E8DCCB]
+                                           rounded-xl py-2.5
+                                           hover:bg-[#F8F4EE]
+                                           transition"
+                                >
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                    Edit
+
+                                </a>
+
+
+                                <form
+                                    action="/admin/products/<%= product._id %>/delete"
+                                    method="POST"
+                                    class="flex-1"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        onclick="return confirm('Delete this product?')"
+                                        class="w-full flex items-center
+                                               justify-center gap-2
+                                               border border-red-200
+                                               text-red-600
+                                               rounded-xl py-2.5
+                                               hover:bg-red-50
+                                               transition"
+                                    >
+
+                                        <i class="fa-solid fa-trash"></i>
+
+                                        Delete
+
+                                    </button>
+
+                                </form>
+
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                <% }) %>
+
+
+            <% } else { %>
+
+
+                <!-- EMPTY -->
+
+                <div
+                    class="sm:col-span-2 xl:col-span-3
+                           bg-white border border-[#E8DCCB]
+                           rounded-2xl py-20 text-center"
+                >
+
+                    <div
+                        class="w-16 h-16 mx-auto rounded-full
+                               bg-[#F8EFD8] flex items-center
+                               justify-center"
+                    >
+
+                        <i
+                            class="fa-solid fa-box-open
+                                   text-2xl text-[#C9A36B]"
+                        ></i>
+
+                    </div>
+
+
+                    <h2 class="font-serif text-3xl mt-6">
+                        No Products
+                    </h2>
+
+
+                    <p class="text-[#8B7765] mt-2">
+                        Add your first product to your bakery menu.
+                    </p>
+
+
+                    <a
+                        href="/admin/products/new"
+                        class="inline-flex items-center gap-2
+                               mt-6 bg-[#C9A36B]
+                               hover:bg-[#B89056]
+                               px-5 py-3 rounded-xl
+                               font-semibold"
+                    >
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Add Product
+
+                    </a>
+
+                </div>
+
+
+            <% } %>
+
+
+        </div>
+
+
+        <!-- NO FILTER RESULTS -->
+
+        <div
+            id="no-results"
+            class="hidden bg-white border border-[#E8DCCB]
+                   rounded-2xl py-16 text-center mt-6"
+        >
+
+            <div
+                class="w-14 h-14 mx-auto rounded-full
+                       bg-[#F8EFD8] flex items-center
+                       justify-center"
+            >
+
+                <i
+                    class="fa-solid fa-magnifying-glass
+                           text-xl text-[#C9A36B]"
+                ></i>
+
+            </div>
+
+
+            <h2 class="font-serif text-2xl mt-5">
+                No Matching Products
+            </h2>
+
+
+            <p class="text-sm text-[#8B7765] mt-2">
+                Try changing your search or filters.
+            </p>
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+<!-- SCRIPT -->
+
+<script>
+
+    const searchInput =
+        document.querySelector('#product-search')
+
+    const availabilityFilter =
+        document.querySelector('#availability-filter')
+
+    const categoryFilter =
+        document.querySelector('#category-filter')
+
+    const cards =
+        [...document.querySelectorAll('.product-card')]
+
+    const noResults =
+        document.querySelector('#no-results')
+
+
+    function filterProducts() {
+
+        const search =
+            searchInput?.value.trim().toLowerCase() || ''
+
+        const availability =
+            availabilityFilter?.value || ''
+
+        const category =
+            categoryFilter?.value || ''
+
+
+        let visible = 0
+
+
+        cards.forEach(card => {
+
+            const name =
+                card.dataset.name.toLowerCase()
+
+            const cardCategory =
+                card.dataset.category.toLowerCase()
+
+            const available =
+                card.dataset.available
+
+
+            const matchesSearch =
+                !search || name.includes(search)
+
+            const matchesAvailability =
+                !availability ||
+                available === availability
+
+            const matchesCategory =
+                !category ||
+                cardCategory === category
+
+
+            const show =
+                matchesSearch &&
+                matchesAvailability &&
+                matchesCategory
+
+
+            card.classList.toggle(
+                'hidden',
+                !show
+            )
+
+
+            if (show) visible++
+
+        })
+
+
+        noResults?.classList.toggle(
+            'hidden',
+            visible !== 0
+        )
+
+    }
+
+
+    searchInput?.addEventListener(
+        'input',
+        filterProducts
+    )
+
+    availabilityFilter?.addEventListener(
+        'change',
+        filterProducts
+    )
+
+    categoryFilter?.addEventListener(
+        'change',
+        filterProducts
+    )
+
+
+    // MOBILE SIDEBAR
+
+    const sidebar =
+        document.querySelector('#sidebar')
+
+    const mobileMenuButton =
+        document.querySelector('#mobile-menu-button')
+
+    const sidebarOverlay =
+        document.querySelector('#sidebar-overlay')
+
+
+    mobileMenuButton?.addEventListener('click', () => {
+
+        sidebar.classList.toggle(
+            '-translate-x-full'
+        )
+
+        sidebarOverlay.classList.toggle(
+            'hidden'
+        )
+
+    })
+
+
+    sidebarOverlay?.addEventListener('click', () => {
+
+        sidebar.classList.add(
+            '-translate-x-full'
+        )
+
+        sidebarOverlay.classList.add(
+            'hidden'
+        )
+
+    })
+
+</script>
+
+
+</body>
+
+</html>

@@ -9,7 +9,7 @@ export async function getLoginPage(req, res){
 }
 
 export function getSignupPage(req, res){
-    res.render('signup', {error: null})
+    res.render('signup', {error: null, formData: {}})
 }
 
 export async function loginUser(req, res){
@@ -20,6 +20,13 @@ export async function loginUser(req, res){
         if (!user) {
             res.render('login', {error: 'Account doesn\'t exist', loginRequired: ''})
             return
+        }
+
+        if (user.role === 'admin') {
+            return res.render('login', {
+                error: 'Please use the admin login page.',
+                loginRequired: ''
+            })
         }
 
         if (bcrypt.compareSync(password, user.password)) {
@@ -45,7 +52,17 @@ export async function signupUser(req, res){
 
     try{
 
-        const { username, email, password } = req.body
+        const { username, email, password, confirmPassword } = req.body
+
+        const user = await userModel.findOne({email})
+
+        if(user) {
+            return res.render('signup', {error: 'This account already exists'})
+        }
+
+        if(password !== confirmPassword) {
+            return res.render('signup', {error: 'Passwords don\'t match', formData: {username, email}})
+        }
 
         const encryptedPassword = bcrypt.hashSync(password, 10)
         const newUser = await userModel.insertOne({username, email, password: encryptedPassword, role: 'customer'})
