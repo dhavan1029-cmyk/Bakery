@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><%= customer.username %> | FLOURish Admin</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+</head>
+
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen">
+
+
+<!-- MOBILE HEADER -->
+
+<header class="lg:hidden bg-white border-b border-[#E8DCCB] h-16 px-5 flex items-center justify-between">
+
+    <a href="/admin/dashboard" class="flex items-center gap-2">
+
+        <i class="fa-solid fa-wheat-awn text-2xl text-[#C9A36B]"></i>
+
+        <h1 class="font-serif text-2xl">
+            FLOUR<span class="italic text-[#C9A36B]">ish</span>
+        </h1>
+
+    </a>
+
+
+    <button
+        id="mobile-menu-button"
+        class="w-10 h-10 rounded-xl hover:bg-[#F8F4EE]"
+    >
+
+        <i class="fa-solid fa-bars"></i>
+
+    </button>
+
+</header>
+
+
+
+<!-- SIDEBAR -->
+
+<aside
+    id="sidebar"
+    class="fixed left-0 top-0 bottom-0 w-64 bg-white
+           border-r border-[#E8DCCB] z-50
+           -translate-x-full lg:translate-x-0
+           transition-transform duration-300"
+>
+
+
+    <!-- LOGO -->
+
+    <div class="h-20 px-6 flex items-center border-b border-[#E8DCCB]">
+
+        <a href="/admin/dashboard" class="flex items-center gap-3">
+
+            <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
+
+            <h1 class="font-serif text-3xl">
+
+                FLOUR<span class="italic text-[#C9A36B]">ish</span>
+
+            </h1>
+
+        </a>
+
+    </div>
+
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="p-4 space-y-2">
+
+        <p class="text-xs uppercase tracking-widest
+                  text-[#A18D7B] px-3 mb-3">
+
+            Management
+
+        </p>
+
+
+        <a
+            href="/admin/dashboard"
+            class="flex items-center gap-3 px-4 py-3
+                   rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+
+            <i class="fa-solid fa-chart-line w-5 text-[#8B7765]"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a
+            href="/admin/orders"
+            class="flex items-center gap-3 px-4 py-3
+                   rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+
+            <i class="fa-solid fa-bag-shopping w-5 text-[#8B7765]"></i>
+
+            Orders
+
+        </a>
+
+
+        <a
+            href="/admin/products"
+            class="flex items-center gap-3 px-4 py-3
+                   rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+
+            <i class="fa-solid fa-box w-5 text-[#8B7765]"></i>
+
+            Products
+
+        </a>
+
+
+        <a
+            href="/admin/customers"
+            class="flex items-center gap-3 px-4 py-3
+                   rounded-xl bg-[#F8EFD8] font-semibold"
+        >
+
+            <i class="fa-solid fa-users w-5 text-[#C9A36B]"></i>
+
+            Customers
+
+        </a>
+
+
+        <div class="pt-5">
+
+            <p class="text-xs uppercase tracking-widest
+                      text-[#A18D7B] px-3 mb-3">
+
+                Website
+
+            </p>
+
+
+            <a
+                href="/"
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-xl hover:bg-[#F8F4EE] transition"
+            >
+
+                <i class="fa-solid fa-arrow-up-right-from-square
+                          w-5 text-[#8B7765]"></i>
+
+                View Website
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ADMIN -->
+
+    <div
+        class="absolute bottom-0 left-0 right-0 p-4
+               border-t border-[#E8DCCB]"
+    >
+
+        <div class="flex items-center gap-3 px-3 py-3">
+
+            <div
+                class="w-10 h-10 rounded-full bg-[#F8EFD8]
+                       flex items-center justify-center"
+            >
+
+                <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
+
+            </div>
+
+
+            <div>
+
+                <p class="font-semibold text-sm">
+                    Admin
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form action="/admin/logout" method="POST">
+
+            <button
+                type="submit"
+                class="w-full flex items-center gap-3
+                       px-4 py-3 rounded-xl
+                       text-red-600 hover:bg-red-50 transition"
+            >
+
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
+
+                Logout
+
+            </button>
+
+        </form>
+
+    </div>
+
+</aside>
+
+
+
+<!-- MOBILE OVERLAY -->
+
+<div
+    id="sidebar-overlay"
+    class="fixed inset-0 bg-black/30 z-40 hidden lg:hidden"
+></div>
+
+
+
+<!-- MAIN -->
+
+<main class="lg:ml-64 min-h-screen">
+
+
+    <!-- DESKTOP HEADER -->
+
+    <header
+        class="hidden lg:flex h-20 bg-white
+               border-b border-[#E8DCCB]
+               px-8 items-center justify-between"
+    >
+
+        <div>
+
+            <p class="text-sm text-[#8B7765]">
+                Administration
+            </p>
+
+            <h2 class="font-serif text-2xl">
+                Customer Details
+            </h2>
+
+        </div>
+
+
+        <div class="flex items-center gap-3">
+
+            <div
+                class="w-10 h-10 rounded-full bg-[#F8EFD8]
+                       flex items-center justify-center"
+            >
+
+                <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
+
+            </div>
+
+
+            <div>
+
+                <p class="font-semibold text-sm">
+                    Admin
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- CONTENT -->
+
+    <section class="p-5 sm:p-8 max-w-7xl mx-auto">
+
+
+        <!-- BACK -->
+
+        <a
+            href="/admin/customers"
+            class="inline-flex items-center gap-2
+                   text-sm text-[#8B7765]
+                   hover:text-[#C9A36B] transition"
+        >
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Customers
+
+        </a>
+
+
+
+        <!-- CUSTOMER PROFILE -->
+
+        <div
+            class="bg-white border border-[#E8DCCB]
+                   rounded-3xl p-6 sm:p-8
+                   mt-6 shadow-sm"
+        >
+
+            <div
+                class="flex flex-col sm:flex-row
+                       sm:items-center gap-6"
+            >
+
+
+                <!-- AVATAR -->
+
+                <div
+                    class="w-24 h-24 rounded-full
+                           bg-[#F8EFD8]
+                           flex items-center justify-center
+                           text-4xl font-semibold
+                           text-[#C9A36B] shrink-0"
+                >
+
+                    <%= customer.username
+                        ?.charAt(0)
+                        ?.toUpperCase() || '?' %>
+
+                </div>
+
+
+
+                <!-- INFORMATION -->
+
+                <div class="flex-1">
+
+                    <p
+                        class="text-xs uppercase
+                               tracking-widest
+                               text-[#C9A36B]"
+                    >
+
+                        Customer
+
+                    </p>
+
+
+                    <h1 class="font-serif text-4xl mt-1">
+
+                        <%= customer.username %>
+
+                    </h1>
+
+
+                    <p class="text-[#6B5B50] mt-2">
+
+                        <i class="fa-solid fa-envelope mr-2"></i>
+
+                        <%= customer.email %>
+
+                    </p>
+
+
+                    <p class="text-sm text-[#8B7765] mt-2">
+
+                        <i class="fa-solid fa-calendar mr-2"></i>
+
+                        Joined
+
+                        <%= customer.createdAt
+                            ? new Date(customer.createdAt)
+                                .toLocaleDateString('en-IN')
+                            : '—' %>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STATISTICS -->
+
+        <div class="grid sm:grid-cols-3 gap-5 mt-6">
+
+
+            <!-- ORDERS -->
+
+            <div
+                class="bg-white border border-[#E8DCCB]
+                       rounded-2xl p-6"
+            >
+
+                <div class="flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-sm text-[#8B7765]">
+                            Total Orders
+                        </p>
+
+                        <p class="text-3xl font-bold mt-2">
+                            <%= orders?.length || 0 %>
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="w-12 h-12 rounded-xl
+                               bg-[#F8EFD8]
+                               flex items-center justify-center"
+                    >
+
+                        <i class="fa-solid fa-bag-shopping
+                                  text-[#C9A36B]"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SPENDING -->
+
+            <div
+                class="bg-white border border-[#E8DCCB]
+                       rounded-2xl p-6"
+            >
+
+                <div class="flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-sm text-[#8B7765]">
+                            Total Spent
+                        </p>
+
+                        <p class="text-3xl font-bold mt-2">
+
+                            ₹<%= totalSpent || 0 %>
+
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="w-12 h-12 rounded-xl
+                               bg-[#F8EFD8]
+                               flex items-center justify-center"
+                    >
+
+                        <i class="fa-solid fa-indian-rupee-sign
+                                  text-[#C9A36B]"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LAST ORDER -->
+
+            <div
+                class="bg-white border border-[#E8DCCB]
+                       rounded-2xl p-6"
+            >
+
+                <div class="flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-sm text-[#8B7765]">
+                            Last Order
+                        </p>
+
+                        <p class="text-lg font-semibold mt-2">
+
+                            <% if (orders?.length) { %>
+
+                                <%= orders[0].createdAt
+                                    ? new Date(orders[0].createdAt)
+                                        .toLocaleDateString('en-IN')
+                                    : '—' %>
+
+                            <% } else { %>
+
+                                No orders
+
+                            <% } %>
+
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="w-12 h-12 rounded-xl
+                               bg-[#F8EFD8]
+                               flex items-center justify-center"
+                    >
+
+                        <i class="fa-solid fa-clock-rotate-left
+                                  text-[#C9A36B]"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ORDER HISTORY -->
+
+        <div
+            class="bg-white border border-[#E8DCCB]
+                   rounded-2xl overflow-hidden
+                   shadow-sm mt-6"
+        >
+
+
+            <div
+                class="px-6 py-5
+                       border-b border-[#E8DCCB]
+                       flex items-center justify-between"
+            >
+
+                <div>
+
+                    <h2 class="font-serif text-3xl">
+                        Order History
+                    </h2>
+
+                    <p class="text-sm text-[#8B7765] mt-1">
+                        Orders placed by this customer.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <% if (orders?.length) { %>
+
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full min-w-[700px]">
+
+                        <thead
+                            class="bg-[#F8F4EE]
+                                   border-b border-[#E8DCCB]"
+                        >
+
+                            <tr>
+
+                                <th class="text-left px-6 py-4 text-sm">
+                                    Order
+                                </th>
+
+                                <th class="text-left px-6 py-4 text-sm">
+                                    Date
+                                </th>
+
+                                <th class="text-left px-6 py-4 text-sm">
+                                    Items
+                                </th>
+
+                                <th class="text-left px-6 py-4 text-sm">
+                                    Total
+                                </th>
+
+                                <th class="text-left px-6 py-4 text-sm">
+                                    Status
+                                </th>
+
+                                <th class="text-right px-6 py-4 text-sm">
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <% orders.forEach(order => { %>
+
+                                <tr
+                                    class="border-b border-[#E8DCCB]
+                                           last:border-0
+                                           hover:bg-[#F8F4EE]/60"
+                                >
+
+
+                                    <!-- ORDER -->
+
+                                    <td class="px-6 py-5">
+
+                                        <p class="font-semibold">
+
+                                            #<%= order._id
+                                                .toString()
+                                                .slice(-6)
+                                                .toUpperCase() %>
+
+                                        </p>
+
+                                    </td>
+
+
+
+                                    <!-- DATE -->
+
+                                    <td class="px-6 py-5 text-sm text-[#6B5B50]">
+
+                                        <%= order.createdAt
+                                            ? new Date(order.createdAt)
+                                                .toLocaleDateString('en-IN')
+                                            : '—' %>
+
+                                    </td>
+
+
+
+                                    <!-- ITEMS -->
+
+                                    <td class="px-6 py-5 text-sm">
+
+                                        <%= order.products?.reduce(
+                                            (sum, item) =>
+                                                sum + item.quantity,
+                                            0
+                                        ) || 0 %>
+
+                                        item(s)
+
+                                    </td>
+
+
+
+                                    <!-- TOTAL -->
+
+                                    <td class="px-6 py-5 font-semibold">
+
+                                        ₹<%= order.total || 0 %>
+
+                                    </td>
+
+
+
+                                    <!-- STATUS -->
+
+                                    <td class="px-6 py-5">
+
+                                        <span
+                                            class="
+                                                inline-flex
+                                                px-3 py-1
+                                                rounded-full
+                                                text-xs
+                                                font-semibold
+
+                                                <%= order.status === 'Delivered'
+                                                    ? 'bg-green-100 text-green-700'
+                                                    : order.status === 'Cancelled'
+                                                        ? 'bg-red-100 text-red-700'
+                                                        : 'bg-amber-100 text-amber-700'
+                                                %>
+                                            "
+                                        >
+
+                                            <%= order.status %>
+
+                                        </span>
+
+                                    </td>
+
+
+
+                                    <!-- ACTION -->
+
+                                    <td class="px-6 py-5 text-right">
+
+                                        <a
+                                            href="/admin/orders/<%= order._id %>"
+                                            class="inline-flex items-center gap-2
+                                                   border border-[#E8DCCB]
+                                                   rounded-xl px-4 py-2
+                                                   hover:bg-[#F8F4EE]
+                                                   transition"
+                                        >
+
+                                            <i class="fa-solid fa-eye"></i>
+
+                                            View
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            <% }) %>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            <% } else { %>
+
+
+                <!-- NO ORDERS -->
+
+                <div class="py-20 text-center">
+
+                    <div
+                        class="w-16 h-16 mx-auto
+                               rounded-full bg-[#F8EFD8]
+                               flex items-center justify-center"
+                    >
+
+                        <i
+                            class="fa-solid fa-bag-shopping
+                                   text-2xl text-[#C9A36B]"
+                        ></i>
+
+                    </div>
+
+
+                    <h2 class="font-serif text-3xl mt-6">
+
+                        No Orders Yet
+
+                    </h2>
+
+
+                    <p class="text-[#8B7765] mt-2">
+
+                        This customer hasn't placed an order yet.
+
+                    </p>
+
+                </div>
+
+            <% } %>
+
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+
+<script>
+
+const sidebar =
+    document.querySelector('#sidebar')
+
+const mobileMenuButton =
+    document.querySelector('#mobile-menu-button')
+
+const sidebarOverlay =
+    document.querySelector('#sidebar-overlay')
+
+
+mobileMenuButton?.addEventListener('click', () => {
+
+    sidebar.classList.toggle(
+        '-translate-x-full'
+    )
+
+    sidebarOverlay.classList.toggle(
+        'hidden'
+    )
+
+})
+
+
+sidebarOverlay?.addEventListener('click', () => {
+
+    sidebar.classList.add(
+        '-translate-x-full'
+    )
+
+    sidebarOverlay.classList.add(
+        'hidden'
+    )
+
+})
+
+</script>
+
+
+</body>
+</html>
