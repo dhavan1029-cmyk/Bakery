@@ -262,3 +262,12 @@ export async function renderAdminAccount(req, res) {
     }
 
 }
+
+export async function renderChangePassword(req, res) {
+    res.render('admin/changePassword', {
+        admin: req.admin,
+        error: '',
+        success: ''
+    })
+
+}

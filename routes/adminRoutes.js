@@ -26,4 +26,6 @@ router.get('/admin/customers/:id', checkAdminAuth, renderCustomer)
 
 router.get('/admin/account', checkAdminAuth, renderAdminAccount)
 
+router.get('/admin/account/change-password', checkAdminAuth, renderChangePassword)
+
 export default router
