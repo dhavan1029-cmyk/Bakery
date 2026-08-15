@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Profile | FLOURish</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+</head>
+
+
+<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen">
+
+
+<!-- MOBILE HEADER -->
+
+<header
+    class="lg:hidden bg-white border-b border-[#E8DCCB]
+           h-16 px-5 flex items-center justify-between"
+>
+
+    <a
+        href="/admin/dashboard"
+        class="flex items-center gap-2"
+    >
+
+        <i class="fa-solid fa-wheat-awn text-2xl text-[#C9A36B]"></i>
+
+        <h1 class="font-serif text-2xl">
+            FLOUR<span class="italic text-[#C9A36B]">ish</span>
+        </h1>
+
+    </a>
+
+
+    <button
+        id="mobile-menu-button"
+        class="w-10 h-10 rounded-xl hover:bg-[#F8F4EE]"
+    >
+
+        <i class="fa-solid fa-bars"></i>
+
+    </button>
+
+</header>
+
+
+
+<!-- SIDEBAR -->
+
+<aside
+    id="sidebar"
+    class="fixed left-0 top-0 bottom-0 w-64
+           bg-white border-r border-[#E8DCCB]
+           z-50 -translate-x-full lg:translate-x-0
+           transition-transform duration-300"
+>
+
+
+    <!-- LOGO -->
+
+    <div
+        class="h-20 px-6 flex items-center
+               border-b border-[#E8DCCB]"
+    >
+
+        <a
+            href="/admin/dashboard"
+            class="flex items-center gap-3"
+        >
+
+            <i
+                class="fa-solid fa-wheat-awn
+                       text-3xl text-[#C9A36B]"
+            ></i>
+
+            <h1 class="font-serif text-3xl">
+                FLOUR<span class="italic text-[#C9A36B]">ish</span>
+            </h1>
+
+        </a>
+
+    </div>
+
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="p-4 space-y-2">
+
+        <p
+            class="text-xs uppercase tracking-widest
+                   text-[#A18D7B] px-3 mb-3"
+        >
+            Management
+        </p>
+
+
+        <a
+            href="/admin/dashboard"
+            class="flex items-center gap-3 px-4 py-3
+                   rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+
+            <i
+                class="fa-solid fa-chart-line
+                       w-5 text-[#8B7765]"
+            ></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a
+            href="/admin/orders"
+            class="flex items-center gap-3 px-4 py-3
+                   rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+
+            <i
+                class="fa-solid fa-bag-shopping
+                       w-5 text-[#8B7765]"
+            ></i>
+
+            Orders
+
+        </a>
+
+
+        <a
+            href="/admin/products"
+            class="flex items-center gap-3 px-4 py-3
+                   rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+
+            <i
+                class="fa-solid fa-box
+                       w-5 text-[#8B7765]"
+            ></i>
+
+            Products
+
+        </a>
+
+
+        <a
+            href="/admin/customers"
+            class="flex items-center gap-3 px-4 py-3
+                   rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+
+            <i
+                class="fa-solid fa-users
+                       w-5 text-[#8B7765]"
+            ></i>
+
+            Customers
+
+        </a>
+
+
+
+        <!-- ACCOUNT -->
+
+        <div class="pt-5">
+
+            <p
+                class="text-xs uppercase tracking-widest
+                       text-[#A18D7B] px-3 mb-3"
+            >
+                Account
+            </p>
+
+
+            <a
+                href="/admin/profile"
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-xl bg-[#F8EFD8]
+                       font-semibold"
+            >
+
+                <i
+                    class="fa-solid fa-user-shield
+                           w-5 text-[#C9A36B]"
+                ></i>
+
+                Profile
+
+            </a>
+
+        </div>
+
+
+
+        <!-- WEBSITE -->
+
+        <div class="pt-5">
+
+            <p
+                class="text-xs uppercase tracking-widest
+                       text-[#A18D7B] px-3 mb-3"
+            >
+                Website
+            </p>
+
+
+            <a
+                href="/"
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-xl hover:bg-[#F8F4EE] transition"
+            >
+
+                <i
+                    class="fa-solid fa-arrow-up-right-from-square
+                           w-5 text-[#8B7765]"
+                ></i>
+
+                View Website
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ADMIN -->
+
+    <div
+        class="absolute bottom-0 left-0 right-0
+               p-4 border-t border-[#E8DCCB]"
+    >
+
+        <div class="flex items-center gap-3 px-3 py-3">
+
+            <div
+                class="w-10 h-10 rounded-full
+                       bg-[#F8EFD8]
+                       flex items-center justify-center"
+            >
+
+                <i
+                    class="fa-solid fa-user-shield
+                           text-[#C9A36B]"
+                ></i>
+
+            </div>
+
+
+            <div>
+
+                <p class="font-semibold text-sm">
+                    <%= admin?.username || "Admin" %>
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form
+            action="/admin/logout"
+            method="POST"
+        >
+
+            <button
+                type="submit"
+                class="w-full flex items-center gap-3
+                       px-4 py-3 rounded-xl
+                       text-red-600 hover:bg-red-50 transition"
+            >
+
+                <i
+                    class="fa-solid fa-right-from-bracket
+                           w-5"
+                ></i>
+
+                Logout
+
+            </button>
+
+        </form>
+
+    </div>
+
+</aside>
+
+
+
+<!-- MOBILE OVERLAY -->
+
+<div
+    id="sidebar-overlay"
+    class="fixed inset-0 bg-black/30
+           z-40 hidden lg:hidden"
+></div>
+
+
+
+<!-- MAIN -->
+
+<main class="lg:ml-64 min-h-screen">
+
+
+    <!-- DESKTOP HEADER -->
+
+    <header
+        class="hidden lg:flex h-20 bg-white
+               border-b border-[#E8DCCB]
+               px-8 items-center justify-between"
+    >
+
+        <div>
+
+            <p class="text-sm text-[#8B7765]">
+                Account
+            </p>
+
+            <h2 class="font-serif text-2xl">
+                Admin Profile
+            </h2>
+
+        </div>
+
+
+        <div class="flex items-center gap-3">
+
+            <div
+                class="w-10 h-10 rounded-full
+                       bg-[#F8EFD8]
+                       flex items-center justify-center"
+            >
+
+                <i
+                    class="fa-solid fa-user-shield
+                           text-[#C9A36B]"
+                ></i>
+
+            </div>
+
+
+            <div>
+
+                <p class="font-semibold text-sm">
+                    <%= admin?.username || "Admin" %>
+                </p>
+
+                <p class="text-xs text-[#8B7765]">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- CONTENT -->
+
+    <section class="p-5 sm:p-8 max-w-5xl mx-auto">
+
+
+        <!-- TITLE -->
+
+        <div class="mb-8">
+
+            <p class="text-[#8B7765]">
+                Manage your administrator account
+            </p>
+
+            <h1 class="font-serif text-4xl sm:text-5xl mt-1">
+                Profile
+            </h1>
+
+        </div>
+
+
+
+        <!-- PROFILE CARD -->
+
+        <div
+            class="bg-white border border-[#E8DCCB]
+                   rounded-3xl shadow-sm overflow-hidden"
+        >
+
+
+            <!-- PROFILE HEADER -->
+
+            <div
+                class="bg-[#F8EFD8]
+                       px-6 sm:px-8 py-8"
+            >
+
+                <div class="flex items-center gap-5">
+
+
+                    <div
+                        class="w-20 h-20 rounded-full
+                               bg-white
+                               flex items-center justify-center
+                               border border-[#E8DCCB]"
+                    >
+
+                        <i
+                            class="fa-solid fa-user-shield
+                                   text-3xl text-[#C9A36B]"
+                        ></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h2 class="font-serif text-3xl">
+
+                            <%= admin?.username || "Admin" %>
+
+                        </h2>
+
+                        <p class="text-[#6B5B50] mt-1">
+                            Administrator
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACCOUNT INFORMATION -->
+
+            <div class="p-6 sm:p-8">
+
+
+                <h2 class="font-serif text-2xl mb-6">
+                    Account Information
+                </h2>
+
+
+                <div class="grid md:grid-cols-2 gap-6">
+
+
+                    <!-- USERNAME -->
+
+                    <div>
+
+                        <p
+                            class="text-xs uppercase
+                                   tracking-widest
+                                   text-[#8B7765]"
+                        >
+                            Username
+                        </p>
+
+                        <div
+                            class="mt-2 border border-[#E8DCCB]
+                                   rounded-xl px-4 py-3
+                                   bg-[#F8F4EE]"
+                        >
+
+                            <%= admin?.username || "Admin" %>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div>
+
+                        <p
+                            class="text-xs uppercase
+                                   tracking-widest
+                                   text-[#8B7765]"
+                        >
+                            Email
+                        </p>
+
+                        <div
+                            class="mt-2 border border-[#E8DCCB]
+                                   rounded-xl px-4 py-3
+                                   bg-[#F8F4EE]"
+                        >
+
+                            <%= admin?.email || "Not available" %>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ROLE -->
+
+                    <div>
+
+                        <p
+                            class="text-xs uppercase
+                                   tracking-widest
+                                   text-[#8B7765]"
+                        >
+                            Account Role
+                        </p>
+
+                        <div
+                            class="mt-2 border border-[#E8DCCB]
+                                   rounded-xl px-4 py-3
+                                   bg-[#F8F4EE] flex items-center gap-2"
+                        >
+
+                            <i
+                                class="fa-solid fa-shield-halved
+                                       text-[#C9A36B]"
+                            ></i>
+
+                            Administrator
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ACCOUNT TYPE -->
+
+                    <div>
+
+                        <p
+                            class="text-xs uppercase
+                                   tracking-widest
+                                   text-[#8B7765]"
+                        >
+                            Account Type
+                        </p>
+
+                        <div
+                            class="mt-2 border border-[#E8DCCB]
+                                   rounded-xl px-4 py-3
+                                   bg-[#F8F4EE]"
+                        >
+
+                            Admin Account
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SECURITY -->
+
+                <div
+                    class="mt-10 pt-8
+                           border-t border-[#E8DCCB]"
+                >
+
+                    <h2 class="font-serif text-2xl">
+                        Security
+                    </h2>
+
+                    <p
+                        class="text-sm text-[#8B7765]
+                               mt-1"
+                    >
+                        Manage your administrator security settings.
+                    </p>
+
+
+                    <div
+                        class="mt-6 flex flex-col sm:flex-row
+                               gap-4"
+                    >
+
+                        <a
+                            href="/admin/account/change-password"
+                            class="flex-1 flex items-center
+                                   justify-center gap-2
+                                   border border-[#E8DCCB]
+                                   rounded-xl py-3
+                                   hover:bg-[#F8F4EE]
+                                   transition"
+                        >
+
+                            <i class="fa-solid fa-key"></i>
+
+                            Change Password
+
+                        </a>
+
+
+                        <form
+                            action="/admin/logout"
+                            method="POST"
+                            class="flex-1"
+                        >
+
+                            <button
+                                type="submit"
+                                class="w-full flex items-center
+                                       justify-center gap-2
+                                       border border-red-200
+                                       text-red-600
+                                       rounded-xl py-3
+                                       hover:bg-red-50
+                                       transition"
+                            >
+
+                                <i
+                                    class="fa-solid fa-right-from-bracket"
+                                ></i>
+
+                                Logout
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SECURITY NOTICE -->
+
+                <div
+                    class="mt-8 rounded-2xl
+                           border border-amber-200
+                           bg-amber-50 px-5 py-4"
+                >
+
+                    <div class="flex items-start gap-4">
+
+                        <div
+                            class="w-10 h-10 rounded-full
+                                   bg-amber-100
+                                   flex items-center justify-center
+                                   shrink-0"
+                        >
+
+                            <i
+                                class="fa-solid fa-shield-halved
+                                       text-amber-600"
+                            ></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <p class="font-semibold">
+                                Administrator Account
+                            </p>
+
+                            <p
+                                class="text-sm text-[#6B5B50]
+                                       mt-1"
+                            >
+                                This account has access to the
+                                FLOURish administration panel.
+                                Keep your credentials secure and
+                                never share your administrator
+                                password.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<script>
+
+    const sidebar =
+        document.querySelector('#sidebar')
+
+    const mobileMenuButton =
+        document.querySelector('#mobile-menu-button')
+
+    const sidebarOverlay =
+        document.querySelector('#sidebar-overlay')
+
+
+    mobileMenuButton?.addEventListener('click', () => {
+
+        sidebar.classList.toggle(
+            '-translate-x-full'
+        )
+
+        sidebarOverlay.classList.toggle(
+            'hidden'
+        )
+
+    })
+
+
+    sidebarOverlay?.addEventListener('click', () => {
+
+        sidebar.classList.add(
+            '-translate-x-full'
+        )
+
+        sidebarOverlay.classList.add(
+            'hidden'
+        )
+
+    })
+
+</script>
+
+
+</body>
+
+</html>

@@ -54,186 +54,130 @@
 
 <aside
     id="sidebar"
-    class="fixed left-0 top-0 bottom-0 w-64 bg-white
-           border-r border-[#E8DCCB] z-[60]
-           -translate-x-full lg:translate-x-0
-           transition-transform duration-300"
+    class="fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-[#E8DCCB] z-50
+           -translate-x-full lg:translate-x-0 transition-transform duration-300"
 >
-
-
     <!-- LOGO -->
-
     <div class="h-20 px-6 flex items-center border-b border-[#E8DCCB]">
-
         <a href="/admin/dashboard" class="flex items-center gap-3">
-
             <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
-
             <h1 class="font-serif text-3xl">
-
                 FLOUR<span class="italic text-[#C9A36B]">ish</span>
-
             </h1>
-
         </a>
-
     </div>
-
-
-
     <!-- NAVIGATION -->
+    <nav class="p-4 space-y-2">
 
-    <nav class="p-4">
 
-        <p class="text-xs uppercase tracking-widest
-                  text-[#A18D7B] px-3 mb-3">
-
+        <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
             Management
-
         </p>
 
 
-        <div class="space-y-1">
+        <a
+            href="/admin/dashboard"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+            <i class="fa-solid fa-chart-line w-5 text-[#C9A36B]"></i>
+            Dashboard
+        </a>
 
-            <a
-                href="/admin/dashboard"
-                class="flex items-center gap-3 px-4 py-3
-                       rounded-xl hover:bg-[#F8F4EE] transition"
-            >
 
-                <i class="fa-solid fa-chart-line w-5 text-[#8B7765]"></i>
+        <a
+            href="/admin/orders"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+            <i class="fa-solid fa-bag-shopping w-5 text-[#8B7765]"></i>
+            Orders
+        </a>
 
-                Dashboard
 
+        <a
+            href="/admin/products"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#F8EFD8] text-[#4A3428] font-semibold"
+        >
+            <i class="fa-solid fa-box w-5 text-[#8B7765]"></i>
+            Products
+        </a>
+
+
+        <a
+            href="/admin/customers"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+        >
+            <i class="fa-solid fa-users w-5 text-[#8B7765]"></i>
+            Customers
+        </a>
+      
+        
+        <div class="pt-5">
+            <p class="text-xs uppercase tracking-widest
+                       text-[#A18D7B] px-3 mb-3">
+                Account
+            </p>
+            <a href="/admin/account" class="flex items-center gap-3 px-4 py-3
+                       rounded-xl
+                       font-semibold">
+                <i class="fa-solid fa-user-shield
+                           w-5 text-[#C9A36B]"></i>
+                Profile
             </a>
-
-
-            <a
-                href="/admin/orders"
-                class="flex items-center gap-3 px-4 py-3
-                       rounded-xl hover:bg-[#F8F4EE] transition"
-            >
-
-                <i class="fa-solid fa-bag-shopping w-5 text-[#8B7765]"></i>
-
-                Orders
-
-            </a>
-
-
-            <a
-                href="/admin/products"
-                class="flex items-center gap-3 px-4 py-3
-                       rounded-xl bg-[#F8EFD8] font-semibold"
-            >
-
-                <i class="fa-solid fa-box w-5 text-[#C9A36B]"></i>
-
-                Products
-
-            </a>
-
-
-            <a
-                href="/admin/customers"
-                class="flex items-center gap-3 px-4 py-3
-                       rounded-xl hover:bg-[#F8F4EE] transition"
-            >
-
-                <i class="fa-solid fa-users w-5 text-[#8B7765]"></i>
-
-                Customers
-
-            </a>
-
         </div>
 
 
-
-        <div class="border-t border-[#E8DCCB] mt-6 pt-6">
-
-            <p class="text-xs uppercase tracking-widest
-                      text-[#A18D7B] px-3 mb-3">
-
+        <div class="pt-5">
+            <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
                 Website
-
             </p>
-
-
             <a
                 href="/"
-                class="flex items-center gap-3 px-4 py-3
-                       rounded-xl hover:bg-[#F8F4EE] transition"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
             >
-
-                <i class="fa-solid fa-arrow-up-right-from-square
-                          w-5 text-[#8B7765]"></i>
-
+                <i class="fa-solid fa-arrow-up-right-from-square w-5 text-[#8B7765]"></i>
                 View Website
-
             </a>
-
         </div>
+
 
     </nav>
 
+    <!-- SIDEBAR FOOTER -->
 
+    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-[#E8DCCB]">
 
-    <!-- ADMIN -->
+        <div class="flex items-center gap-3 px-3 py-3">
 
-    <div class="absolute bottom-0 left-0 right-0
-                border-t border-[#E8DCCB] p-4">
-
-        <div class="flex items-center gap-3 px-3 mb-3">
-
-            <div
-                class="w-10 h-10 rounded-full bg-[#F8EFD8]
-                       flex items-center justify-center"
-            >
-
+            <div class="w-10 h-10 rounded-full bg-[#F8EFD8] flex items-center justify-center">
                 <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
-
             </div>
 
-
-            <div>
-
-                <p class="font-semibold text-sm">
-                    Admin
+            <div class="flex-1 min-w-0">
+                <p class="font-semibold text-sm truncate">
+                    <%= admin.username%>
                 </p>
-
                 <p class="text-xs text-[#8B7765]">
                     Administrator
                 </p>
-
             </div>
 
         </div>
-
 
         <form action="/admin/logout" method="POST">
 
             <button
                 type="submit"
-                class="w-full flex items-center gap-3
-                       px-4 py-3 rounded-xl
+                class="w-full flex items-center gap-3 px-4 py-3 rounded-xl
                        text-red-600 hover:bg-red-50 transition"
             >
-
                 <i class="fa-solid fa-right-from-bracket w-5"></i>
-
                 Logout
-
             </button>
 
         </form>
 
-    </div>
-
-</aside>
-
-
-
+        </div>
+    </aside>
 <!-- OVERLAY -->
 
 <div
@@ -285,7 +229,7 @@
             <div>
 
                 <p class="font-semibold text-sm">
-                    Admin
+                    <%= admin.username%>
                 </p>
 
                 <p class="text-xs text-[#8B7765]">

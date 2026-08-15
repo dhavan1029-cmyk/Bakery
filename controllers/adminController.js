@@ -4,7 +4,6 @@ import userModel from '../models/userModel.js'
 import ordersModel from '../models/ordersModel.js'
 import productModel from '../models/productModel.js'
 
-
 export async function getLoginPage(req, res) {
     res.render('admin/login', {error: null, formData: {}})
 }
@@ -237,6 +236,26 @@ export async function renderCustomer(req, res) {
     } catch (err) {
 
         console.log(err)
+
+        res.redirect('/serverError')
+
+    }
+
+}
+
+export async function renderAdminAccount(req, res) {
+
+    try {
+
+        const admin = req.admin
+
+        res.render('admin/account', {
+            admin
+        })
+
+    } catch (error) {
+
+        console.log(error)
 
         res.redirect('/serverError')
 

@@ -117,6 +117,27 @@
             Customers
         </a>
 
+        <div class="pt-5">
+
+            <p class="text-xs uppercase tracking-widest
+                       text-[#A18D7B] px-3 mb-3">
+
+                Account
+                
+            </p>
+
+            <a href="/admin/account" class="flex items-center gap-3 px-4 py-3
+                       rounded-xl
+                       font-semibold">
+
+                <i class="fa-solid fa-user-shield
+                           w-5 text-[#C9A36B]"></i>
+
+                Profile
+
+            </a>
+
+        </div>
 
         <div class="pt-5">
 
@@ -154,7 +175,7 @@
             <div class="min-w-0">
 
                 <p class="font-semibold text-sm">
-                    Admin
+                    <%= admin.username%>
                 </p>
 
                 <p class="text-xs text-[#8B7765]">
@@ -226,7 +247,7 @@
             <div>
 
                 <p class="font-semibold text-sm">
-                    Admin
+                    <%= admin.username%>
                 </p>
 
                 <p class="text-xs text-[#8B7765]">
