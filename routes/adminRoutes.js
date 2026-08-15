@@ -1,5 +1,5 @@
 import express from 'express'
-import { getLoginPage, getOrder, getOrders, getProducts, loginAdmin, renderAddProduct, renderCustomers, renderDashboard, renderEditProduct, renderCustomer, renderAdminAccount, renderChangePassword } from '../controllers/adminController.js'
+import { getLoginPage, getOrder, getOrders, getProducts, loginAdmin, renderAddProduct, renderCustomers, renderDashboard, renderEditProduct, renderCustomer, renderAdminAccount, renderChangePassword, renderAdminSettings } from '../controllers/adminController.js'
 import { checkAdminAuth } from '../middlewares/adminMiddleware.js'
 
 const router = express.Router()
@@ -27,5 +27,7 @@ router.get('/admin/customers/:id', checkAdminAuth, renderCustomer)
 router.get('/admin/account', checkAdminAuth, renderAdminAccount)
 
 router.get('/admin/account/change-password', checkAdminAuth, renderChangePassword)
+
+router.get('/admin/settings', checkAdminAuth, renderAdminSettings)
 
 export default router
