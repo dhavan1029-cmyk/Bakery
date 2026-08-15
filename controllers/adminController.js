@@ -161,3 +161,27 @@ export async function renderEditProduct(req, res) {
 
     }
 }
+
+export async function renderCustomers(req, res) {
+
+    try {
+
+        const customers = await userModel
+            .find({role: 'customer'})
+            .select('-password')
+            .sort({ createdAt: -1 })
+
+
+        res.render('admin/customers', {
+            customers
+        })
+
+    } catch (err) {
+
+        console.error(err)
+
+        res.redirect('/serverError')
+
+    }
+
+}

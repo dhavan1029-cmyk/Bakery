@@ -1,31 +1,30 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | FLOURish Admin</title>
 
-<title>Products | FLOURish Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
->
-
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
 
 </head>
+
 
 <body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen">
 
 
 <!-- MOBILE HEADER -->
 
-<header class="lg:hidden bg-white border-b border-[#E8DCCB] h-16 px-5 flex items-center justify-between">
+<header class="lg:hidden h-16 bg-white border-b border-[#E8DCCB]
+               flex items-center justify-between px-5 sticky top-0 z-50">
 
     <a href="/admin/dashboard" class="flex items-center gap-2">
 
@@ -37,23 +36,32 @@
 
     </a>
 
+
     <button
         id="mobile-menu-button"
         class="w-10 h-10 rounded-xl hover:bg-[#F8F4EE]"
     >
+
         <i class="fa-solid fa-bars"></i>
+
     </button>
 
 </header>
+
 
 
 <!-- SIDEBAR -->
 
 <aside
     id="sidebar"
-    class="fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-[#E8DCCB]
-           z-50 -translate-x-full lg:translate-x-0 transition-transform duration-300"
+    class="fixed left-0 top-0 bottom-0 w-64 bg-white
+           border-r border-[#E8DCCB] z-[60]
+           -translate-x-full lg:translate-x-0
+           transition-transform duration-300"
 >
+
+
+    <!-- LOGO -->
 
     <div class="h-20 px-6 flex items-center border-b border-[#E8DCCB]">
 
@@ -62,7 +70,9 @@
             <i class="fa-solid fa-wheat-awn text-3xl text-[#C9A36B]"></i>
 
             <h1 class="font-serif text-3xl">
+
                 FLOUR<span class="italic text-[#C9A36B]">ish</span>
+
             </h1>
 
         </a>
@@ -70,65 +80,97 @@
     </div>
 
 
+
     <!-- NAVIGATION -->
 
-    <nav class="p-4 space-y-2">
+    <nav class="p-4">
 
-        <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
+        <p class="text-xs uppercase tracking-widest
+                  text-[#A18D7B] px-3 mb-3">
+
             Management
+
         </p>
 
 
-        <a
-            href="/admin/dashboard"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
-        >
-            <i class="fa-solid fa-chart-line w-5 text-[#8B7765]"></i>
-            Dashboard
-        </a>
+        <div class="space-y-1">
+
+            <a
+                href="/admin/dashboard"
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-xl hover:bg-[#F8F4EE] transition"
+            >
+
+                <i class="fa-solid fa-chart-line w-5 text-[#8B7765]"></i>
+
+                Dashboard
+
+            </a>
 
 
-        <a
-            href="/admin/orders"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
-        >
-            <i class="fa-solid fa-bag-shopping w-5 text-[#8B7765]"></i>
-            Orders
-        </a>
+            <a
+                href="/admin/orders"
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-xl hover:bg-[#F8F4EE] transition"
+            >
+
+                <i class="fa-solid fa-bag-shopping w-5 text-[#8B7765]"></i>
+
+                Orders
+
+            </a>
 
 
-        <a
-            href="/admin/products"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl
-                   bg-[#F8EFD8] font-semibold"
-        >
-            <i class="fa-solid fa-box w-5 text-[#C9A36B]"></i>
-            Products
-        </a>
+            <a
+                href="/admin/products"
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-xl bg-[#F8EFD8] font-semibold"
+            >
+
+                <i class="fa-solid fa-box w-5 text-[#C9A36B]"></i>
+
+                Products
+
+            </a>
 
 
-        <a
-            href="/admin/customers"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
-        >
-            <i class="fa-solid fa-users w-5 text-[#8B7765]"></i>
-            Customers
-        </a>
+            <a
+                href="/admin/customers"
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-xl hover:bg-[#F8F4EE] transition"
+            >
+
+                <i class="fa-solid fa-users w-5 text-[#8B7765]"></i>
+
+                Customers
+
+            </a>
+
+        </div>
 
 
-        <div class="pt-5">
 
-            <p class="text-xs uppercase tracking-widest text-[#A18D7B] px-3 mb-3">
+        <div class="border-t border-[#E8DCCB] mt-6 pt-6">
+
+            <p class="text-xs uppercase tracking-widest
+                      text-[#A18D7B] px-3 mb-3">
+
                 Website
+
             </p>
 
 
             <a
                 href="/"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F8F4EE] transition"
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-xl hover:bg-[#F8F4EE] transition"
             >
-                <i class="fa-solid fa-arrow-up-right-from-square w-5 text-[#8B7765]"></i>
+
+                <i class="fa-solid fa-arrow-up-right-from-square
+                          w-5 text-[#8B7765]"></i>
+
                 View Website
+
             </a>
 
         </div>
@@ -136,13 +178,18 @@
     </nav>
 
 
+
     <!-- ADMIN -->
 
-    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-[#E8DCCB]">
+    <div class="absolute bottom-0 left-0 right-0
+                border-t border-[#E8DCCB] p-4">
 
-        <div class="flex items-center gap-3 px-3 py-3">
+        <div class="flex items-center gap-3 px-3 mb-3">
 
-            <div class="w-10 h-10 rounded-full bg-[#F8EFD8] flex items-center justify-center">
+            <div
+                class="w-10 h-10 rounded-full bg-[#F8EFD8]
+                       flex items-center justify-center"
+            >
 
                 <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
 
@@ -168,11 +215,15 @@
 
             <button
                 type="submit"
-                class="w-full flex items-center gap-3 px-4 py-3 rounded-xl
+                class="w-full flex items-center gap-3
+                       px-4 py-3 rounded-xl
                        text-red-600 hover:bg-red-50 transition"
             >
+
                 <i class="fa-solid fa-right-from-bracket w-5"></i>
+
                 Logout
+
             </button>
 
         </form>
@@ -182,12 +233,15 @@
 </aside>
 
 
-<!-- MOBILE OVERLAY -->
+
+<!-- OVERLAY -->
 
 <div
     id="sidebar-overlay"
-    class="fixed inset-0 bg-black/30 z-40 hidden lg:hidden"
+    class="fixed inset-0 bg-black/30 z-50
+           hidden lg:hidden"
 ></div>
+
 
 
 <!-- MAIN -->
@@ -197,8 +251,11 @@
 
     <!-- DESKTOP HEADER -->
 
-    <header class="hidden lg:flex h-20 bg-white border-b border-[#E8DCCB]
-                   px-8 items-center justify-between">
+    <header
+        class="hidden lg:flex h-20 bg-white
+               border-b border-[#E8DCCB]
+               px-8 items-center justify-between"
+    >
 
         <div>
 
@@ -215,12 +272,15 @@
 
         <div class="flex items-center gap-3">
 
-            <div class="w-10 h-10 rounded-full bg-[#F8EFD8]
-                        flex items-center justify-center">
+            <div
+                class="w-10 h-10 rounded-full bg-[#F8EFD8]
+                       flex items-center justify-center"
+            >
 
                 <i class="fa-solid fa-user-shield text-[#C9A36B]"></i>
 
             </div>
+
 
             <div>
 
@@ -239,16 +299,19 @@
     </header>
 
 
+
     <!-- CONTENT -->
 
     <section class="p-5 sm:p-8 max-w-7xl mx-auto">
 
 
-        <!-- PAGE TITLE -->
+        <!-- TITLE -->
 
-        <div class="flex flex-col sm:flex-row sm:items-end
-                    justify-between gap-5 mb-8">
-
+        <div
+            class="flex flex-col sm:flex-row
+                   sm:items-end justify-between
+                   gap-5 mb-8"
+        >
 
             <div>
 
@@ -263,13 +326,14 @@
             </div>
 
 
-            <!-- ADD PRODUCT -->
-
             <a
                 href="/admin/products/new"
-                class="inline-flex items-center justify-center gap-2
-                       bg-[#C9A36B] hover:bg-[#B89056]
-                       text-[#2F241D] font-semibold
+                class="inline-flex items-center
+                       justify-center gap-2
+                       bg-[#C9A36B]
+                       hover:bg-[#B89056]
+                       text-[#2F241D]
+                       font-semibold
                        px-5 py-3 rounded-xl transition"
             >
 
@@ -282,17 +346,112 @@
         </div>
 
 
-        <!-- TOOLBAR -->
 
-        <div class="bg-white border border-[#E8DCCB]
-                    rounded-2xl p-5 shadow-sm mb-6">
+        <!-- STATISTICS -->
 
-            <div class="flex flex-col md:flex-row gap-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+
+
+            <div class="bg-white border border-[#E8DCCB]
+                        rounded-2xl p-5">
+
+                <div class="flex justify-between items-start">
+
+                    <div>
+
+                        <p class="text-sm text-[#8B7765]">
+                            Total Products
+                        </p>
+
+                        <p class="text-3xl font-bold mt-2">
+                            <%= products?.length || 0 %>
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="w-10 h-10 rounded-xl bg-[#F8EFD8]
+                               flex items-center justify-center"
+                    >
+
+                        <i class="fa-solid fa-box text-[#C9A36B]"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="bg-white border border-[#E8DCCB]
+                        rounded-2xl p-5">
+
+                <p class="text-sm text-[#8B7765]">
+                    Available
+                </p>
+
+                <p class="text-3xl font-bold mt-2 text-green-600">
+
+                    <%= products?.filter(p => p.availability).length || 0 %>
+
+                </p>
+
+            </div>
+
+
+
+            <div class="bg-white border border-[#E8DCCB]
+                        rounded-2xl p-5">
+
+                <p class="text-sm text-[#8B7765]">
+                    Unavailable
+                </p>
+
+                <p class="text-3xl font-bold mt-2 text-red-600">
+
+                    <%= products?.filter(p => !p.availability).length || 0 %>
+
+                </p>
+
+            </div>
+
+
+
+            <div class="bg-white border border-[#E8DCCB]
+                        rounded-2xl p-5">
+
+                <p class="text-sm text-[#8B7765]">
+                    Categories
+                </p>
+
+                <p class="text-3xl font-bold mt-2">
+
+                    <%= [...new Set(
+                        (products || []).map(p => p.category)
+                    )].length %>
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FILTER BAR -->
+
+        <div
+            class="bg-white border border-[#E8DCCB]
+                   rounded-2xl p-5 mb-6 shadow-sm"
+        >
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
 
 
                 <!-- SEARCH -->
 
-                <div class="relative flex-1">
+                <div class="relative lg:col-span-1">
 
                     <i
                         class="fa-solid fa-magnifying-glass
@@ -300,6 +459,7 @@
                                -translate-y-1/2
                                text-[#A18D7B]"
                     ></i>
+
 
                     <input
                         id="product-search"
@@ -314,6 +474,7 @@
                 </div>
 
 
+
                 <!-- AVAILABILITY -->
 
                 <select
@@ -325,7 +486,7 @@
                 >
 
                     <option value="">
-                        All Products
+                        All Availability
                     </option>
 
                     <option value="true">
@@ -337,6 +498,7 @@
                     </option>
 
                 </select>
+
 
 
                 <!-- CATEGORY -->
@@ -353,61 +515,100 @@
                         All Categories
                     </option>
 
-                    <option value="cakes">
-                        Cakes
-                    </option>
+                    <%
+                        const categories = [
+                            ...new Set(
+                                (products || [])
+                                .map(product => product.category)
+                                .filter(Boolean)
+                            )
+                        ]
+                    %>
 
-                    <option value="pastries">
-                        Pastries
-                    </option>
 
-                    <option value="breads">
-                        Breads
-                    </option>
+                    <% categories.forEach(category => { %>
 
-                    <option value="cookies">
-                        Cookies
-                    </option>
+                        <option value="<%= category %>">
+                            <%= category %>
+                        </option>
+
+                    <% }) %>
 
                 </select>
 
+
+
+                <!-- SORT -->
+
+                <select
+                    id="sort-filter"
+                    class="border border-[#E8DCCB]
+                           rounded-xl px-4 py-3
+                           bg-white outline-none
+                           focus:border-[#C9A36B]"
+                >
+
+                    <option value="">
+                        Sort Products
+                    </option>
+
+                    <option value="name-asc">
+                        Name: A-Z
+                    </option>
+
+                    <option value="name-desc">
+                        Name: Z-A
+                    </option>
+
+                    <option value="price-low">
+                        Price: Low to High
+                    </option>
+
+                    <option value="price-high">
+                        Price: High to Low
+                    </option>
+
+                </select>
 
             </div>
 
         </div>
 
 
-        <!-- PRODUCTS -->
+
+        <!-- PRODUCT GRID -->
 
         <div
             id="products-grid"
-            class="grid sm:grid-cols-2 xl:grid-cols-3
-                   gap-6"
+            class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6"
         >
 
 
-            <% if (products?.length) { %>
+            <% if(products?.length) { %>
 
 
                 <% products.forEach(product => { %>
 
 
                     <article
-                        class="product-card bg-white border border-[#E8DCCB]
-                               rounded-2xl overflow-hidden shadow-sm
-                               hover:shadow-md transition"
+                        class="product-card bg-white
+                               border border-[#E8DCCB]
+                               rounded-2xl overflow-hidden
+                               shadow-sm hover:shadow-md
+                               transition"
                         data-name="<%= product.name %>"
                         data-category="<%= product.category %>"
                         data-available="<%= product.availability %>"
+                        data-price="<%= product.price %>"
                     >
 
 
                         <!-- IMAGE -->
 
-                        <div class="relative h-52 bg-[#E8DCCB]">
+                        <div class="relative h-56 bg-[#E8DCCB]">
 
 
-                            <% if (product.image) { %>
+                            <% if(product.image) { %>
 
                                 <img
                                     src="<%= product.image %>"
@@ -418,8 +619,9 @@
                             <% } else { %>
 
                                 <div
-                                    class="w-full h-full flex items-center
-                                           justify-center text-[#A18D7B]"
+                                    class="w-full h-full flex
+                                           items-center justify-center
+                                           text-[#A18D7B]"
                                 >
 
                                     <i class="fa-solid fa-image text-4xl"></i>
@@ -429,18 +631,23 @@
                             <% } %>
 
 
-                            <!-- AVAILABILITY -->
+
+                            <!-- STATUS -->
 
                             <div class="absolute top-4 right-4">
 
-                                <% if (product.availability) { %>
+                                <% if(product.availability) { %>
 
                                     <span
                                         class="px-3 py-1.5 rounded-full
                                                bg-green-100 text-green-700
                                                text-xs font-semibold"
                                     >
+
+                                        <i class="fa-solid fa-circle-check mr-1"></i>
+
                                         Available
+
                                     </span>
 
                                 <% } else { %>
@@ -450,7 +657,11 @@
                                                bg-red-100 text-red-700
                                                text-xs font-semibold"
                                     >
+
+                                        <i class="fa-solid fa-circle-xmark mr-1"></i>
+
                                         Unavailable
+
                                     </span>
 
                                 <% } %>
@@ -460,17 +671,28 @@
                         </div>
 
 
-                        <!-- INFORMATION -->
+
+                        <!-- DETAILS -->
 
                         <div class="p-5">
 
 
-                            <p
-                                class="text-xs uppercase tracking-widest
-                                       text-[#C9A36B]"
+                            <div
+                                class="flex items-center
+                                       justify-between gap-3"
                             >
-                                <%= product.category %>
-                            </p>
+
+                                <p
+                                    class="text-xs uppercase
+                                           tracking-widest
+                                           text-[#C9A36B]"
+                                >
+
+                                    <%= product.category %>
+
+                                </p>
+
+                            </div>
 
 
                             <h2 class="font-serif text-2xl mt-1">
@@ -480,39 +702,73 @@
                             </h2>
 
 
+                            <% if(product.description) { %>
+
+                                <p
+                                    class="text-sm text-[#8B7765]
+                                           mt-2 line-clamp-2"
+                                >
+
+                                    <%= product.description %>
+
+                                </p>
+
+                            <% } %>
+
+
+
+                            <!-- PRICE -->
+
                             <div
-                                class="flex items-center
-                                       justify-between mt-4"
+                                class="flex items-end
+                                       justify-between mt-5"
                             >
 
-                                <p class="font-bold text-xl">
+                                <div>
 
-                                    ₹<%= product.price %>
+                                    <p class="text-xs text-[#8B7765]">
+                                        Price
+                                    </p>
 
-                                </p>
+                                    <p class="font-bold text-2xl">
+                                        ₹<%= product.price %>
+                                    </p>
+
+                                </div>
 
 
-                                <p class="text-sm text-[#8B7765]">
+                                <div class="text-right text-sm text-[#8B7765]">
 
-                                    Max:
-                                    <%= product.maxQuantityPerOrder %>
+                                    <p>
+                                        Pack of <strong>
+                                            <%= product.quantity %>
+                                        </strong>
+                                    </p>
 
-                                </p>
+                                    <p>
+                                        Max order:
+                                        <strong>
+                                            <%= product.maxQuantityPerOrder %>
+                                        </strong>
+                                    </p>
+
+                                </div>
 
                             </div>
+
 
 
                             <!-- ACTIONS -->
 
                             <div
-                                class="flex gap-3 mt-5 pt-5
+                                class="grid grid-cols-2
+                                       gap-3 mt-5 pt-5
                                        border-t border-[#E8DCCB]"
                             >
 
-
                                 <a
                                     href="/admin/products/<%= product._id %>/edit"
-                                    class="flex-1 flex items-center
+                                    class="flex items-center
                                            justify-center gap-2
                                            border border-[#E8DCCB]
                                            rounded-xl py-2.5
@@ -530,7 +786,6 @@
                                 <form
                                     action="/admin/products/<%= product._id %>/delete"
                                     method="POST"
-                                    class="flex-1"
                                 >
 
                                     <button
@@ -553,7 +808,6 @@
 
                                 </form>
 
-
                             </div>
 
                         </div>
@@ -567,18 +821,18 @@
             <% } else { %>
 
 
-                <!-- EMPTY -->
+                <!-- EMPTY STATE -->
 
                 <div
-                    class="sm:col-span-2 xl:col-span-3
-                           bg-white border border-[#E8DCCB]
+                    class="col-span-full bg-white
+                           border border-[#E8DCCB]
                            rounded-2xl py-20 text-center"
                 >
 
                     <div
                         class="w-16 h-16 mx-auto rounded-full
-                               bg-[#F8EFD8] flex items-center
-                               justify-center"
+                               bg-[#F8EFD8]
+                               flex items-center justify-center"
                     >
 
                         <i
@@ -595,7 +849,7 @@
 
 
                     <p class="text-[#8B7765] mt-2">
-                        Add your first product to your bakery menu.
+                        Your bakery menu is currently empty.
                     </p>
 
 
@@ -616,14 +870,13 @@
 
                 </div>
 
-
             <% } %>
-
 
         </div>
 
 
-        <!-- NO FILTER RESULTS -->
+
+        <!-- NO RESULTS -->
 
         <div
             id="no-results"
@@ -633,8 +886,8 @@
 
             <div
                 class="w-14 h-14 mx-auto rounded-full
-                       bg-[#F8EFD8] flex items-center
-                       justify-center"
+                       bg-[#F8EFD8]
+                       flex items-center justify-center"
             >
 
                 <i
@@ -656,148 +909,201 @@
 
         </div>
 
-
     </section>
 
 </main>
 
 
-<!-- SCRIPT -->
 
 <script>
 
-    const searchInput =
-        document.querySelector('#product-search')
+const searchInput =
+    document.querySelector('#product-search')
 
-    const availabilityFilter =
-        document.querySelector('#availability-filter')
+const availabilityFilter =
+    document.querySelector('#availability-filter')
 
-    const categoryFilter =
-        document.querySelector('#category-filter')
+const categoryFilter =
+    document.querySelector('#category-filter')
 
-    const cards =
-        [...document.querySelectorAll('.product-card')]
+const sortFilter =
+    document.querySelector('#sort-filter')
 
-    const noResults =
-        document.querySelector('#no-results')
+const grid =
+    document.querySelector('#products-grid')
 
+const cards =
+    [...document.querySelectorAll('.product-card')]
 
-    function filterProducts() {
-
-        const search =
-            searchInput?.value.trim().toLowerCase() || ''
-
-        const availability =
-            availabilityFilter?.value || ''
-
-        const category =
-            categoryFilter?.value || ''
+const noResults =
+    document.querySelector('#no-results')
 
 
-        let visible = 0
+
+function filterProducts() {
+
+    const search =
+        searchInput?.value.trim().toLowerCase() || ''
+
+    const availability =
+        availabilityFilter?.value.trim().toLowerCase() || ''
+
+    const category =
+        categoryFilter?.value.trim().toLowerCase() || ''
+
+    const sort =
+        sortFilter?.value || ''
 
 
-        cards.forEach(card => {
+    let visibleCards = cards.filter(card => {
 
-            const name =
-                card.dataset.name.toLowerCase()
+        const name =
+            (card.dataset.name || '').trim().toLowerCase()
 
-            const cardCategory =
-                card.dataset.category.toLowerCase()
+        const cardCategory =
+            (card.dataset.category || '').trim().toLowerCase()
 
-            const available =
-                card.dataset.available
+        const available =
+            (card.dataset.available || '').trim().toLowerCase()
 
-
-            const matchesSearch =
-                !search || name.includes(search)
-
-            const matchesAvailability =
-                !availability ||
-                available === availability
-
-            const matchesCategory =
-                !category ||
-                cardCategory === category
+        const price =
+            Number(card.dataset.price)
 
 
-            const show =
-                matchesSearch &&
-                matchesAvailability &&
-                matchesCategory
+        const matchesSearch =
+            !search || name.includes(search)
+
+        const matchesAvailability =
+            !availability ||
+            available === availability
+
+        const matchesCategory =
+            !category ||
+            cardCategory === category
 
 
-            card.classList.toggle(
-                'hidden',
-                !show
-            )
-
-
-            if (show) visible++
-
-        })
-
-
-        noResults?.classList.toggle(
-            'hidden',
-            visible !== 0
-        )
-
-    }
-
-
-    searchInput?.addEventListener(
-        'input',
-        filterProducts
-    )
-
-    availabilityFilter?.addEventListener(
-        'change',
-        filterProducts
-    )
-
-    categoryFilter?.addEventListener(
-        'change',
-        filterProducts
-    )
-
-
-    // MOBILE SIDEBAR
-
-    const sidebar =
-        document.querySelector('#sidebar')
-
-    const mobileMenuButton =
-        document.querySelector('#mobile-menu-button')
-
-    const sidebarOverlay =
-        document.querySelector('#sidebar-overlay')
-
-
-    mobileMenuButton?.addEventListener('click', () => {
-
-        sidebar.classList.toggle(
-            '-translate-x-full'
-        )
-
-        sidebarOverlay.classList.toggle(
-            'hidden'
+        return (
+            matchesSearch &&
+            matchesAvailability &&
+            matchesCategory
         )
 
     })
 
 
-    sidebarOverlay?.addEventListener('click', () => {
+    // SORT
 
-        sidebar.classList.add(
-            '-translate-x-full'
-        )
+    visibleCards.sort((a, b) => {
 
-        sidebarOverlay.classList.add(
-            'hidden'
-        )
+        const nameA =
+            (a.dataset.name || '').toLowerCase()
+
+        const nameB =
+            (b.dataset.name || '').toLowerCase()
+
+        const priceA =
+            Number(a.dataset.price)
+
+        const priceB =
+            Number(b.dataset.price)
+
+
+        switch(sort) {
+
+            case 'name-asc':
+                return nameA.localeCompare(nameB)
+
+            case 'name-desc':
+                return nameB.localeCompare(nameA)
+
+            case 'price-low':
+                return priceA - priceB
+
+            case 'price-high':
+                return priceB - priceA
+
+            default:
+                return 0
+        }
 
     })
+
+
+    // HIDE ALL
+
+    cards.forEach(card => {
+        card.classList.add('hidden')
+    })
+
+
+    // SHOW MATCHING CARDS IN SORTED ORDER
+
+    visibleCards.forEach(card => {
+
+        card.classList.remove('hidden')
+
+        grid.appendChild(card)
+
+    })
+
+
+    noResults?.classList.toggle(
+        'hidden',
+        visibleCards.length > 0
+    )
+
+}
+
+searchInput?.addEventListener(
+    'input',
+    filterProducts
+)
+
+availabilityFilter?.addEventListener(
+    'change',
+    filterProducts
+)
+
+categoryFilter?.addEventListener(
+    'change',
+    filterProducts
+)
+
+sortFilter?.addEventListener(
+    'change',
+    filterProducts
+)
+
+
+
+// MOBILE SIDEBAR
+
+const sidebar =
+    document.querySelector('#sidebar')
+
+const mobileMenuButton =
+    document.querySelector('#mobile-menu-button')
+
+const sidebarOverlay =
+    document.querySelector('#sidebar-overlay')
+
+
+mobileMenuButton?.addEventListener('click', () => {
+
+    sidebar.classList.toggle('-translate-x-full')
+
+    sidebarOverlay.classList.toggle('hidden')
+
+})
+
+
+sidebarOverlay?.addEventListener('click', () => {
+
+    sidebar.classList.add('-translate-x-full')
+
+    sidebarOverlay.classList.add('hidden')
+
+})
 
 </script>
 
