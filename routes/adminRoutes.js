@@ -1,6 +1,12 @@
 import express from 'express'
-import { getLoginPage, getOrder, getOrders, getProducts, loginAdmin, renderAddProduct, renderCustomers, renderDashboard, renderEditProduct, renderCustomer, renderAdminAccount, renderChangePassword, renderAdminSettings } from '../controllers/adminController.js'
 import { checkAdminAuth } from '../middlewares/adminMiddleware.js'
+import { getLoginPage, loginAdmin } from '../controllers/admin/authController.js'
+import { renderDashboard } from '../controllers/admin/dashboardController.js'
+import { getOrder, getOrders } from '../controllers/admin/orderController.js'
+import { getProducts, renderAddProduct, renderEditProduct } from '../controllers/admin/productController.js'
+import { renderCustomer, renderCustomers } from '../controllers/admin/customerController.js'
+import { renderAdminSettings } from '../controllers/admin/settingsController.js'
+import { renderAdminAccount, renderChangePassword } from '../controllers/admin/profileController.js'
 
 const router = express.Router()
 
