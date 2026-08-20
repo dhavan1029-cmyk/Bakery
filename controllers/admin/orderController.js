@@ -21,6 +21,8 @@ export async function getOrders(req, res) {
 export async function getOrder(req, res) {
     try {
 
+        const {success, error} = req.query
+
         const order = await ordersModel
             .findById(req.params.id)
             .populate('products.product')
@@ -30,7 +32,7 @@ export async function getOrder(req, res) {
             return res.redirect('/admin/orders');
         }
 
-        res.render('admin/order', { order });
+        res.render('admin/order', { order , successStatus: success || '', error});
 
     } catch (err) {
 
@@ -38,4 +40,36 @@ export async function getOrder(req, res) {
         res.redirect('/serverError');
 
     }
+}
+
+export async function changeOrderStatus(req, res) {
+
+    const orderId = req.params.id
+    const status = req.body.status
+
+    const allowedTransitions = {
+        Preparing: ['Baking', 'Cancelled'],
+        Baking: ['Out for Delivery', 'Cancelled'],
+        'Out for Delivery': ['Delivered'],
+        Delivered: [],
+        Cancelled: []
+    }
+
+    const order = await ordersModel.findById(orderId)
+
+    if (!order) {
+        return res.redirect('/admin/orders')
+    }
+
+    const allowedStatuses = allowedTransitions[order.status]
+
+    if (!allowedStatuses.includes(status)) {
+        return res.redirect(`/admin/orders/${orderId}?error=${true}`)
+    }
+
+    order.status = status
+
+    await order.save()
+
+    res.redirect(`/admin/orders/${orderId}?success=${encodeURIComponent(status)}`)
 }

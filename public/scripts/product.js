@@ -50,10 +50,11 @@ if(unavailable){
 
 async function addItem(e) {
     try{
+        const productId = e.currentTarget.getAttribute('data-id')
         const res = await fetch('/cart', {
             method: 'POST',
             body: JSON.stringify({
-                productId: e.currentTarget.getAttribute('data-id'),
+                productId: productId,
                 quantity: +quantityInp.value
             }),
             headers: {

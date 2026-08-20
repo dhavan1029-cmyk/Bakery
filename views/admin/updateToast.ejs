@@ -1,0 +1,56 @@
+<div id="updateToast"
+     class="fixed z-10 bg-[#3A2E25] w-[80%] h-[10vh] text-center px-10 transition-all duration-300 transform translate-y-[-15vh]">
+</div>
+
+<script>
+    const updateToast = document.querySelector('#updateToast')
+
+    const updates = []
+    let isShowingUpdates = false
+
+    function showToast(message) {
+        updateToast.textContent = message
+        updateToast.classList.replace(
+            'translate-y-[-15vh]',
+            'translate-y-0'
+        )
+    }
+
+    function hideToast() {
+        updateToast.classList.replace(
+            'translate-y-0',
+            'translate-y-[-15vh]'
+        )
+    }
+
+    function wait(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+    }
+
+    const showUpdate = (() => {
+        const updates = []
+        let isShowingUpdates = false
+        
+        return async function (message) {
+            updates.push(message)
+        
+            if (isShowingUpdates) return
+        
+            isShowingUpdates = true
+        
+            while (updates.length > 0) {
+                const update = updates.shift()
+            
+                showToast(update)
+            
+                await wait(3000)
+            
+                hideToast()
+            
+                await wait(300)
+            }
+        
+            isShowingUpdates = false
+        }
+    })()
+</script>

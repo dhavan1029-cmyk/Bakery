@@ -737,8 +737,10 @@
     </main>
 
 <% } %>
-
+<script src="/socket.io/socket.io.js"></script>
 <script>
+
+    const socket = io()
 
     const sidebar = document.querySelector('#sidebar');
     const mobileMenuButton = document.querySelector('#mobile-menu-button');
@@ -759,6 +761,10 @@
         sidebarOverlay.classList.add('hidden');
 
     });
+
+    socket.on('ordered message', product => {
+        document.body.prepend(product.name)
+    })
 
 </script>
 

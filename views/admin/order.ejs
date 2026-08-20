@@ -369,6 +369,91 @@
 
 
     <!-- CONTENT -->
+    <% if(error){ %>
+        <div
+            class="m-6 flex items-start gap-4
+                   rounded-2xl border border-red-200
+                   bg-red-50 px-5 py-4"
+        >
+
+            <div
+                class="w-10 h-10 shrink-0 rounded-full
+                       bg-red-100 flex items-center justify-center"
+            >
+
+                <i class="fa-solid fa-circle-check text-red-600"></i>
+
+            </div>
+
+
+            <div class="flex-1">
+
+                <p class="text-sm text-red-700 mt-1">
+
+                    Order status cannot be changed
+
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                onclick="this.parentElement.remove()"
+                class="text-red-600 hover:text-red-800"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+    <% } else if(successStatus){ %>
+        <div
+            class="m-6 flex items-start gap-4
+                   rounded-2xl border border-green-200
+                   bg-green-50 px-5 py-4"
+        >
+
+            <div
+                class="w-10 h-10 shrink-0 rounded-full
+                       bg-green-100 flex items-center justify-center"
+            >
+
+                <i class="fa-solid fa-circle-check text-green-600"></i>
+
+            </div>
+
+
+            <div class="flex-1">
+
+                <p class="font-semibold text-green-800">
+                    Order updated successfully
+                </p>
+
+                <p class="text-sm text-green-700 mt-1">
+
+                    The order is now marked as
+                    <strong><%= successStatus %></strong>.
+
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                onclick="this.parentElement.remove()"
+                class="text-green-600 hover:text-green-800"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+    
+    <% } %>
 
     <section class="p-5 sm:p-8 max-w-7xl mx-auto">
 
@@ -427,71 +512,88 @@
                     Order Status
                 </p>
 
+                <% if (order.status === 'Cancelled' || order.status === 'Delivered') { %>
 
-                <form
-                    action="/admin/orders/<%= order._id %>/status"
-                    method="POST"
-                >
-
-                    <div class="flex gap-2">
-
-                        <select
-                            name="status"
-                            class="border border-[#E8DCCB] rounded-xl
-                                   px-4 py-2.5 bg-white outline-none
-                                   focus:border-[#C9A36B]"
-                        >
-
-                            <option
-                                value="Preparing"
-                                <%= order.status === 'Preparing' ? 'selected' : '' %>
-                            >
-                                Preparing
-                            </option>
-
-                            <option
-                                value="Baking"
-                                <%= order.status === 'Baking' ? 'selected' : '' %>
-                            >
-                                Baking
-                            </option>
-
-                            <option
-                                value="Out for Delivery"
-                                <%= order.status === 'Out for Delivery' ? 'selected' : '' %>
-                            >
-                                Out for Delivery
-                            </option>
-
-                            <option
-                                value="Delivered"
-                                <%= order.status === 'Delivered' ? 'selected' : '' %>
-                            >
-                                Delivered
-                            </option>
-
-                            <option
-                                value="Cancelled"
-                                <%= order.status === 'Cancelled' ? 'selected' : '' %>
-                            >
-                                Cancelled
-                            </option>
-
-                        </select>
-
-
-                        <button
-                            type="submit"
-                            class="px-4 py-2.5 bg-[#C9A36B]
-                                   hover:bg-[#B89056] rounded-xl
-                                   font-semibold transition"
-                        >
-                            Update
-                        </button>
-
+                    <div class="flex items-center gap-3">
+                    
+                        <div class="px-5 py-3 rounded-xl bg-<%= order.status === 'Cancelled' ? 'red' : 'green'%>-50 border border-<%= order.status === 'Cancelled' ? 'red' : 'green'%>-200 text-<%= order.status === 'Cancelled' ? 'red' : 'green'%>-600 font-semibold">
+                        
+                            <i class="fa-solid fa-circle-xmark mr-2"></i>
+                        
+                            Order <%= order.status%>
+                        
+                        </div>
+                    
                     </div>
+                
+                <% } else { %>
 
-                </form>
+                    <form
+                        action="/admin/orders/<%= order._id %>/status"
+                        method="POST"
+                    >
+
+                        <div class="flex gap-2">
+
+                            <select
+                                name="status"
+                                class="border border-[#E8DCCB] rounded-xl
+                                       px-4 py-2.5 bg-white outline-none
+                                       focus:border-[#C9A36B]"
+                            >
+
+                                <option
+                                    value="Preparing"
+                                    <%= order.status === 'Preparing' ? 'selected' : '' %>
+                                >
+                                    Preparing
+                                </option>
+
+                                <option
+                                    value="Baking"
+                                    <%= order.status === 'Baking' ? 'selected' : '' %>
+                                >
+                                    Baking
+                                </option>
+
+                                <option
+                                    value="Out for Delivery"
+                                    <%= order.status === 'Out for Delivery' ? 'selected' : '' %>
+                                >
+                                    Out for Delivery
+                                </option>
+
+                                <option
+                                    value="Delivered"
+                                    <%= order.status === 'Delivered' ? 'selected' : '' %>
+                                >
+                                    Delivered
+                                </option>
+
+                                <option
+                                    value="Cancelled"
+                                    <%= order.status === 'Cancelled' ? 'selected' : '' %>
+                                >
+                                    Cancelled
+                                </option>
+
+                            </select>
+
+
+                            <button
+                                type="submit"
+                                class="px-4 py-2.5 bg-[#C9A36B]
+                                       hover:bg-[#B89056] rounded-xl
+                                       font-semibold transition"
+                            >
+                                Update
+                            </button>
+
+                        </div>
+
+                    </form>
+                
+                <% } %>
 
             </div>
 

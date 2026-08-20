@@ -1,7 +1,9 @@
 import './config/env.js'
 import './config/mongoose.js'
+import './socket.js'
 import express from 'express'
 import path from 'path'
+import http from 'http'
 import pageRoutes from './routes/pageRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import authRoutes from './routes/authRoutes.js'
@@ -10,8 +12,13 @@ import checkoutRoutes from './routes/checkoutRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
 import cookieParser from 'cookie-parser'
 import { checkAuth } from './middlewares/authMiddleware.js'
+import { initSocket } from './socket.js'
 
 const app = express()
+
+const server = http.createServer(app)
+
+initSocket(server)
 
 app.use(cookieParser())
 
@@ -30,5 +37,5 @@ app.use(authRoutes)
 app.use(checkoutRoutes)
 app.use(adminRoutes)
 
-app.listen(process.env.PORT)
+server.listen(process.env.PORT)
 // (process.env)

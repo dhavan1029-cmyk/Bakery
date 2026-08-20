@@ -292,11 +292,10 @@
 
         <section class="pb-24 flex-1">
 
-            <div
-                id="no-filter-results"
-                class="hidden rounded-3xl p-16 text-center"
-            >
-
+            <!-- NO FILTER RESULTS -->
+                
+            <div id="no-filter-results" class="hidden rounded-3xl p-16 text-center">
+            
                 <div class="w-24 h-24 mx-auto rounded-full bg-[#FAF7F2] flex items-center justify-center">
                 
                     <i class="fa-solid fa-filter-circle-xmark text-5xl text-[#C9A36B]"></i>
@@ -304,312 +303,407 @@
                 </div>
             
                 <h2 class="mt-8 font-serif text-4xl text-[#2F241D]">
-                
                     No Matching Orders
-                
                 </h2>
             
                 <p class="mt-4 max-w-xl mx-auto text-[#6B5B50] leading-relaxed">
-                
                     We couldn't find any orders matching your current filters.
                     Try changing your filters or clear them to view all of your orders.
-                
                 </p>
             
-                <!-- <div class="mt-10 flex flex-wrap justify-center gap-4">
-                
-                    <button
-                        id="clear-filters-btn"
-                        type="button"
-                        class="px-8 py-4 rounded-xl bg-[#C9A36B] hover:bg-[#B89056] text-[#2F241D] font-semibold transition"
-                    >
-                
-                        <i class="fa-solid fa-rotate-left mr-2"></i>
-                
-                        Clear Filters
-                
-                    </button>
-                
-                    <button
-                        id="view-all-orders-btn"
-                        type="button"
-                        class="px-8 py-4 rounded-xl border border-[#E8DCCB] hover:bg-[#FAF7F2] font-semibold transition"
-                    >
-                
-                        <i class="fa-solid fa-box mr-2"></i>
-                
-                        View All Orders
-                
-                    </button>
-                
-                </div> -->
-            
             </div>
-
+        
+        
+            <!-- ORDERS -->
+        
             <div class="max-w-7xl mx-auto px-6 space-y-8">
             
-                <% orders.forEach(order => { %>
+                <% if (orders?.length) { %>
                 
-                    <!-- ORDER CARD -->
-                
-                    <div
-                        class="
-                            orders <%= order.status.toLowerCase() %> bg-white rounded-3xl overflow-hidden border transition-all
-                
-                            <%= order.status === 'Cancelled'
-                                ? 'border-red-200 opacity-80'
-                                : 'border-[#E8DCCB]'
-                            %>
-                        "
-                    >
-                
-                        <!-- HEADER -->
-                
-                        <div class="px-8 py-6 border-b border-[#E8DCCB]">
-                        
-                            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                            
-                                <div>
-                                
-                                    <p class="uppercase tracking-widest text-xs text-[#8B7765]">
-                                    
-                                        Order ID
-                                    
-                                    </p>
-                                
-                                    <h2 class="font-serif text-3xl mt-2">
-                                    
-                                        #<%= order._id %>
-                                    
-                                    </h2>
-                                
-                                </div>
-                            
-                                <div class="text-left lg:text-right">
-                                
-                                    <p class="text-[#6B5B50]">
-                                    
-                                        <%= new Date(order.createdAt).toLocaleDateString() %>
-                                    
-                                    </p>
-                                
-                                    <span
-                                        class="
-                                            inline-flex items-center mt-3 px-4 py-2 rounded-full text-sm font-semibold
-                                
-                                            <%= order.status === 'Delivered'
-                                                ? 'bg-green-100 text-green-700'
-                                                : order.status === 'Cancelled'
-                                                ? 'bg-red-100 text-red-700'
-                                                : order.status === 'Preparing'
-                                                ? 'bg-yellow-100 text-yellow-700'
-                                                : order.status === 'Out for Delivery'
-                                                ? 'bg-blue-100 text-blue-700'
-                                                : 'bg-gray-100 text-gray-700'
-                                            %>
-                                        "
-                                    >
-                                
-                                        <%= order.status %>
-                                
-                                    </span>
-                                
-                                </div>
-                            
-                            </div>
-                        
-                        </div>
+                    <% orders.forEach(order => { %>
                     
+                        <!-- ORDER CARD -->
                     
+                        <article
+                            class="order-card bg-white rounded-3xl overflow-hidden border transition-all"
+                            data-status="<%= order.status %>"
+                        >
                     
+                            <!-- HEADER -->
                     
-                    
-                        <% if(order.status === 'Cancelled'){ %>
-                        
-                            <div class="bg-red-50 border-b border-red-200 px-8 py-4 flex items-start gap-4">
+                            <div class="px-8 py-6 border-b border-[#E8DCCB]">
                             
-                                <i class="fa-solid fa-circle-xmark text-red-500 text-xl mt-1"></i>
-                            
-                                <div>
+                                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                                 
-                                    <p class="font-semibold text-red-700">
-                                    
-                                        This order has been cancelled.
-                                    
-                                    </p>
+                                    <!-- ORDER INFORMATION -->
                                 
-                                    <p class="text-sm text-red-600 mt-1">
+                                    <div>
                                     
-                                        It will not be prepared or delivered.
+                                        <p class="uppercase tracking-widest text-xs text-[#8B7765]">
+                                            Order ID
+                                        </p>
                                     
-                                    </p>
-                                
-                                </div>
-                            
-                            </div>
-                        
-                        <% } %>
-                        
-                        
-                        
-                        
-                        
-                        <!-- PRODUCT PREVIEW -->
-                        
-                        <div class="px-8 py-6 <%= order.status === 'Cancelled' ? 'opacity-60' : '' %>">
-                        
-                            <div class="space-y-5">
-                            
-                                <% order.products.slice(0,3).forEach(item => { %>
-                                
-                                    <div class="flex items-center justify-between">
+                                        <h2 class="font-serif text-3xl mt-2 break-all">
+                                            #<%= order._id %>
+                                        </h2>
                                     
-                                        <div class="flex items-center gap-4">
-                                        
-                                            <div
-                                                class="w-16 h-16 rounded-xl bg-[#E8DCCB]"
-                                                style="<%= item.product.image ? `background-image:url('${item.product.image}');background-size:cover;background-position:center;` : '' %>"
-                                            ></div>
-                                        
-                                            <div>
-                                            
-                                                <p class="font-medium">
-                                                
-                                                    <%= item.product.name %>
-                                                
-                                                </p>
-                                            
-                                                <p class="text-sm text-[#6B5B50]">
-                                                
-                                                    Qty: <%= item.quantity %>
-                                                
-                                                </p>
-                                            
-                                            </div>
-                                        
-                                        </div>
-                                    
-                                        <p class="font-semibold">
-                                        
-                                            ₹<%= item.orderPrice * item.quantity %>
-                                        
+                                        <p class="text-sm text-[#6B5B50] mt-2">
+                                            <%= new Date(order.createdAt).toLocaleDateString('en-IN', {
+                                                day: 'numeric',
+                                                month: 'long',
+                                                year: 'numeric'
+                                            }) %>
                                         </p>
                                     
                                     </div>
                                 
-                                <% }) %>
                                 
-                                <% if(order.products.length > 3){ %>
+                                    <!-- STATUS -->
                                 
-                                    <p class="text-sm text-[#6B5B50]">
+                                    <div class="text-left lg:text-right">
                                     
-                                        + <%= order.products.length - 3 %> more item(s)
+                                        <span
+                                            class="
+                                                inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold
                                     
-                                    </p>
-                                
-                                <% } %>
-                                
-                            </div>
-                        
-                        </div>
-                    
-                    
-                    
-                    
-                    
-                        <!-- FOOTER -->
-                    
-                        <div
-                            class="
-                                px-8 py-6 border-t
-                    
-                                <%= order.status === 'Cancelled'
-                                    ? 'bg-red-50 border-red-200'
-                                    : 'bg-[#FAF7F2] border-[#E8DCCB]'
-                                %>
-                            "
-                        >
-                    
-                            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                            
-                                <div>
-                                
-                                    <p class="text-sm text-[#8B7765]">
+                                                <%= order.status === 'Delivered'
+                                                    ? 'bg-green-100 text-green-700'
+                                                    : order.status === 'Cancelled'
+                                                    ? 'bg-red-100 text-red-700'
+                                                    : order.status === 'Baking'
+                                                    ? 'bg-orange-100 text-orange-700'
+                                                    : order.status === 'Out for Delivery'
+                                                    ? 'bg-blue-100 text-blue-700'
+                                                    : 'bg-yellow-100 text-yellow-700'
+                                                %>
+                                            "
+                                        >
                                     
-                                        <%= order.status === 'Cancelled'
-                                            ? 'Order Value'
-                                            : 'Total Amount'
-                                        %>
+                                            <% if (order.status === 'Delivered') { %>
+                                            
+                                                <i class="fa-solid fa-circle-check mr-2"></i>
+                                            
+                                            <% } else if (order.status === 'Cancelled') { %>
+                                            
+                                                <i class="fa-solid fa-circle-xmark mr-2"></i>
+                                            
+                                            <% } else if (order.status === 'Out for Delivery') { %>
+                                            
+                                                <i class="fa-solid fa-truck mr-2"></i>
+                                            
+                                            <% } else if (order.status === 'Baking') { %>
+                                            
+                                                <i class="fa-solid fa-fire mr-2"></i>
+                                            
+                                            <% } else { %>
+                                            
+                                                <i class="fa-solid fa-clock mr-2"></i>
+                                            
+                                            <% } %>
+                                            
+                                            <%= order.status %>
+                                            
+                                        </span>
                                     
-                                    </p>
-                                
-                                    <p class="font-bold text-3xl mt-1">
                                     
-                                        ₹<%= order.total %>
+                                        <!-- PAYMENT STATUS -->
                                     
-                                    </p>
+                                        <div class="flex items-center gap-2 mt-3 lg:justify-end">
+                                        
+                                            <span class="text-sm text-[#8B7765]">
+                                            
+                                                <%= order.paymentMethod === 'cod'
+                                                    ? 'Cash on Delivery'
+                                                    : 'Online Payment'
+                                                %>
+                                            
+                                            </span>
+                                        
+                                            <span
+                                                class="
+                                                    px-2.5 py-1 rounded-full text-xs font-semibold
+                                        
+                                                    <%= order.paymentStatus === 'Paid'
+                                                        ? 'bg-green-100 text-green-700'
+                                                        : 'bg-yellow-100 text-yellow-700'
+                                                    %>
+                                                "
+                                            >
+                                        
+                                                <%= order.paymentStatus %>
+                                        
+                                            </span>
+                                        
+                                        </div>
+                                    
+                                    </div>
                                 
                                 </div>
                             
-                                <div class="flex flex-wrap gap-3">
+                            </div>
+                        
+                        
+                            <!-- CANCELLED MESSAGE -->
+                        
+                            <% if (order.status === 'Cancelled') { %>
+                            
+                                <div class="bg-red-50 border-b border-red-200 px-8 py-4 flex items-start gap-4">
                                 
-                                    <a
-                                        href="/orders/<%= order._id %>"
-                                        class="px-6 py-3 rounded-xl bg-[#C9A36B] hover:bg-[#B89056] font-semibold transition"
-                                    >
+                                    <i class="fa-solid fa-circle-xmark text-red-500 text-xl mt-1"></i>
                                 
-                                        View Details
-                                
-                                    </a>
-                                
-                                    <% if(['Placed','Confirmed','Preparing'].includes(order.status)){ %>
+                                    <div>
                                     
-                                        <button
-                                            class="cancel-order px-6 py-3 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 transition"
-                                            data-id="<%= order._id %>"
-                                        >
+                                        <p class="font-semibold text-red-700">
+                                            This order has been cancelled.
+                                        </p>
                                     
-                                            Cancel Order
+                                        <p class="text-sm text-red-600 mt-1">
+                                            This order will not be prepared or delivered.
+                                        </p>
                                     
-                                        </button>
+                                    </div>
+                                
+                                </div>
+                            
+                            <% } %>
+                            
+                            
+                            <!-- PRODUCTS -->
+                            
+                            <div
+                                class="
+                                    px-8 py-6
+                                    <%= order.status === 'Cancelled' ? 'opacity-60' : '' %>
+                                "
+                            >
+                            
+                                <p class="text-xs uppercase tracking-widest text-[#8B7765] mb-5">
+                                    Order Items
+                                </p>
+                            
+                                <div class="space-y-5">
+                                
+                                    <% order.products.slice(0, 3).forEach(item => { %>
+                                    
+                                        <div class="flex items-center justify-between gap-5">
+                                        
+                                            <div class="flex items-center gap-4 min-w-0">
+                                            
+                                                <div
+                                                    class="w-16 h-16 rounded-xl bg-[#E8DCCB] shrink-0"
+                                                    <% if (item.product?.image) { %>
+                                                        style="background-image:url('<%= item.product.image %>');background-size:cover;background-position:center;"
+                                                    <% } %>
+                                                ></div>
+                                                    
+                                                <div class="min-w-0">
+                                                
+                                                    <p class="font-medium truncate">
+                                                        <%= item.product?.name || 'Product unavailable' %>
+                                                    </p>
+                                                
+                                                    <p class="text-sm text-[#6B5B50] mt-1">
+                                                        Qty: <%= item.quantity %>
+                                                    </p>
+                                                
+                                                    <p class="text-xs text-[#8B7765] mt-1">
+                                                        ₹<%= item.orderPrice %> each
+                                                    </p>
+                                                
+                                                </div>
+                                            
+                                            </div>
+                                        
+                                            <p class="font-semibold shrink-0">
+                                                ₹<%= item.orderPrice * item.quantity %>
+                                            </p>
+                                        
+                                        </div>
+                                    
+                                    <% }) %>
+                                    
+                                    
+                                    <% if (order.products.length > 3) { %>
+                                    
+                                        <p class="text-sm text-[#6B5B50] pt-1">
+                                            + <%= order.products.length - 3 %> more item(s)
+                                        </p>
                                     
                                     <% } %>
                                     
-                                    <% if(['Delivered','Cancelled'].includes(order.status)){ %>
+                                </div>
+                            
+                            </div>
+                        
+                        
+                            <!-- ORDER SUMMARY -->
+                        
+                            <div class="px-8 py-6 border-t border-[#E8DCCB] bg-[#FAF7F2]">
+                            
+                                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+                                
+                                    <!-- PRICE BREAKDOWN -->
+                                
+                                    <div class="space-y-2 min-w-64">
                                     
-                                        <button
-                                            class="reorder px-6 py-3 rounded-xl border border-[#E8DCCB] hover:bg-white transition"
-                                            data-id="<%= order._id %>"
-                                        >
+                                        <div class="flex justify-between gap-12 text-sm text-[#6B5B50]">
+                                        
+                                            <span>Subtotal</span>
+                                        
+                                            <span>₹<%= order.subtotal %></span>
+                                        
+                                        </div>
                                     
-                                            Reorder
+                                        <div class="flex justify-between gap-12 text-sm text-[#6B5B50]">
+                                        
+                                            <span>Delivery Fee</span>
+                                        
+                                            <span>₹<%= order.deliveryFee %></span>
+                                        
+                                        </div>
                                     
-                                        </button>
+                                        <div class="flex justify-between gap-12 pt-3 mt-2 border-t border-[#E8DCCB]">
+                                        
+                                            <span class="font-semibold text-[#4A3428]">
+                                                Total
+                                            </span>
+                                        
+                                            <span class="font-bold text-2xl">
+                                                ₹<%= order.total %>
+                                            </span>
+                                        
+                                        </div>
                                     
-                                    <% } %>
+                                    </div>
+                                
+                                
+                                    <!-- ACTIONS -->
+                                
+                                    <div class="flex flex-wrap gap-3">
                                     
-                                    <% if(order.status === 'Out for Delivery'){ %>
+                                        <!-- VIEW DETAILS -->
                                     
                                         <a
                                             href="/orders/<%= order._id %>"
-                                            class="px-6 py-3 rounded-xl border border-[#E8DCCB] hover:bg-white transition"
+                                            class="px-6 py-3 rounded-xl bg-[#C9A36B] hover:bg-[#B89056] font-semibold transition"
                                         >
-                                    
-                                            Track Order
-                                    
+                                            <i class="fa-solid fa-eye mr-2"></i>
+                                            View Details
                                         </a>
                                     
-                                    <% } %>
                                     
+                                        <!-- CANCEL -->
+                                    
+                                        <% if (['Preparing', 'Baking'].includes(order.status)) { %>
+                                        
+                                            <button
+                                                type="button"
+                                                class="cancel-order px-6 py-3 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 transition"
+                                                data-id="<%= order._id %>"
+                                            >
+                                                <i class="fa-solid fa-xmark mr-2"></i>
+                                                Cancel Order
+                                            </button>
+                                        
+                                        <% } %>
+                                        
+                                        
+                                        <!-- REORDER -->
+                                        
+                                        <% if (['Delivered', 'Cancelled'].includes(order.status)) { %>
+                                        
+                                            <button
+                                                type="button"
+                                                class="reorder px-6 py-3 rounded-xl border border-[#E8DCCB] hover:bg-white transition"
+                                                data-id="<%= order._id %>"
+                                            >
+                                                <i class="fa-solid fa-rotate-right mr-2"></i>
+                                                Reorder
+                                            </button>
+                                        
+                                        <% } %>
+                                        
+                                        
+                                        <!-- TRACK -->
+                                        
+                                        <% if (order.status === 'Out for Delivery') { %>
+                                        
+                                            <a
+                                                href="/orders/<%= order._id %>"
+                                                class="px-6 py-3 rounded-xl border border-[#E8DCCB] hover:bg-white transition"
+                                            >
+                                                <i class="fa-solid fa-location-dot mr-2"></i>
+                                                Track Order
+                                            </a>
+                                        
+                                        <% } %>
+                                        
+                                    </div>
+                                
                                 </div>
                             
                             </div>
                         
+                        
+                            <!-- ORDER NOTES -->
+                        
+                            <% if (order.orderNotes) { %>
+                            
+                                <div class="px-8 py-5 border-t border-[#E8DCCB] flex items-start gap-4">
+                                
+                                    <i class="fa-solid fa-note-sticky text-[#C9A36B] mt-1"></i>
+                                
+                                    <div>
+                                    
+                                        <p class="text-xs uppercase tracking-widest text-[#8B7765]">
+                                            Order Note
+                                        </p>
+                                    
+                                        <p class="text-sm text-[#6B5B50] mt-1">
+                                            <%= order.orderNotes %>
+                                        </p>
+                                    
+                                    </div>
+                                
+                                </div>
+                            
+                            <% } %>
+                            
+                        </article>
+                    
+                    <% }) %>
+                    
+                <% } else { %>
+                
+                    <!-- NO ORDERS -->
+                
+                    <div class="bg-white border border-[#E8DCCB] rounded-3xl py-20 text-center">
+                    
+                        <div class="w-20 h-20 mx-auto rounded-full bg-[#F8EFD8] flex items-center justify-center">
+                        
+                            <i class="fa-solid fa-bag-shopping text-3xl text-[#C9A36B]"></i>
+                        
                         </div>
+                    
+                        <h2 class="font-serif text-3xl mt-6">
+                            No Orders Yet
+                        </h2>
+                    
+                        <p class="text-[#8B7765] mt-2">
+                            Your orders will appear here once you place your first order.
+                        </p>
+                    
+                        <a
+                            href="/menu"
+                            class="inline-flex items-center gap-2 mt-6 bg-[#C9A36B] hover:bg-[#B89056] px-6 py-3 rounded-xl font-semibold transition"
+                        >
+                            <i class="fa-solid fa-store"></i>
+                            Browse Menu
+                        </a>
                     
                     </div>
                 
-                <% }) %>
+                <% } %>
                 
             </div>
         
