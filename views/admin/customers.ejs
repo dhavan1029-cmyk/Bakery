@@ -898,7 +898,15 @@
 
     <!-- SCRIPT -->
 
+    <%- include('./updateToast')%>
+    <script src="/socket.io/socket.io.js"></script>
     <script>
+    
+        const socket = io()
+    
+        socket.on('notify admin', notification => {
+            showUpdate(notification.message)
+        })
 
         const searchInput =
             document.querySelector('#customer-search')

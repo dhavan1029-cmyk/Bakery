@@ -9,7 +9,6 @@ export function initSocket(server) {
         console.log("User connected:", socket.id);
     });
 }
-
 export function getIO() {
     if (!io) {
         throw new Error("Socket.IO has not been initialized");

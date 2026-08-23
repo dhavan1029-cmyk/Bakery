@@ -1,5 +1,11 @@
+import { getIO } from "../socket.js";
 import userModel from "../models/userModel.js";
 import ordersModel from "../models/ordersModel.js";
+
+// await ordersModel.deleteMany({})
+// const user = await userModel.findOne({email: 'john@j.com'})
+// user.orders = []
+// await user.save()
 
 const DELIVERY_FEE = 50;
 
@@ -80,10 +86,22 @@ export async function getOrder(req, res) {
 
 export async function cancelOrder(req, res) {
     try{
-        // console.log(req.params)
+        let io = getIO()
+
         const order = await ordersModel.findById(req.params.order)
+        const user = await userModel.findById(order.userID)
         order.status = 'Cancelled'
         await order.save()
+
+        io.emit('notify admin', {
+            type: 'order_cancelled',
+            orderId: order._id,
+            status: order.status,
+            username: user.username,
+            message: `Order #${order._id} cancelled — ${user.username} cancelled their order.`
+        })
+
+
         res.json({})
     } catch (err) {
         console.log(err)

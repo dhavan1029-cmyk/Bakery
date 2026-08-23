@@ -369,7 +369,7 @@
                                 Total Orders
                             </p>
 
-                            <p class="font-serif text-4xl mt-2">
+                            <p class="font-serif text-4xl mt-2" id="totalOrders">
                                 <%= totalOrders || 0 %>
                             </p>
 
@@ -403,7 +403,7 @@
                                 Revenue
                             </p>
 
-                            <p class="font-serif text-4xl mt-2">
+                            <p class="font-serif text-4xl mt-2" id="revenue">
                                 ₹<%= totalRevenue || 0 %>
                             </p>
 
@@ -737,14 +737,27 @@
     </main>
 
 <% } %>
+<%- include('./updateToast')%>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-
-    const socket = io()
 
     const sidebar = document.querySelector('#sidebar');
     const mobileMenuButton = document.querySelector('#mobile-menu-button');
     const sidebarOverlay = document.querySelector('#sidebar-overlay');
+    const totalOrders = document.querySelector('#totalOrders')
+    const revenue = document.querySelector('#revenue')
+
+    const socket = io()
+
+    socket.on('notify admin', notification => {
+        showUpdate(notification.message)
+
+        if(notification.status === 'Preparing'){
+            totalOrders.textContent = +totalOrders.textContent + 1
+            revenue.textContent = "₹" + (+revenue.textContent.slice(1) || '') + notification.total
+        }
+
+    })
 
 
     mobileMenuButton?.addEventListener('click', () => {
@@ -761,10 +774,6 @@
         sidebarOverlay.classList.add('hidden');
 
     });
-
-    socket.on('ordered message', product => {
-        document.body.prepend(product.name)
-    })
 
 </script>
 

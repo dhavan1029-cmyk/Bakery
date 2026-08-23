@@ -1,9 +1,9 @@
 import './config/env.js'
 import './config/mongoose.js'
-import './socket.js'
 import express from 'express'
 import path from 'path'
 import http from 'http'
+import { initSocket } from './socket.js'
 import pageRoutes from './routes/pageRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import authRoutes from './routes/authRoutes.js'
@@ -12,7 +12,6 @@ import checkoutRoutes from './routes/checkoutRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
 import cookieParser from 'cookie-parser'
 import { checkAuth } from './middlewares/authMiddleware.js'
-import { initSocket } from './socket.js'
 
 const app = express()
 

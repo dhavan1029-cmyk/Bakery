@@ -504,7 +504,7 @@
 
             <!-- STATUS -->
 
-            <div class="bg-white border border-[#E8DCCB]
+            <div id="orderStatus" class="bg-white border border-[#E8DCCB]
                         rounded-2xl p-4">
 
                 <p class="text-xs uppercase tracking-widest
@@ -514,7 +514,7 @@
 
                 <% if (order.status === 'Cancelled' || order.status === 'Delivered') { %>
 
-                    <div class="flex items-center gap-3">
+                    <div id="orderFinalStatus" class="flex items-center gap-3">
                     
                         <div class="px-5 py-3 rounded-xl bg-<%= order.status === 'Cancelled' ? 'red' : 'green'%>-50 border border-<%= order.status === 'Cancelled' ? 'red' : 'green'%>-200 text-<%= order.status === 'Cancelled' ? 'red' : 'green'%>-600 font-semibold">
                         
@@ -529,6 +529,7 @@
                 <% } else { %>
 
                     <form
+                        id="statusForm"
                         action="/admin/orders/<%= order._id %>/status"
                         method="POST"
                     >
@@ -962,13 +963,38 @@
 
 </main>
 
-
+<%- include('./updateToast')%>
+<script src="/socket.io/socket.io.js"></script>
 <script>
 
+    const socket = io()
+
+    const orderStatus = document.querySelector('#orderStatus')
+    const statusForm = document.querySelector('#statusForm')
     const sidebar = document.querySelector('#sidebar')
     const mobileMenuButton = document.querySelector('#mobile-menu-button')
     const sidebarOverlay = document.querySelector('#sidebar-overlay')
 
+    socket.on('notify admin', notification => {
+        showUpdate(notification.message)
+
+        if(notification.status === 'Cancelled'){
+            statusForm.remove()
+            orderStatus.innerHTML += `
+            <div id="orderFinalStatus" class="flex items-center gap-3">
+            
+                <div class="px-5 py-3 rounded-xl bg-${ notification.status === 'Cancelled' ? 'red' : 'green'}-50 border border-${ notification.status === 'Cancelled' ? 'red' : 'green'}-200 text-${ notification.status === 'Cancelled' ? 'red' : 'green'}-600 font-semibold">
+                
+                    <i class="fa-solid fa-circle-xmark mr-2"></i>
+                
+                    Order ${notification.status}
+                
+                </div>
+            
+            </div>`
+        }
+
+    })
 
     mobileMenuButton?.addEventListener('click', () => {
 

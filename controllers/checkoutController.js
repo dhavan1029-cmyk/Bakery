@@ -2,6 +2,7 @@ import userModel from "../models/userModel.js"
 import ordersModel from "../models/ordersModel.js";
 import productModel from '../models/productModel.js'
 import mongoose from "mongoose";
+import { getIO } from '../socket.js'
 
 
 function isMaxOrderLimitExceeded(items){
@@ -25,8 +26,6 @@ async function comparePrices(prevPrices, userId){
 
     return priceChanges
 }
-
-
 
 const DELIVERY_FEE = 50
 
@@ -136,6 +135,7 @@ export async function getCheckoutPage(req, res){
             cartItems.push({product, quantity})
             subtotal = product.price * quantity
             total = subtotal + DELIVERY_FEE
+            console.log('fdfdfdf')
 
         }
         res.render('checkout', {reorderId, checkoutError: '', orderError: '', cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, productID, quantity, formData: {}, changedPrices})
@@ -152,6 +152,8 @@ export async function getCheckoutPage(req, res){
 export async function placeOrder(req, res){
 
     try{
+
+        const io = getIO()
 
         let { fullName, phone, house, landmark, address, city, state, pincode, paymentMethod, notes, productID, quantity, reorderId, pricesAtCheckout } = req.body
 
@@ -195,7 +197,7 @@ export async function placeOrder(req, res){
 
             const productsAvailability = await checkAvailability(...user.cart)
 
-            if(!productsAvailability || isMaxOrderLimitExceeded(products)) {
+            if(!productsAvailability || isMaxOrderLimitExceeded(user.cart)) {
                 return res.redirect(`/cart`)
             }
 
@@ -236,7 +238,20 @@ export async function placeOrder(req, res){
         user.orders.push(newOrder._id)
         await user.save()
 
-        res.redirect(`/order-success/${newOrder._id}`)
+        io.emit('notify admin', {
+            orderId: newOrder._id.toString(),
+            message: `Order placed by ${user.username}`,
+            status: newOrder.status,
+            customerName: newOrder.deliveryAddress.fullName,
+            phone: newOrder.deliveryAddress.phone,
+            itemCount: newOrder.products.length,
+            total: newOrder.total,
+            paymentMethod: newOrder.paymentMethod,
+            paymentStatus: newOrder.paymentStatus,
+            createdAt: newOrder.createdAt
+        })
+
+        res.redirect(`/order-success/${newOrder._id}`)  
 
             
     } catch (orderError) {

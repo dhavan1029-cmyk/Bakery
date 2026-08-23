@@ -1,11 +1,10 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import validator from 'validator'
 import userModel from '../models/userModel.js'
 
 export async function getLoginPage(req, res){
     const loginRequired = req.query.loginRequired
-    res.render('login', {error: null, loginRequired})
+    res.render('login', {error: null, loginRequired, formData: {}})
 }
 
 export function getSignupPage(req, res){
@@ -39,7 +38,7 @@ export async function loginUser(req, res){
 
         } else {
 
-            res.render('login', {error: 'Incorrect password', loginRequired: ''})
+            res.render('login', {error: 'Incorrect password', loginRequired: '', formData: req.body})
 
         }
     } catch (err) {

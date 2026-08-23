@@ -77,7 +77,9 @@ async function addItem(e) {
 
 function buyItem(e){
     const quantity = quantityInp.value
-    if(quantity > quantityInp.max) return
+    if(+quantity > +quantityInp.max) return
+
+
 
     if(!Number.isInteger(+quantity) || quantity < 1) showToast({success: false, message: 'Invalid Quantity'})
     else window.location.href = `/checkout?productID=${buyNow.getAttribute('data-id')}&quantity=${quantity}`
