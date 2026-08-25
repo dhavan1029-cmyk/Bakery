@@ -1,3 +1,10 @@
+const socket = io()
+
+socket.on('order status changed', notification => {
+    showNotification(notification.message)
+})
+
+
 const items = document.querySelectorAll('.items')
 const removeBtns = document.querySelectorAll('.remove-btn')
 const increaseBtns = document.querySelectorAll('.increase-btn')

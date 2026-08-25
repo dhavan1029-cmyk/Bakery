@@ -1,3 +1,9 @@
+const socket = io()
+
+socket.on('order status changed', notification => {
+    showNotification(notification.message)
+})
+
 const addToCart = document.querySelector('#addToCart')
 const buyNow = document.querySelector('#buyNow')
 const toast = document.querySelector('#toast')

@@ -18,7 +18,7 @@
 
 </head>
 
-<body class="bg-[#F8F4EE] text-[#4A3428] min-h-screen flex flex-col">
+<body data-order-id="<%= order._id %>" class="bg-[#F8F4EE] text-[#4A3428] min-h-screen flex flex-col">
 
     <%if(!order) {%>
         <section class="h-[100vh] flex items-center justify-center px-6">
@@ -275,24 +275,24 @@
                             </p>
 
                             <span
+                                id="order-status"
                                 class="
                                     inline-flex items-center mt-4 px-6 py-3 rounded-full font-semibold
-
                                     <%= order.status === 'Delivered'
                                         ? 'bg-green-100 text-green-700'
                                         : order.status === 'Cancelled'
                                         ? 'bg-red-100 text-red-700'
                                         : order.status === 'Preparing'
                                         ? 'bg-yellow-100 text-yellow-700'
+                                        : order.status === 'Baking'
+                                        ? 'bg-orange-100 text-orange-700'
                                         : order.status === 'Out for Delivery'
                                         ? 'bg-blue-100 text-blue-700'
                                         : 'bg-gray-100 text-gray-700'
                                     %>
                                 "
                             >
-
                                 <%= order.status %>
-
                             </span>
 
                             <p class="mt-5 text-[#6B5B50]">
@@ -341,7 +341,7 @@
 
 
 
-                    <div class="mt-12 flex items-center justify-between">
+                    <div id="order-timeline" class="mt-12 flex items-center justify-between">
 
                         <%
                             const steps = [
@@ -815,6 +815,7 @@
                                 </p>
 
                                 <span
+                                    id="payment-status"
                                     class="
                                         inline-flex items-center mt-3 px-5 py-2 rounded-full font-semibold
 
@@ -1004,7 +1005,7 @@
                         
                             <!-- PRIMARY ACTION -->
                         
-                            <div class="flex flex-wrap gap-4">
+                            <div id="order-actions" class="flex flex-wrap gap-4">
                             
                                 <% if(['Baking' , 'Preparing'].includes(order.status)){ %>
                                 
@@ -1094,6 +1095,9 @@
     <% } %>
 
     <%- include('./loadAnimation')%>
+    <%- include('./notification')%>
+
+    <script src="/socket.io/socket.io.js"></script>
 
     <script src="/scripts/load.js"></script>
 

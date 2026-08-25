@@ -2,7 +2,11 @@ import { getIO } from "../socket.js";
 import userModel from "../models/userModel.js";
 import ordersModel from "../models/ordersModel.js";
 
-// await ordersModel.deleteMany({})
+const deliveredOrders = await ordersModel.find({status: 'Delivered'})
+deliveredOrders.forEach(async (element) => {
+    element.paymentStatus = 'Paid'
+    await element.save()
+});
 // const user = await userModel.findOne({email: 'john@j.com'})
 // user.orders = []
 // await user.save()

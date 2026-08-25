@@ -8,8 +8,14 @@ export async function renderDashboard(req, res){
     const products = await productModel.find({})
     const users = await userModel.find( {role: { $ne: 'admin' }} )
 
-    const totalRevenue = orders.length ? orders.map(order => order.total).reduce((prevTotal, currTotal) => prevTotal + currTotal) : 0
-
+    const totalRevenue = orders
+        .filter(order => 
+            order.status === 'Delivered' &&
+            order.paymentStatus === 'Paid'
+        )
+        .reduce((total, order) => total + order.total, 0)
+    
+        
     res.render('admin/dashboard', {
             totalOrders: orders.length,
             totalRevenue,

@@ -324,10 +324,18 @@
 </section>
 
 <%- include('./loadAnimation')%>
+<%- include('./notification') %>
 
+<script src="/socket.io/socket.io.js"></script>
 <script src="/scripts/load.js"></script>
 
 <script>
+    
+    const socket = io()
+
+    socket.on('order status changed', notification => {
+        showNotification(notification.message)
+    })
 
     hideLoading()
 

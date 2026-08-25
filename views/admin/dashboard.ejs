@@ -754,6 +754,9 @@
 
         if(notification.status === 'Preparing'){
             totalOrders.textContent = +totalOrders.textContent + 1
+        }
+
+        if(notification.status === 'Delivered'){
             revenue.textContent = "₹" + (+revenue.textContent.slice(1) || '') + notification.total
         }
 

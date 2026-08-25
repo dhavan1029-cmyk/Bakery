@@ -33,7 +33,7 @@ export async function loginUser(req, res){
             const token = jwt.sign({email}, process.env.JWT_CODE)
            
             res.cookie('userToken', token)
-            res.redirect('/menu')
+            res.redirect(`/menu?userId=${user._id}`)
             
 
         } else {

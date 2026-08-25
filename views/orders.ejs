@@ -326,6 +326,8 @@
                     
                         <article
                             class="order-card bg-white rounded-3xl overflow-hidden border transition-all"
+                            id="order-<%= order._id %>"
+                            data-order-id="<%= order._id %>"
                             data-status="<%= order.status %>"
                         >
                     
@@ -364,8 +366,8 @@
                                     
                                         <span
                                             class="
+                                                order-status
                                                 inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold
-                                    
                                                 <%= order.status === 'Delivered'
                                                     ? 'bg-green-100 text-green-700'
                                                     : order.status === 'Cancelled'
@@ -377,32 +379,39 @@
                                                     : 'bg-yellow-100 text-yellow-700'
                                                 %>
                                             "
+                                            data-status="<%= order.status %>"
                                         >
                                     
-                                            <% if (order.status === 'Delivered') { %>
+                                            <span class="order-status-icon">
                                             
-                                                <i class="fa-solid fa-circle-check mr-2"></i>
-                                            
-                                            <% } else if (order.status === 'Cancelled') { %>
-                                            
-                                                <i class="fa-solid fa-circle-xmark mr-2"></i>
-                                            
-                                            <% } else if (order.status === 'Out for Delivery') { %>
-                                            
-                                                <i class="fa-solid fa-truck mr-2"></i>
-                                            
-                                            <% } else if (order.status === 'Baking') { %>
-                                            
-                                                <i class="fa-solid fa-fire mr-2"></i>
-                                            
-                                            <% } else { %>
-                                            
-                                                <i class="fa-solid fa-clock mr-2"></i>
-                                            
-                                            <% } %>
-                                            
-                                            <%= order.status %>
-                                            
+                                                <% if (order.status === 'Delivered') { %>
+                                                
+                                                    <i class="fa-solid fa-circle-check mr-2"></i>
+                                                
+                                                <% } else if (order.status === 'Cancelled') { %>
+                                                
+                                                    <i class="fa-solid fa-circle-xmark mr-2"></i>
+                                                
+                                                <% } else if (order.status === 'Out for Delivery') { %>
+                                                
+                                                    <i class="fa-solid fa-truck mr-2"></i>
+                                                
+                                                <% } else if (order.status === 'Baking') { %>
+                                                
+                                                    <i class="fa-solid fa-fire mr-2"></i>
+                                                
+                                                <% } else { %>
+                                                
+                                                    <i class="fa-solid fa-clock mr-2"></i>
+                                                
+                                                <% } %>
+                                                
+                                            </span>
+                                        
+                                            <span class="order-status-text">
+                                                <%= order.status %>
+                                            </span>
+                                        
                                         </span>
                                     
                                     
@@ -412,17 +421,19 @@
                                         
                                             <span class="text-sm text-[#8B7765]">
                                             
-                                                <%= order.paymentMethod === 'cod'
-                                                    ? 'Cash on Delivery'
-                                                    : 'Online Payment'
-                                                %>
+                                                <span class="payment-method">
+                                                    <%= order.paymentMethod === 'cod'
+                                                        ? 'Cash on Delivery'
+                                                        : 'Online Payment'
+                                                    %>
+                                                </span>
                                             
                                             </span>
                                         
                                             <span
                                                 class="
+                                                    payment-status
                                                     px-2.5 py-1 rounded-full text-xs font-semibold
-                                        
                                                     <%= order.paymentStatus === 'Paid'
                                                         ? 'bg-green-100 text-green-700'
                                                         : 'bg-yellow-100 text-yellow-700'
@@ -445,38 +456,38 @@
                         
                             <!-- CANCELLED MESSAGE -->
                         
-                            <% if (order.status === 'Cancelled') { %>
-                            
-                                <div class="bg-red-50 border-b border-red-200 px-8 py-4 flex items-start gap-4">
+                            <div
+                                class="cancelled-message bg-red-50 border-b border-red-200 px-8 py-4 items-start gap-4
+                                    <%= order.status === 'Cancelled' ? 'flex' : 'hidden' %>"
+                            >
+                        
+                                <i class="fa-solid fa-circle-xmark text-red-500 text-xl mt-1"></i>
+                        
+                                <div>
                                 
-                                    <i class="fa-solid fa-circle-xmark text-red-500 text-xl mt-1"></i>
+                                    <p class="font-semibold text-red-700">
+                                        This order has been cancelled.
+                                    </p>
                                 
-                                    <div>
-                                    
-                                        <p class="font-semibold text-red-700">
-                                            This order has been cancelled.
-                                        </p>
-                                    
-                                        <p class="text-sm text-red-600 mt-1">
-                                            This order will not be prepared or delivered.
-                                        </p>
-                                    
-                                    </div>
+                                    <p class="text-sm text-red-600 mt-1">
+                                        This order will not be prepared or delivered.
+                                    </p>
                                 
                                 </div>
                             
-                            <% } %>
-                            
-                            
+                            </div>
+                        
+                        
                             <!-- PRODUCTS -->
-                            
+                        
                             <div
                                 class="
+                                    order-products
                                     px-8 py-6
                                     <%= order.status === 'Cancelled' ? 'opacity-60' : '' %>
                                 "
                             >
-                            
+                        
                                 <p class="text-xs uppercase tracking-widest text-[#8B7765] mb-5">
                                     Order Items
                                 </p>
@@ -499,15 +510,21 @@
                                                 <div class="min-w-0">
                                                 
                                                     <p class="font-medium truncate">
+                                                    
                                                         <%= item.product?.name || 'Product unavailable' %>
+                                                    
                                                     </p>
                                                 
                                                     <p class="text-sm text-[#6B5B50] mt-1">
+                                                    
                                                         Qty: <%= item.quantity %>
+                                                    
                                                     </p>
                                                 
                                                     <p class="text-xs text-[#8B7765] mt-1">
+                                                    
                                                         ₹<%= item.orderPrice %> each
+                                                    
                                                     </p>
                                                 
                                                 </div>
@@ -515,7 +532,9 @@
                                             </div>
                                         
                                             <p class="font-semibold shrink-0">
+                                            
                                                 ₹<%= item.orderPrice * item.quantity %>
+                                            
                                             </p>
                                         
                                         </div>
@@ -526,7 +545,9 @@
                                     <% if (order.products.length > 3) { %>
                                     
                                         <p class="text-sm text-[#6B5B50] pt-1">
+                                        
                                             + <%= order.products.length - 3 %> more item(s)
+                                        
                                         </p>
                                     
                                     <% } %>
@@ -550,7 +571,9 @@
                                         
                                             <span>Subtotal</span>
                                         
-                                            <span>₹<%= order.subtotal %></span>
+                                            <span class="order-subtotal">
+                                                ₹<%= order.subtotal %>
+                                            </span>
                                         
                                         </div>
                                     
@@ -558,7 +581,9 @@
                                         
                                             <span>Delivery Fee</span>
                                         
-                                            <span>₹<%= order.deliveryFee %></span>
+                                            <span class="order-delivery-fee">
+                                                ₹<%= order.deliveryFee %>
+                                            </span>
                                         
                                         </div>
                                     
@@ -568,7 +593,7 @@
                                                 Total
                                             </span>
                                         
-                                            <span class="font-bold text-2xl">
+                                            <span class="order-total font-bold text-2xl">
                                                 ₹<%= order.total %>
                                             </span>
                                         
@@ -579,7 +604,7 @@
                                 
                                     <!-- ACTIONS -->
                                 
-                                    <div class="flex flex-wrap gap-3">
+                                    <div class="order-actions flex flex-wrap gap-3">
                                     
                                         <!-- VIEW DETAILS -->
                                     
@@ -587,8 +612,11 @@
                                             href="/orders/<%= order._id %>"
                                             class="px-6 py-3 rounded-xl bg-[#C9A36B] hover:bg-[#B89056] font-semibold transition"
                                         >
+                                    
                                             <i class="fa-solid fa-eye mr-2"></i>
+                                    
                                             View Details
+                                    
                                         </a>
                                     
                                     
@@ -601,8 +629,11 @@
                                                 class="cancel-order px-6 py-3 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 transition"
                                                 data-id="<%= order._id %>"
                                             >
+                                        
                                                 <i class="fa-solid fa-xmark mr-2"></i>
+                                        
                                                 Cancel Order
+                                        
                                             </button>
                                         
                                         <% } %>
@@ -617,8 +648,11 @@
                                                 class="reorder px-6 py-3 rounded-xl border border-[#E8DCCB] hover:bg-white transition"
                                                 data-id="<%= order._id %>"
                                             >
+                                        
                                                 <i class="fa-solid fa-rotate-right mr-2"></i>
+                                        
                                                 Reorder
+                                        
                                             </button>
                                         
                                         <% } %>
@@ -630,10 +664,13 @@
                                         
                                             <a
                                                 href="/orders/<%= order._id %>"
-                                                class="px-6 py-3 rounded-xl border border-[#E8DCCB] hover:bg-white transition"
+                                                class="track-order px-6 py-3 rounded-xl border border-[#E8DCCB] hover:bg-white transition"
                                             >
+                                        
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
+                                        
                                                 Track Order
+                                        
                                             </a>
                                         
                                         <% } %>
@@ -712,7 +749,9 @@
     <% } %>
     
     <%- include('./loadAnimation')%>
+    <%- include('./notification')%>
 
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/scripts/load.js"></script>
     <script src="/scripts/orders.js" type="module"></script>
 
