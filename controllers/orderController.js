@@ -2,15 +2,6 @@ import { getIO } from "../socket.js";
 import userModel from "../models/userModel.js";
 import ordersModel from "../models/ordersModel.js";
 
-const deliveredOrders = await ordersModel.find({status: 'Delivered'})
-deliveredOrders.forEach(async (element) => {
-    element.paymentStatus = 'Paid'
-    await element.save()
-});
-// const user = await userModel.findOne({email: 'john@j.com'})
-// user.orders = []
-// await user.save()
-
 const DELIVERY_FEE = 50;
 
 // Calculate the cart subtotal and final total.
@@ -79,6 +70,8 @@ export async function getOrder(req, res) {
     try{
         const order = await ordersModel.findById(req.params.order)
 
+        if(!req.user._id.equals(order.userID)) res.redirect('/unauthorizedAction')
+
         if(order) await order.populate('products.product')
 
         res.render('order', {order})
@@ -93,6 +86,9 @@ export async function cancelOrder(req, res) {
         let io = getIO()
 
         const order = await ordersModel.findById(req.params.order)
+
+        if(!req.user._id.equals(order.userID)) res.redirect('/unauthorizedAction')
+
         const user = await userModel.findById(order.userID)
         order.status = 'Cancelled'
         await order.save()

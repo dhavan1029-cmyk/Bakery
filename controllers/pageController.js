@@ -11,10 +11,6 @@ export function contact(req, res){
     res.render('contact')
 }
 
-export function cart(req, res) {
-    res.render('cart', {error: null, cartItems: []});
-}
-
-export function orders(req, res) {
-    res.render('orders', {orders: []});
+export function unauthoziedAction(req, res){
+    res.render('unauthorized')
 }
