@@ -1,14 +1,15 @@
-import productModel from "../../models/productModel.js";
+import productModel from "../../models/productModel.js"
 
 export async function getProducts(req, res) {
     try {
 
+        const { isProductAdded } = req.query
         const products = await productModel
             .find()
             .sort({ createdAt: -1 });
 
         res.render('admin/products', {
-            products
+            products, isProductAdded
         });
 
     } catch (err) {
@@ -63,3 +64,17 @@ export async function renderEditProduct(req, res) {
 
     }
 }
+
+export async function createNewProduct(req, res){
+
+    const {name, description, availability, maxQuantityPerOrder, category, price, quantity} = req.body
+
+    await productModel.insertOne({
+        name, description, availability, maxQuantityPerOrder, category, price, quantity,
+        image: req.file.path
+    })
+
+    res.redirect('/admin/products?isProductAdded=true')
+
+}   
+

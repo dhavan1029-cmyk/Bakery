@@ -920,6 +920,10 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
+const isProductAdded = '<%= isProductAdded%>'
+
+if(isProductAdded) showUpdate('The product has been created successfully')
+
 const socket = io()
 
 socket.on('notify admin', notification => {
