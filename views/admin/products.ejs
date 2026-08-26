@@ -920,9 +920,9 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
-const isProductAdded = '<%= isProductAdded%>'
+const message = '<%= message%>'
 
-if(isProductAdded) showUpdate('The product has been created successfully')
+if(message) showUpdate(message)
 
 const socket = io()
 

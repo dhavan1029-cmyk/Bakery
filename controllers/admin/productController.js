@@ -3,13 +3,13 @@ import productModel from "../../models/productModel.js"
 export async function getProducts(req, res) {
     try {
 
-        const { isProductAdded } = req.query
+        const { message } = req.query
         const products = await productModel
             .find()
             .sort({ createdAt: -1 });
 
         res.render('admin/products', {
-            products, isProductAdded
+            products, message
         });
 
     } catch (err) {
@@ -67,14 +67,41 @@ export async function renderEditProduct(req, res) {
 
 export async function createNewProduct(req, res){
 
-    const {name, description, availability, maxQuantityPerOrder, category, price, quantity} = req.body
+    try{
 
-    await productModel.insertOne({
-        name, description, availability, maxQuantityPerOrder, category, price, quantity,
-        image: req.file.path
-    })
+        const {name, description, availability, maxQuantityPerOrder, category, price, quantity} = req.body
 
-    res.redirect('/admin/products?isProductAdded=true')
+        await productModel.insertOne({
+            name, description, availability, maxQuantityPerOrder, category, price, quantity,
+            image: req.file.path
+        })
+
+        res.redirect('/admin/products?message=The changes are done')
+    } catch (err){
+        console.log(err)
+        res.redirect('/serverError')
+    }
 
 }   
 
+export async function editProduct(req, res){
+    const image = req.file
+
+    const product = await productModel.findById(req.params.id)
+
+    const productProps = ['name', 'availability', 'price', 'description', 'category','availability', 'maxQuantityPerOrder']
+
+    productProps.forEach(async prop => {
+        if(product[prop] !== req.body[prop]) {
+            product[prop] = req.body[prop]
+        }
+    })
+
+    if(req.file){
+        product.image = req.file.path
+    }
+
+    await product.save()
+
+    res.redirect('/admin/products?message=The changes are done')
+}

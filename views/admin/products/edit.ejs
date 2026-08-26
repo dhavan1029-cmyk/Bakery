@@ -239,12 +239,31 @@
 
                     <input
                         id="image"
-                        type="url"
+                        type="file"
                         name="image"
-                        required
-                        value="<%= formData?.image ?? product.image %>"
-                        class="w-full border border-[#E8DCCB] rounded-xl px-4 py-3 outline-none focus:border-[#C9A36B]"
+                        accept="image/jpeg,image/png,image/webp"
+                        class="w-full rounded-xl border border-[#E8DCCB] bg-white
+                               text-[#6B5B50] text-sm
+                               file:mr-4
+                               file:py-3
+                               file:px-5
+                               file:rounded-lg
+                               file:border-0
+                               file:bg-[#C9A36B]
+                               file:text-[#2F241D]
+                               file:font-semibold
+                               file:cursor-pointer
+                               hover:file:bg-[#B89056]
+                               focus:outline-none
+                               focus:border-[#C9A36B]
+                               focus:ring-2
+                               focus:ring-[#C9A36B]/20
+                               transition"
                     >
+
+                    <p class="mt-2 text-sm text-[#8B7765]">
+                        Upload a JPG, PNG, or WebP image. Recommended: square image.
+                    </p>
 
                 </section>
 
