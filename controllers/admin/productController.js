@@ -1,4 +1,5 @@
 import productModel from "../../models/productModel.js"
+import cloudinary from "../../config/cloudinary.js";
 
 
 function validateProduct({
@@ -78,9 +79,9 @@ export async function renderEditProduct(req, res) {
 
         if (!product) {
             return res.status(404).render('admin/products/edit', {
-                product: null,
+                product: {},
                 error: 'Product not found.',
-                formData: null
+                formData: {}
             });
         }
 
@@ -151,4 +152,17 @@ export async function editProduct(req, res){
     await product.save()
 
     res.redirect('/admin/products?message=The changes are done')
+}
+
+export async function deleteProduct(req, res){
+
+    const product = await productModel.findById(req.params.id)
+
+    if(!product) return res.redirect('/admin/products?message=Product not found')
+
+    await productModel.findByIdAndDelete(req.params.id)
+
+    await cloudinary.uploader.destroy(product.image)
+
+    res.redirect('/admin/products?message=The product has been deleted')
 }
