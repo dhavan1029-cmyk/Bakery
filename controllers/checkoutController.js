@@ -157,6 +157,8 @@ export async function placeOrder(req, res){
 
         let { fullName, phone, house, landmark, address, city, state, pincode, paymentMethod, notes, productID, quantity, reorderId, pricesAtCheckout } = req.body
 
+        if(!(+phone) || !(+pincode)) res.redirect('/checkout')
+
         if(!validateFields([ fullName, phone, house, landmark, address, city, state, pincode, paymentMethod ])){
             res.redirect(`/checkout?productID=${productID}&quantity=${quantity}&reorderId=${reorderId}`)
         }

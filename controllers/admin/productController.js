@@ -1,5 +1,43 @@
 import productModel from "../../models/productModel.js"
 
+
+function validateProduct({
+    name,
+    description,
+    availability,
+    maxQuantityPerOrder,
+    category,
+    price,
+    quantity
+}) {
+    if (
+        typeof name !== 'string' ||
+        !name.trim() ||
+
+        typeof description !== 'string' ||
+        !description.trim() ||
+
+        (availability !== 'true' && availability !== 'false') ||
+
+        !Number.isInteger(Number(maxQuantityPerOrder)) ||
+        Number(maxQuantityPerOrder) <= 0 ||
+
+        typeof category !== 'string' ||
+        !category.trim() ||
+
+        !Number.isFinite(Number(price)) ||
+        Number(price) <= 0 ||
+
+        !Number.isInteger(Number(quantity)) ||
+        Number(quantity) <= 0
+    ) {
+        return false;
+    }
+
+    return true;
+}
+
+
 export async function getProducts(req, res) {
     try {
 
@@ -69,7 +107,14 @@ export async function createNewProduct(req, res){
 
     try{
 
-        const {name, description, availability, maxQuantityPerOrder, category, price, quantity} = req.body
+        const { name, description, maxQuantityPerOrder, category, price, quantity } = req.body;
+        const availability = req.body.availability === 'true';
+
+        const error = validateProduct(name, description, availability, maxQuantityPerOrder, category, price, quantity);
+
+        if (!error) {
+            return res.render('admin/products/new', { error: 'Invalid data' , formData: req.body});
+        }
 
         await productModel.insertOne({
             name, description, availability, maxQuantityPerOrder, category, price, quantity,
@@ -86,6 +131,8 @@ export async function createNewProduct(req, res){
 
 export async function editProduct(req, res){
     const image = req.file
+
+    if(!validateProduct(req.body)) return res.render('admin/products/edit', { error: 'Invalid data' , formData: req.body});
 
     const product = await productModel.findById(req.params.id)
 
