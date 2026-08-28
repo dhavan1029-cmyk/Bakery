@@ -24,7 +24,7 @@ export function initSocket(server) {
             const cookies = parseCookie(
                 socket.handshake.headers.cookie || ''
             )
-            const token = cookies.userToken
+            const token = cookies.userToken 
 
             if (!token) {
                 return next(new Error('Not authenticated'))

@@ -49,7 +49,7 @@ export async function getMenu(req, res){
         })
         .sort(sortParams)
 
-        res.render('menu', { products, err: '' , available, price, userId: req.user._id});
+        res.render('menu', { products, err: '' , available, price, userId: req.user?._id || ''});
 
     }catch(err){
 

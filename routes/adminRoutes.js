@@ -6,7 +6,7 @@ import { changeOrderStatus, getOrder, getOrders } from '../controllers/admin/ord
 import { createNewProduct, deleteProduct, editProduct, getProducts, renderAddProduct, renderEditProduct } from '../controllers/admin/productController.js'
 import { renderCustomer, renderCustomers } from '../controllers/admin/customerController.js'
 import { renderAdminSettings } from '../controllers/admin/settingsController.js'
-import { renderAdminAccount, renderChangePassword } from '../controllers/admin/profileController.js'
+import { changePassword, logoutAdmin, renderAdminAccount, renderChangePassword } from '../controllers/admin/profileController.js'
 import upload from '../middlewares/uploadMiddleware.js'
 
 const router = express.Router()
@@ -55,6 +55,10 @@ router.get('/admin/customers/:id', checkAdminAuth, renderCustomer)
 router.get('/admin/account', checkAdminAuth, renderAdminAccount)
 
 router.get('/admin/account/change-password', checkAdminAuth, renderChangePassword)
+
+router.post('/admin/account/change-password', checkAdminAuth, changePassword)
+
+router.post('/admin/logout', checkAdminAuth, logoutAdmin)
 
 // settings routes
 

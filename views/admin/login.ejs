@@ -210,8 +210,12 @@
 
     </div>
 
-
+    <%- include('./updateToast')%>
     <script>
+
+        const message = '<%= message%>'
+
+        if(message) showUpdate(message)
 
         const passwordInput = document.querySelector('#password');
         const togglePassword = document.querySelector('#toggle-password');

@@ -1,11 +1,10 @@
 import productModel from "../../models/productModel.js"
 import cloudinary from "../../config/cloudinary.js";
 
-
 function validateProduct({
     name,
     description,
-    availability,
+    availability = 'false',
     maxQuantityPerOrder,
     category,
     price,
@@ -144,6 +143,8 @@ export async function editProduct(req, res){
             product[prop] = req.body[prop]
         }
     })
+
+    product.availability = availability ? true : false
 
     if(req.file){
         product.image = req.file.path

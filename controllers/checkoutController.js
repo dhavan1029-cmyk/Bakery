@@ -1,7 +1,6 @@
 import userModel from "../models/userModel.js"
 import ordersModel from "../models/ordersModel.js";
 import productModel from '../models/productModel.js'
-import mongoose from "mongoose";
 import { getIO } from '../socket.js'
 
 

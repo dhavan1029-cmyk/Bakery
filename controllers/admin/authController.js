@@ -3,7 +3,8 @@ import bcrypt from 'bcrypt'
 import userModel from '../../models/userModel.js'
 
 export async function getLoginPage(req, res) {
-    res.render('admin/login', {error: null, formData: {}})
+    const message = req.query.message || ''
+    res.render('admin/login', {error: null, formData: {}, message})
 }
 
 export async function loginAdmin(req, res) {
@@ -13,7 +14,7 @@ export async function loginAdmin(req, res) {
         const admin = await userModel.findOne({email, role: 'admin'})
 
         if(!admin){
-            res.render('admin/login', {error: 'Account doesn\'t exist', formData: req.body})
+            res.render('admin/login', {error: 'Account doesn\'t exist', formData: req.body, message: ''})
             return
         }
 
@@ -26,7 +27,7 @@ export async function loginAdmin(req, res) {
 
         }else{
 
-            res.render('admin/login', {error: 'Incorrect password', formData: req.body})
+            res.render('admin/login', {error: 'Incorrect password', formData: req.body, message: ''})
 
         }
 
