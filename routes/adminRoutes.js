@@ -5,7 +5,7 @@ import { renderDashboard } from '../controllers/admin/dashboardController.js'
 import { changeOrderStatus, getOrder, getOrders } from '../controllers/admin/orderController.js'
 import { createNewProduct, deleteProduct, editProduct, getProducts, renderAddProduct, renderEditProduct } from '../controllers/admin/productController.js'
 import { renderCustomer, renderCustomers } from '../controllers/admin/customerController.js'
-import { renderAdminSettings } from '../controllers/admin/settingsController.js'
+import { renderAdminSettings, updateSettings } from '../controllers/admin/settingsController.js'
 import { changePassword, logoutAdmin, renderAdminAccount, renderChangePassword } from '../controllers/admin/profileController.js'
 import upload from '../middlewares/uploadMiddleware.js'
 
@@ -63,5 +63,7 @@ router.post('/admin/logout', checkAdminAuth, logoutAdmin)
 // settings routes
 
 router.get('/admin/settings', checkAdminAuth, renderAdminSettings)
+
+router.post('/admin/settings', checkAdminAuth, updateSettings)
 
 export default router

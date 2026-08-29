@@ -5,7 +5,8 @@ export async function getMenu(req, res){
     try{
 
         const {available, priceRange, sort} = req.query
-        const availability = available === 'false' ? false : true
+        const availability = available === 'true' ? true :  available === 'false' ? false : 'all'
+        console.log(availability)
         const price = priceRange?.split(',') || [0, Infinity]
         
         if (    
@@ -38,16 +39,19 @@ export async function getMenu(req, res){
             sortParams.createdAt = -1
         }
 
-
-
-        const products = await productModel.find({
-            availability, 
+        const filterParams = {
             price: {
                 $gte: +price[0] || 0,
                 $lte: +price[1] || Infinity
             }
-        })
-        .sort(sortParams)
+        }
+
+        if (availability !== 'all') {
+            filterParams.availability = availability ;
+        }
+
+
+        const products = await productModel.find(filterParams).sort(sortParams)
 
         res.render('menu', { products, err: '' , available, price, userId: req.user?._id || ''});
 

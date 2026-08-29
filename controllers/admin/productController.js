@@ -144,7 +144,7 @@ export async function editProduct(req, res){
         }
     })
 
-    product.availability = availability ? true : false
+    product.availability = req.body.availability ? true : false
 
     if(req.file){
         product.image = req.file.path

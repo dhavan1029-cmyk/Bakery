@@ -1,94 +1,94 @@
 import mongoose from 'mongoose';
 
 const settingsSchema = new mongoose.Schema({
-        storeName: {
-            type: String,
-            required: true,
-            trim: true,
-            default: 'FLOURish Bakery'
-        },
+    storeName: {
+        type: String,
+        required: true,
+        trim: true,
+        default: 'FLOURish Bakery'
+    },
 
-        storeEmail: {
-            type: String,
-            required: true,
-            trim: true,
-            lowercase: true
-        },
+    storeEmail: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true
+    },
 
-        storePhone: {
-            type: String,
-            trim: true,
-            default: ''
-        },
+    storePhone: {
+        type: String,
+        trim: true,
+        default: ''
+    },
 
-        storeAddress: {
-            type: String,
-            trim: true,
-            default: ''
-        },
-
-
-        // PAYMENT
-
-        onlinePayment: {
-            type: Boolean,
-            default: true
-        },
-
-        cod: {
-            type: Boolean,
-            default: true
-        },
+    storeAddress: {
+        type: String,
+        trim: true,
+        default: ''
+    },
 
 
-        // ORDER SETTINGS
+    // PAYMENT
 
-        deliveryFee: {
-            type: Number,
-            min: 0,
-            default: 50
-        },
+    onlinePayment: {
+        type: Boolean,
+        default: true
+    },
 
-        minimumOrderAmount: {
-            type: Number,
-            min: 0,
-            default: 0
-        },
-
-        deliveryTime: {
-            type: String,
-            enum: [
-                '30-45',
-                '45-60',
-                '60-90',
-                '90-120'
-            ],
-            default: '30-45'
-        },
-
-        defaultMaxOrder: {
-            type: Number,
-            min: 1,
-            default: 10
-        },
+    cod: {
+        type: Boolean,
+        default: true
+    },
 
 
-        // STORE STATUS
+    // ORDER SETTINGS
 
-        storeOpen: {
-            type: Boolean,
-            default: true
-        },
+    deliveryFee: {
+        type: Number,
+        min: 0,
+        default: 50
+    },
 
-        acceptOrders: {
-            type: Boolean,
-            default: true
-        },
+    minOrderAmount: {
+        type: Number,
+        min: 0,
+        default: 0
+    },
 
-        maintenanceMode: {
-            type: Boolean,
-            default: false
-        }
+    deliveryTime: {
+        type: String,
+        enum: [
+            '30-45',
+            '45-60',
+            '60-90',
+            '90-120'
+        ],
+        default: '30-45'
+    },
+
+    defaultMaxOrder: {
+        type: Number,
+        min: 1,
+        default: 10
+    },
+
+
+    // STORE STATUS
+
+     storeOpen: {
+        type: Boolean,
+        default: true
+    },
+
+    acceptOrders: {
+        type: Boolean,
+        default: true
+    },
+
+    maintenanceMode: {
+        type: Boolean,
+        default: false
+    }
     },
     {
         timestamps: true

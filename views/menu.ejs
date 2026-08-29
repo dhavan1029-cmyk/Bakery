@@ -271,12 +271,13 @@
                     Availability
                 </p>
             
-                <label class="flex items-center gap-3 cursor-pointer" onclick="updateQuery('available', true)">
+                <label class="flex items-center gap-3 cursor-pointer">
                     <input
                         type="checkbox"
                         id="filter-available"
                         class="w-4 h-4 accent-[#C9A36B]"
                         <%= available === 'true' ? 'checked' : '' %>
+                        onchange="updateQuery('available', this.checked ? true : 'all')"
                     >
                 
                     <span>
@@ -284,12 +285,13 @@
                     </span>
                 </label>
             
-                <label class="flex items-center gap-3 mt-3 cursor-pointer" onclick="updateQuery('available', false)">
+                <label class="flex items-center gap-3 mt-3 cursor-pointer">
                     <input
                         type="checkbox"
                         id="filter-unavailable"
                         class="w-4 h-4 accent-[#C9A36B]"
                         <%= available === 'false' ? 'checked' : '' %>
+                        onchange="updateQuery('available', this.checked ? false : 'all')"
                     >
                 
                     <span>

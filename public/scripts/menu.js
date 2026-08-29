@@ -120,13 +120,31 @@ filterBtn.addEventListener('click', e => {
 })
 
 function updateQuery(query, value) {
-    const url = new URL(window.location.href)
 
-    url.searchParams.set(query, value)
+    const url = new URL(window.location.href);
 
-    showLoading('Updating the menu...')
+    // "All" removes the filter completely.
+    if (value === 'all') {
+        url.searchParams.delete(query);
+    }
 
-    window.location.href = url.toString()
+    // Price range array → "0,500"
+    else if (Array.isArray(value)) {
+        url.searchParams.set(query, value.join(','));
+    }
+
+    // Boolean → "true" / "false"
+    else if (typeof value === 'boolean') {
+        url.searchParams.set(query, String(value));
+    }
+
+    // String or number
+    else {
+        url.searchParams.set(query, value);
+    }
+
+    showLoading('Updating the menu...');
+    window.location.href = url.toString();
 }
 
 
