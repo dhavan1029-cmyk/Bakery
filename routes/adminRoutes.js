@@ -1,4 +1,5 @@
 import express from 'express'
+import rateLimit from 'express-rate-limit'
 import { checkAdminAuth } from '../middlewares/adminMiddleware.js'
 import { getLoginPage, loginAdmin } from '../controllers/admin/authController.js'
 import { renderDashboard } from '../controllers/admin/dashboardController.js'
@@ -11,12 +12,19 @@ import upload from '../middlewares/uploadMiddleware.js'
 
 const router = express.Router()
 
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 5,
+    message: 'Too many login attempts. Please try again later.',
+    standardHeaders: 'draft-8',
+    legacyHeaders: false
+})
 
 //auth routes
 
 router.get('/admin/login', getLoginPage)
 
-router.post('/admin/login', loginAdmin)
+router.post('/admin/login', loginLimiter, loginAdmin)
 
 //dashboard
 

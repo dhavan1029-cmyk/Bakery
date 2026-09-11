@@ -8,25 +8,26 @@ const orderSchema = mongoose.Schema({
         required: true
     },
 
-    products: [{
-
-        product: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Product",
-            required: true
-        },
-
-        orderPrice: {
-            type: Number,
-            required: true
-        },
-
-        quantity: {
-            type: Number,
-            required: true
+    products: {
+        type: [{
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Product",
+                required: true
+            },
+            orderPrice: {
+                type: Number,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
+        }],
+        validate: {
+            validator: products => products.length > 0
         }
-
-    }],
+    },
 
     deliveryAddress: {
 

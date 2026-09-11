@@ -1,3 +1,4 @@
+import { isValidObjectId } from "mongoose"
 import ordersModel from "../../models/ordersModel.js"
 import userModel from "../../models/userModel.js"
 
@@ -30,6 +31,8 @@ export async function renderCustomer(req, res) {
     try {
 
         const { id } = req.params
+
+        if(!isValidObjectId(id)) return res.redirect('/admin/customers')
 
         const customer = await userModel
             .findOne({

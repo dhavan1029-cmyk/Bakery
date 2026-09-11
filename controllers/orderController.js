@@ -1,78 +1,89 @@
 import { getIO } from "../socket.js";
 import userModel from "../models/userModel.js";
 import ordersModel from "../models/ordersModel.js";
+import mongoose, { isValidObjectId } from "mongoose";
 
-const DELIVERY_FEE = 50;
-
-// Calculate the cart subtotal and final total.
-
-function calculateTotal(user) {
-
-    let subtotal;
-
-    if (user.cart.length === 0) {
-
-        subtotal = 0;
-
-    } else if (user.cart.length === 1) {
-
-        const cartItem = user.cart[0];
-        subtotal = cartItem.product.price * cartItem.quantity;
-
-    } else {
-
-        const lineTotals = user.cart.map(cartItem =>
-            cartItem.product.price * cartItem.quantity
-        );
-
-        subtotal = lineTotals.reduce(
-            (previousTotal, currentTotal) => previousTotal + currentTotal
-        );
-
-    }
-
-    return {
-        subtotal,
-        total: subtotal + DELIVERY_FEE
-    };
-
-}
 
 export async function getOrders(req, res) {
 
-    try{
+    try {
 
-        if(!req.user){
-            return res.redirect('/login?loginRequired=true')
-        }
+        if (!req.user) return res.redirect('/login?loginRequired=true');
+
+        const { noCancel, status, payment, sort } = req.query;
 
         const user = await userModel.findOne({
             email: req.user.email
-        }).populate({
-            path: "orders",
-            populate: {
-                path: "products.product"
-            }
         });
 
-        res.render("orders", {
+        if (!user) return res.redirect('/login');
+
+        const statuses = [
+            'Preparing',
+            'Baking',
+            'Out for Delivery',
+            'Delivered',
+            'Cancelled'
+        ];
+
+        const payments = [
+            'Paid',
+            'Pending',
+            'Refunded'
+        ];
+
+        const filter = {
+            userID: req.user._id
+        };
+
+        if (statuses.includes(status))
+            filter.status = status;
+
+        if (payments.includes(payment))
+            filter.paymentStatus = payment;
+
+        const sortOptions = {
+            new: { createdAt: -1 },
+            old: { createdAt: 1 },
+            'price-high': { total: -1 },
+            'price-low': { total: 1 }
+        };
+
+        const orders = await ordersModel
+            .find(filter)
+            .sort(sortOptions[sort] || { createdAt: -1 })
+            .populate('products.product');
+
+        res.render('orders', {
             user,
-            orders: user.orders
+            orders,
+            noCancel,
+            filters: { status, payment, sort }
         });
 
     } catch (err) {
-        console.log(err)
-        res.redirect('/serverError')
+
+        console.log(err);
+        res.redirect('/serverError');
+
     }
 }
 
+
 export async function getOrder(req, res) {
     try{
-        const order = await ordersModel.findById(req.params.order)
+        if(!req.user) return res.redirect('/login?loginRequired=true')
 
-        if(!req.user._id.equals(order.userID)) res.redirect('/unauthorizedAction')
+        const orderId = req.params.order
+        
+        if(!mongoose.isValidObjectId(orderId)){
+            return res.status(400).render('badRequest', {statusCode: 400})
+        }
+        const order = await ordersModel.findOne({_id: orderId, userID: req.user._id})
 
-        if(order) await order.populate('products.product')
+        if(!order) return res.status(404).render('badRequest', {statusCode: 404})
+
+        await order.populate('products.product')
 
         res.render('order', {order})
     } catch (err) {
@@ -83,15 +94,29 @@ export async function getOrder(req, res) {
 
 export async function cancelOrder(req, res) {
     try{
-        let io = getIO()
 
-        const order = await ordersModel.findById(req.params.order)
+        if(!req.user) return res.redirect('/login?loginRequired=true')
 
-        if(!req.user._id.equals(order.userID)) res.redirect('/unauthorizedAction')
+        const orderId = req.params.order
+
+        if(!mongoose.isValidObjectId(orderId)){
+            return res.status(400).render('badRequest', {statusCode: 400})
+        }
+
+        const order = await ordersModel.findOne({_id: orderId, userID: req.user._id})
+
+        if(!req.user._id.equals(order?.userID)) return res.redirect('/unauthorizedAction');
+
+        if(!order) return res.status(404).render('badRequest', {statusCode: 404})
 
         const user = await userModel.findById(order.userID)
-        order.status = 'Cancelled'
+
+        if(order.status === 'Preparing' || order.status === 'Baking') order.status = 'Cancelled'
+        else return res.redirect('/orders?noCancel=true')
+
         await order.save()
+
+        let io = getIO()
 
         io.emit('notify admin', {
             type: 'order_cancelled',

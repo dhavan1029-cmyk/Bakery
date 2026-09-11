@@ -14,6 +14,9 @@ const errToastIcon = document.querySelector('#errToastIcon')
 const productUnavailable = document.querySelector('#productUnavailable')
 const productAvailable = document.querySelector('#productAvailable')
 const productName = document.querySelector('#productName')
+const preorderToastIcon = document.querySelector('#preorderToastIcon')
+const preorderBtn = document.querySelector('#preorderBtn')
+const cartBtn = document.querySelector('#cartBtn')
 
 successToastIcon.classList.add('hidden')
 
@@ -21,8 +24,11 @@ function showToast(productStatus){
     toast.classList.remove('translate-x-[120%]', 'opacity-0')
     let statusIcon;
 
+    if(productStatus.success) cartBtn.classList.remove('hidden')
+
     if(!productStatus.success && productStatus.reason === 'preorder_required'){
         statusIcon = preorderToastIcon
+        preorderBtn.classList.remove('hidden')
     } else if (!productStatus.success && productStatus.reason === 'product_unavailable') {
         statusIcon = errToastIcon
         productAvailable.classList.add('hidden')
@@ -42,8 +48,15 @@ function showToast(productStatus){
         toast.classList.add('translate-x-[120%]', 'opacity-0')
 
         statusIcon.classList.add('hidden')
+        cartBtn.classList.add('hidden')
+        preorderBtn.classList.add('hidden')
+
         addToCart.disabled = false
     }, 5000)
+}
+
+if(quantityExceeded) {
+    showToast({success: false, reason: 'preorder_required', message: 'Ordering in large quantity requires preorder'})
 }
 
 if(+quantity > +quantityInp.max){

@@ -7,10 +7,12 @@ const cancelOrderModal = document.querySelector('#cancel-order-modal')
 const confirmCancel = document.querySelector('#confirm-cancel-order-btn')
 const keepOrder = document.querySelector('#keep-order-btn')
 const reorderBtns = document.querySelectorAll('.reorder')
-const filters = document.querySelectorAll('.filters')
 const orders = document.querySelectorAll('.orders')
 const noFilterResults = document.querySelector('#no-filter-results')
-
+const filterBtn = document.querySelector('#filter-btn');
+const filterMenu = document.querySelector('#filter-menu');
+const sortBtn = document.querySelector('#sort-btn');
+const sortMenu = document.querySelector('#sort-menu');
 
 const activeFilterClass = 'filters px-6 py-3 rounded-full bg-[#C9A36B] text-[#2F241D] font-semibold'
 const inactiveFilterClass = 'filters px-6 py-3 rounded-full border border-[#E8DCCB] hover:border-[#C9A36B] hover:bg-white transition'
@@ -40,8 +42,6 @@ function updateOrderCard(data) {
     const orderCard = document.querySelector(
         `[data-order-id="${orderId}"]`
     );
-
-    console.log(orderCard)
 
     // Order isn't present on this page
     if (!orderCard) return;
@@ -463,42 +463,11 @@ function updateOrderActions(orderCard, { orderId, status }) {
 
 
 
-
-filters.forEach(filter => {
-    filter.addEventListener('click', e => {
-        noFilterResults.classList.add('hidden')
-
-        const unfilteredOrderClass = e.currentTarget.id === 'active' ? 'preparing' : e.currentTarget.id
-        let unfilteredOrdersCount = 0
-
-        orders.forEach(order => {
-            if(order.classList.contains(unfilteredOrderClass) || unfilteredOrderClass === 'all'){
-                order.classList.remove('hidden')
-                unfilteredOrdersCount++
-            }else {
-                order.classList.add('hidden')
-            }
-
-        
-        })
-
-        if(unfilteredOrdersCount <= 0) {
-            noFilterResults.classList.remove('hidden')
-        }
-
-        activeFilter.className = inactiveFilterClass
-        e.currentTarget.className = activeFilterClass
-
-        activeFilter = e.currentTarget 
-
-    })
-})
-
 let cancelOrderId;
 
 cancelOrderBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-        cancelOrderId = e.currentTarget.getAttribute('data-id')
+        cancelOrderId = e.currentTarget.dataset.id
         cancelOrderModal.classList.remove('hidden')
     })
 })
@@ -530,13 +499,12 @@ async function cancelOrder(e) {
 
 
 function reorder(e) {
-    const reorderId = e.currentTarget.getAttribute('data-id')
+    const reorderId = e.currentTarget.dataset.id
 
     showLoading('Preparing your previous order...');
-    ('dfdf')
+
     window.location.href = `/checkout?reorderId=${reorderId}`
 } 
-
 
 confirmCancel.addEventListener('click', async (e) => {
     await cancelOrder(e)
@@ -545,3 +513,72 @@ confirmCancel.addEventListener('click', async (e) => {
 reorderBtns.forEach(btn => {
     btn.addEventListener('click', reorder)
 })
+
+// Toggle Filter Menu
+filterBtn.addEventListener('click', (e) => {
+
+    e.stopPropagation();
+
+    filterMenu.classList.toggle('hidden');
+
+    // Close sort menu
+    sortMenu.classList.add('hidden');
+
+});
+
+
+// Toggle Sort Menu
+sortBtn.addEventListener('click', (e) => {
+
+    e.stopPropagation();
+
+    sortMenu.classList.toggle('hidden');
+
+    // Close filter menu
+    filterMenu.classList.add('hidden');
+
+});
+
+
+// Prevent clicks inside menus from closing them
+filterMenu.addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+
+sortMenu.addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+
+
+// Close menus when clicking outside
+document.addEventListener('click', () => {
+
+    filterMenu.classList.add('hidden');
+    sortMenu.classList.add('hidden');
+
+});
+
+
+// Update URL query parameters
+function updateQuery(key, value) {
+
+    const url = new URL(window.location.href);
+
+    // Remove parameter when "all" is selected
+    if (value === 'all') {
+
+        url.searchParams.delete(key);
+
+    } else {
+
+        url.searchParams.set(key, value);
+
+    }
+
+    // Reset pagination when filters change
+    url.searchParams.delete('page');
+
+    window.location.href = url.toString();
+}
+
+window.updateQuery = updateQuery

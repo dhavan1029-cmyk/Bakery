@@ -4,19 +4,20 @@ import { getAccount, logoutUser } from '../controllers/userController.js'
 import { getCartItems, addToCart, changeQty, deleteItem } from '../controllers/cartController.js'
 import { getOrders, getOrder, cancelOrder } from '../controllers/orderController.js'
 import { unauthoziedAction } from '../controllers/pageController.js'
+import { loadSettings } from '../middlewares/userMiddlewares.js'
 
 
 const router = express.Router()
 
 router.get('/account', getAccount)
 
-router.get('/cart', getCartItems)
+router.get('/cart', loadSettings, getCartItems)
 
 router.post('/cart', addToCart)
 
-router.delete('/cart', deleteItem)
+router.delete('/cart', loadSettings, deleteItem)
 
-router.patch('/cart', changeQty)
+router.patch('/cart', loadSettings, changeQty)
 
 router.get('/orders', getOrders)
 

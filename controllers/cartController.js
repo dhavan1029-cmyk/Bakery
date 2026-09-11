@@ -1,11 +1,10 @@
 import userModel from "../models/userModel.js";
 import productModel from "../models/productModel.js";
-
-const DELIVERY_FEE = 50;
+import mongoose from "mongoose";
 
 // Calculate the cart subtotal and final total.
 
-function calculateTotal(user) {
+function calculateTotal(user, deliveryFee) {
 
     let subtotal;
 
@@ -32,7 +31,7 @@ function calculateTotal(user) {
 
     return {
         subtotal,
-        total: subtotal + DELIVERY_FEE
+        total: subtotal + deliveryFee
     };
 
 }
@@ -40,6 +39,7 @@ function calculateTotal(user) {
 export async function getCartItems(req, res) {
     try {
 
+        const deliveryFee = req.settings.deliveryFee
         const changedPrices = req.query.changedPrices || '[]'
         const prices = JSON.parse(changedPrices)
         const products = await productModel.find({})
@@ -52,9 +52,9 @@ export async function getCartItems(req, res) {
         await user.populate('cart.product')
         const cartItems = user.cart
 
-        const {subtotal, total} = calculateTotal(user)
+        const {subtotal, total} = calculateTotal(user, deliveryFee)
         
-        res.render('cart', {cartItems, subtotal, total, deliveryFee: DELIVERY_FEE, err: false, prices})
+        res.render('cart', {cartItems, subtotal, total, deliveryFee, err: false, prices})
         
     } catch (err) {
         res.render('cart', {cartItems: [], err})
@@ -67,7 +67,19 @@ export async function getCartItems(req, res) {
 // Remove a product from the user's cart.
 export async function deleteItem(req, res) {
 
+    if(!req.user){
+        return res.redirect('/login?loginRequired=true')
+    }
+
+
     const { itemId } = req.body;
+
+    if (!mongoose.isValidObjectId(itemId)) {
+        return res.status(400).json({
+            success: false,
+            message: 'product not found'
+        });
+    }
 
     const user = await userModel.findOne({
         email: req.user.email
@@ -84,19 +96,22 @@ export async function deleteItem(req, res) {
             await user.save();
             await user.populate("cart.product");
 
-            break;
+            const { subtotal, total } = calculateTotal(user, req.settings.deliveryFee);
+
+            return res.json({
+                success: true,
+                subtotal,
+                total
+            });
 
         }
 
     }
 
-    const { subtotal, total } = calculateTotal(user);
-
-    res.json({
-        success: true,
-        subtotal,
-        total
-    });
+    return res.json({
+        success: false,
+        message: 'Product not found'
+    })
 
 }
 
@@ -117,24 +132,37 @@ export async function addToCart(req, res) {
 
         const { productId, quantity } = req.body;
 
+        if (!mongoose.isValidObjectId(productId)) {
+            return res.status(400).json({
+                success: false
+            });
+        }
 
-        if(!Number.isInteger(quantity) || quantity < -1 ) {
+
+        if(!Number.isInteger(+quantity) || +quantity < -1 ) {
             return res.json({
                 success: false,
                 message: 'Invalid Quantity'
             })
         }
 
-        if(quantity >= 20) {
+        const product = await productModel.findById(productId)
+
+        if(quantity > product.maxQuantityPerOrder) {
             return res.json({ 
                 success: false,
                 reason: "preorder_required",
-                message: "Orders above 20 items require a preorder."
+                message: "Ordering in large quantity requires preorder"
             })
         }
 
-
-        const product = await productModel.findById(productId)
+        if(!product){
+            return res.json({
+                success: false,
+                reason: 'product_not_found',
+                message: 'Our bakery doesn\'t sell this product'
+            })
+        }
 
         if(!product.availability){
             return res.json({
@@ -156,11 +184,11 @@ export async function addToCart(req, res) {
                 
                 const newQuantity = cartItem.quantity + (+quantity)
 
-                if(newQuantity >= 20) {
+                if(newQuantity > product.maxQuantityPerOrder) {
                     return res.json({ 
                         success: false,
                         reason: "preorder_required",
-                        message: "Orders above 20 items require a preorder."
+                        message: "Ordering in large quantity requires preorder"
                     })
                 } else {
                     cartItem.quantity = newQuantity;
@@ -204,12 +232,38 @@ export async function addToCart(req, res) {
 export async function changeQty(req, res) {
 
     try{
+
+        if(!req.user) return res.redirect('/login?loginRequired=true')
+
+        const deliveryFee = req.settings.deliveryFee
+
         const { productId, updateQty } = req.body;
+
+        if (!mongoose.isValidObjectId(productId)) {
+            return res.status(400).json({
+                success: false
+            });
+        }
+
+        const product = await productModel.findById(productId)
+
+        if(!product){
+            return res.json({
+                success: false,
+                message: 'product not found'
+            })
+        }
 
         const user = await userModel.findOne({email: req.user.email});
 
         const quantityChange = updateQty / Math.abs(updateQty);
 
+        if (updateQty !== 1 && updateQty !== -1) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid quantity'
+            });
+        }
 
         for (let index = 0; index < user.cart.length; index++) {
 
@@ -226,8 +280,8 @@ export async function changeQty(req, res) {
 
                 await user.save();
                 await user.populate("cart.product");
-
-                const { subtotal, total } = calculateTotal(user);
+                console.log(req.settings.deliveryFee)
+                const { subtotal, total } = calculateTotal(user, deliveryFee);
 
 
                 
@@ -250,7 +304,7 @@ export async function changeQty(req, res) {
 
             if(cartItem.quantity + quantityChange > updatedCartItem.product.maxQuantityPerOrder && quantityChange > 0) {
 
-                const { subtotal, total } = calculateTotal(user);
+                const { subtotal, total } = calculateTotal(user, deliveryFee);
 
                 return res.json({
                     success: true,
@@ -267,7 +321,7 @@ export async function changeQty(req, res) {
 
             await user.save();
 
-            const { subtotal, total } = calculateTotal(user);
+            const { subtotal, total } = calculateTotal(user, deliveryFee);
 
             const lineTotal = updatedCartItem.product.price * updatedCartItem.quantity;
 
@@ -281,6 +335,10 @@ export async function changeQty(req, res) {
 
         }
 
+        return res.json({
+            success: false,
+            message: 'product not found'
+        })
 
     } catch (err) {
         (err)

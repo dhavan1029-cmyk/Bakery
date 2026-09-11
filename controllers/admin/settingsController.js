@@ -45,8 +45,6 @@ export async function updateSettings(req, res) {
             maintenanceMode
         } = req.body;
 
-        console.log(storeName, storeEmail, storePhone, storeAddress, onlinePayment, cod, deliveryFee, minimumOrder, deliveryTime, defaultMaxOrder, storeOpen, acceptOrders, maintenanceMode)
-        // Convert checkbox values to booleans
 
         const settings = {
             storeName,
@@ -101,7 +99,7 @@ export async function updateSettings(req, res) {
 
         // Update the settings document
 
-        await settingsModel.findOneAndUpdate(
+        await settingsModel.updateOne(
             {},
             settings,
             {
@@ -110,8 +108,6 @@ export async function updateSettings(req, res) {
                 runValidators: true
             }
         );
-
-        console.log(await settingsModel.findOne({}))
 
         return res.redirect(
             '/admin/settings?success=Settings%20saved%20successfully'

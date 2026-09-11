@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -76,6 +75,39 @@
 
     </nav>
 
+    <% if (noCancel) { %>
+        <div
+            id="cancelWarning"
+            class="fixed z-50 top-6 right-6 w-full max-w-md
+                   bg-[#3A2E25] text-white px-6 py-5 rounded-xl shadow-xl"
+        >
+            <div class="flex items-start gap-4">
+
+                <i class="fa-solid fa-circle-exclamation
+                          text-yellow-400 text-2xl mt-1"></i>
+
+                <div class="flex-1">
+                    <h3 class="font-semibold text-lg">
+                        Order cannot be cancelled
+                    </h3>
+
+                    <p class="text-sm text-gray-300 mt-1">
+                        This order has already progressed too far and
+                        can no longer be cancelled.
+                    </p>
+                </div>
+
+                <button
+                    onclick="this.closest('#cancelWarning').remove()"
+                    class="text-gray-400 hover:text-white transition"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+        </div>
+    <% } %>
+
     <!-- PAGE HEADER -->
 
     <section class="py-14">
@@ -113,54 +145,354 @@
 
             </div>
 
+            <!-- Order Controls -->
+            <div class="w-full mt-5 m-auto flex justify-center items-center gap-4 sm:justify-end">
 
+                <!-- FILTER -->
 
-            <% if(orders.length){ %>
-
-                <!-- ORDER FILTERS -->
-
-                <div class="mt-12 flex flex-wrap gap-3">
-
+                <div class="relative">
+                
                     <button
-                        class="filters px-6 py-3 rounded-full bg-[#C9A36B] text-[#2F241D] font-semibold"
-                        id="all"
+                        id="filter-btn"
+                        type="button"
+                        class="flex items-center justify-between gap-3 w-full sm:w-56 px-5 py-3
+                               bg-white border border-[#E8DCCB] rounded-2xl
+                               hover:border-[#C9A36B] transition"
                     >
-
-                        All Orders
-
+                
+                        <div class="flex items-center gap-3">
+                        
+                            <i class="fa-solid fa-filter text-[#C9A36B]"></i>
+                        
+                            <span class="font-medium">
+                                Filter By
+                            </span>
+                        
+                        </div>
+                    
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    
                     </button>
-
-                    <button
-                        class="filters px-6 py-3 rounded-full border border-[#E8DCCB] hover:border-[#C9A36B] hover:bg-white transition"
-                        id="active"
+                
+                
+                    <div
+                        id="filter-menu"
+                        class="hidden absolute z-30 mt-3 w-full sm:w-64
+                               bg-white border border-[#E8DCCB]
+                               rounded-2xl shadow-lg p-5"
                     >
-
-                        Active
-
-                    </button>
-
-                    <button
-                        class="filters px-6 py-3 rounded-full border border-[#E8DCCB] hover:border-[#C9A36B] hover:bg-white transition"
-                        id="delivered"
-                    >
-
-                        Delivered
-
-                    </button>
-
-                    <button
-                        class="filters px-6 py-3 rounded-full border border-[#E8DCCB] hover:border-[#C9A36B] hover:bg-white transition"
-                        id="cancelled"
-                    >
-
-                        Cancelled
-
-                    </button>
-
+                
+                        <!-- ORDER STATUS -->
+                
+                        <p class="text-xs uppercase tracking-widest text-[#8B7765] mb-4">
+                            Order Status
+                        </p>
+                    
+                        <label class="flex items-center gap-3 cursor-pointer">
+                        
+                            <input
+                                type="radio"
+                                name="status-filter"
+                                value="all"
+                                checked
+                                class="w-4 h-4 accent-[#C9A36B]"
+                                onchange="updateQuery('status', 'all')"
+                                <%= !filters?.status ? 'checked' : '' %>
+                            >
+                        
+                            <span>
+                                All Orders
+                            </span>
+                        
+                        </label>
+                    
+                    
+                        <label class="flex items-center gap-3 mt-3 cursor-pointer">
+                        
+                            <input
+                                type="radio"
+                                name="status-filter"
+                                value="Preparing"
+                                class="w-4 h-4 accent-[#C9A36B]"
+                                onchange="updateQuery('status', 'Preparing')"
+                                <%= filters?.status === 'Preparing' ? 'checked' : '' %>
+                            >
+                        
+                            <span>
+                                Preparing
+                            </span>
+                        
+                        </label>
+                    
+                    
+                        <label class="flex items-center gap-3 mt-3 cursor-pointer">
+                        
+                            <input
+                                type="radio"
+                                name="status-filter"
+                                value="Baking"
+                                class="w-4 h-4 accent-[#C9A36B]"
+                                onchange="updateQuery('status', 'Baking')"
+                                <%= filters?.status === 'Baking' ? 'checked' : '' %>
+                            >
+                        
+                            <span>
+                                Baking
+                            </span>
+                        
+                        </label>
+                    
+                    
+                        <label class="flex items-center gap-3 mt-3 cursor-pointer">
+                        
+                            <input
+                                type="radio"
+                                name="status-filter"
+                                value="Out for Delivery"
+                                class="w-4 h-4 accent-[#C9A36B]"
+                                onchange="updateQuery('status', 'Out for Delivery')"
+                                <%= filters?.status === 'Out for Delivery' ? 'checked' : '' %>
+                            >
+                        
+                            <span>
+                                Out for Delivery
+                            </span>
+                        
+                        </label>
+                    
+                    
+                        <label class="flex items-center gap-3 mt-3 cursor-pointer">
+                        
+                            <input
+                                type="radio"
+                                name="status-filter"
+                                value="Delivered"
+                                class="w-4 h-4 accent-[#C9A36B]"
+                                onchange="updateQuery('status', 'Delivered')"
+                                <%= filters?.status === 'Delivered' ? 'checked' : '' %>
+                            >
+                        
+                            <span>
+                                Delivered
+                            </span>
+                        
+                        </label>
+                    
+                    
+                        <label class="flex items-center gap-3 mt-3 cursor-pointer">
+                        
+                            <input
+                                type="radio"
+                                name="status-filter"
+                                value="Cancelled"
+                                class="w-4 h-4 accent-[#C9A36B]"
+                                onchange="updateQuery('status', 'Cancelled')"
+                                <%= filters?.status === 'Cancelled' ? 'checked' : '' %>
+                            >
+                        
+                            <span>
+                                Cancelled
+                            </span>
+                        
+                        </label>
+                    
+                    
+                        <div class="border-t border-[#E8DCCB] my-5"></div>
+                    
+                    
+                        <!-- PAYMENT -->
+                    
+                        <p class="text-xs uppercase tracking-widest text-[#8B7765] mb-4">
+                            Payment Status
+                        </p>
+                    
+                        <label class="flex items-center gap-3 cursor-pointer">
+                        
+                            <input
+                                type="radio"
+                                name="payment-filter"
+                                value="all"
+                                checked
+                                class="w-4 h-4 accent-[#C9A36B]"
+                                onchange="updateQuery('payment', 'all')"
+                                <%= filters?.payment === 'all' ? 'checked' : '' %>
+                            >
+                        
+                            <span>
+                                All Payments
+                            </span>
+                        
+                        </label>
+                    
+                    
+                        <label class="flex items-center gap-3 mt-3 cursor-pointer">
+                        
+                            <input
+                                type="radio"
+                                name="payment-filter"
+                                value="Paid"
+                                class="w-4 h-4 accent-[#C9A36B]"
+                                onchange="updateQuery('payment', 'Paid')"
+                                <%= filters?.payment === 'Paid' ? 'checked' : '' %>
+                            >
+                        
+                            <span>
+                                Paid
+                            </span>
+                        
+                        </label>
+                    
+                    
+                        <label class="flex items-center gap-3 mt-3 cursor-pointer">
+                        
+                            <input
+                                type="radio"
+                                name="payment-filter"
+                                value="Pending"
+                                class="w-4 h-4 accent-[#C9A36B]"
+                                onchange="updateQuery('payment', 'Pending')"
+                                <%= filters?.payment === 'Pending' ? 'checked' : '' %>
+                            >
+                        
+                            <span>
+                                Pending
+                            </span>
+                        
+                        </label>
+                    
+                    
+                        <label class="flex items-center gap-3 mt-3 cursor-pointer">
+                        
+                            <input
+                                type="radio"
+                                name="payment-filter"
+                                value="Refunded"
+                                class="w-4 h-4 accent-[#C9A36B]"
+                                onchange="updateQuery('payment', 'Refunded')"
+                                <%= filters?.payment === 'Refunded' ? 'checked' : '' %>
+                            >
+                        
+                            <span>
+                                Refunded
+                            </span>
+                        
+                        </label>
+                    
+                    </div>
+                
                 </div>
+            
+            
+            
+                <!-- SORT -->
 
-            <% } %>
+                <div class="relative">
+                
+                    <button
+                        id="sort-btn"
+                        type="button"
+                        class="flex items-center justify-between gap-3 w-full sm:w-56 px-5 py-3
+                               bg-white border border-[#E8DCCB] rounded-2xl
+                               hover:border-[#C9A36B] transition"
+                    >
+                
+                        <div class="flex items-center gap-3">
+                        
+                            <i class="fa-solid fa-arrow-up-wide-short text-[#C9A36B]"></i>
+                        
+                            <span class="font-medium">
+                                Sort By
+                            </span>
+                        
+                        </div>
+                    
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    
+                    </button>
+                
+                
+                    <div
+                        id="sort-menu"
+                        class="hidden absolute z-30 mt-3 w-full sm:w-64
+                               bg-white border border-[#E8DCCB]
+                               rounded-2xl shadow-lg overflow-hidden"
+                    >
+                
+                        <button
+                            type="button"
+                            class="w-full text-left px-5 py-4
+                                   hover:bg-[#FAF7F2] transition
+                                   flex items-center gap-3"
+                            onclick="updateQuery('sort', 'new')"
+                        >
+                
+                            <i class="fa-solid fa-clock text-[#C9A36B] w-5"></i>
+                
+                            <span>
+                                Newest First
+                            </span>
+                        
+                        </button>
+                    
+                    
+                        <button
+                            type="button"
+                            class="w-full text-left px-5 py-4
+                                   hover:bg-[#FAF7F2] transition
+                                   flex items-center gap-3"
+                            onclick="updateQuery('sort', 'old')"
+                        >
+                    
+                            <i class="fa-solid fa-clock-rotate-left text-[#C9A36B] w-5"></i>
+                    
+                            <span>
+                                Oldest First
+                            </span>
+                        
+                        </button>
+                    
+                    
+                        <button
+                            type="button"
+                            class="w-full text-left px-5 py-4
+                                   hover:bg-[#FAF7F2] transition
+                                   flex items-center gap-3"
+                            onclick="updateQuery('sort', 'price-high')"
+                        >
+                    
+                            <i class="fa-solid fa-arrow-up-wide-short text-[#C9A36B] w-5"></i>
+                    
+                            <span>
+                                Total: High to Low
+                            </span>
+                        
+                        </button>
+                    
+                    
+                        <button
+                            type="button"
+                            class="w-full text-left px-5 py-4
+                                   hover:bg-[#FAF7F2] transition
+                                   flex items-center gap-3"
+                            onclick="updateQuery('sort', 'price-low')"
+                        >
+                    
+                            <i class="fa-solid fa-arrow-down-wide-short text-[#C9A36B] w-5"></i>
+                    
+                            <span>
+                                Total: Low to High
+                            </span>
+                        
+                        </button>
+                    
+                    </div>
+                
+                </div>
+            
+            </div>
 
+            
+            
         </div>
 
     </section>

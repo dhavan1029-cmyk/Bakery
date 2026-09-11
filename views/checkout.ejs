@@ -225,19 +225,27 @@
 
                                         <div class="space-y-4">
 
-                                            <label class="flex gap-4 items-center border border-[#E8DCCB] rounded-2xl p-5 cursor-pointer hover:border-[#C9A36B]">
+                                            <label class="flex gap-4 items-center border border-[#E8DCCB] rounded-2xl p-5 <%= cod ? 'cursor-pointer hover:border-[#C9A36B]' : 'opacity-60'%>">
 
-                                                <input type="radio" checked name="paymentMethod" value="cod">
+                                                <input type="radio" name="paymentMethod" value="cod" required>
                                                 <i class="fa-solid fa-money-bill-wave text-2xl text-[#C9A36B]"></i>
-                                                <div><p class="font-semibold">Cash On Delivery</p><p class="text-sm text-[#6B5B50]">Pay when your order arrives.</p></div>
+
+                                                <div>
+                                                    <p class="font-semibold">Cash On Delivery <%= !cod ? '(Currently unavailable)' : ''%> </p>
+                                                    <p class="text-sm text-[#6B5B50]">Pay when your order arrives.</p>
+                                                </div>
                                             
                                             </label>
 
-                                            <label class="flex gap-4 items-center border border-[#E8DCCB] rounded-2xl p-5 opacity-60">
+                                            <label class="flex gap-4 items-center border border-[#E8DCCB] rounded-2xl p-5 <%= onlinePayment ? 'cursor-pointer hover:border-[#C9A36B]' : 'opacity-60'%>">
                                             
-                                                <input type="radio" disabled>
+                                                <input type="radio" name="paymentMethod" value="online" required>
                                                 <i class="fa-solid fa-credit-card text-2xl text-[#C9A36B]"></i>
-                                                <div><p class="font-semibold">Online Payment</p><p class="text-sm">Coming Soon</p></div>
+
+                                                <div>
+                                                    <p class="font-semibold">Online Payment <%= !onlinePayment ? '(Currently unavailable)' : ''%></p>
+                                                    <p class="text-sm">Pay securely online and confirm your order instantly</p>
+                                                </div>
                                             
                                             </label>
 
@@ -308,7 +316,7 @@
 
                                 <h3 class="font-semibold">Delivery Information</h3>
 
-                                <p class="mt-2">Estimated delivery: <strong>30–45 minutes</strong></p>
+                                <p class="mt-2">Estimated delivery: <strong><%= deliveryTime%></strong></p>
 
                                 <p class="text-sm text-[#6B5B50] mt-2">Every order is freshly baked after confirmation.</p>
 

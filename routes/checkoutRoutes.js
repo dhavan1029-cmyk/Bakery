@@ -1,9 +1,11 @@
 import express from 'express';
 import { getCheckoutPage, placeOrder } from '../controllers/checkoutController.js';
+import { loadSettings } from '../middlewares/userMiddlewares.js';
 
 const router = express.Router()
 
-router.get('/checkout', getCheckoutPage)
+router.get('/checkout', loadSettings, getCheckoutPage)
 
-router.post('/checkout', placeOrder)
+router.post('/checkout', loadSettings, placeOrder)
+
 export default router

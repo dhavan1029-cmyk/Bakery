@@ -3,10 +3,9 @@ import productModel from "../models/productModel.js";
 
 export async function getMenu(req, res){
     try{
-
         const {available, priceRange, sort} = req.query
         const availability = available === 'true' ? true :  available === 'false' ? false : 'all'
-        console.log(availability)
+
         const price = priceRange?.split(',') || [0, Infinity]
         
         if (    
@@ -87,7 +86,7 @@ export async function renderProduct(req, res){
     
     try {
         
-        const {unavailable, quantity} = req.query
+        const {unavailable, quantity, quantityExceeded} = req.query
 
         const product = await productModel.findById(req.params.id)
 
@@ -96,7 +95,7 @@ export async function renderProduct(req, res){
             _id: { $ne: product?._id }
         });
 
-        res.render('product', {product, relatedProducts, unavailable, quantity})
+        res.render('product', {product, relatedProducts, unavailable, quantity, quantityExceeded})
 
     } catch (err) {
 

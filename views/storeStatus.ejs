@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FLOURish Bakery</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+</head>
+
+
+<body class="min-h-screen bg-[#F8F4EE] text-[#2F241D]">
+
+
+    <main class="min-h-screen flex items-center justify-center px-6 py-12">
+
+        <div class="w-full max-w-xl text-center">
+
+
+            <!-- ICON -->
+
+            <% if (maintenanceMode) { %>
+
+                <div
+                    class="mx-auto w-24 h-24 rounded-3xl
+                           bg-amber-100
+                           flex items-center justify-center"
+                >
+
+                    <i
+                        class="fa-solid fa-screwdriver-wrench
+                               text-4xl text-amber-600"
+                    ></i>
+
+                </div>
+
+            <% } else if (!storeOpen) { %>
+
+                <div
+                    class="mx-auto w-24 h-24 rounded-3xl
+                           bg-red-100
+                           flex items-center justify-center"
+                >
+
+                    <i
+                        class="fa-solid fa-store-slash
+                               text-4xl text-red-600"
+                    ></i>
+
+                </div>
+
+            <% } else { %>
+
+                <div
+                    class="mx-auto w-24 h-24 rounded-3xl
+                           bg-orange-100
+                           flex items-center justify-center"
+                >
+
+                    <i
+                        class="fa-solid fa-ban
+                               text-4xl text-orange-600"
+                    ></i>
+
+                </div>
+
+            <% } %>
+
+
+            <!-- BRAND -->
+
+            <p
+                class="mt-8 text-sm uppercase
+                       tracking-[0.25em]
+                       text-[#C9A36B]
+                       font-semibold"
+            >
+                FLOURish Bakery
+            </p>
+
+
+            <!-- MESSAGE -->
+
+            <% if (maintenanceMode) { %>
+
+                <h1 class="font-serif text-4xl sm:text-5xl mt-3">
+                    We'll Be Back Soon
+                </h1>
+
+                <p class="mt-5 text-[#6B5B50] leading-relaxed text-lg">
+                    FLOURish is currently undergoing maintenance.
+                    We're working behind the scenes to make things
+                    better for you.
+                </p>
+
+            <% } else if (!storeOpen) { %>
+
+                <h1 class="font-serif text-4xl sm:text-5xl mt-3">
+                    We're Currently Closed
+                </h1>
+
+                <p class="mt-5 text-[#6B5B50] leading-relaxed text-lg">
+                    Our bakery is currently closed and we're not
+                    accepting new orders right now. Please check
+                    back later.
+                </p>
+
+            <% } else { %>
+
+                <h1 class="font-serif text-4xl sm:text-5xl mt-3">
+                    Ordering Is Unavailable
+                </h1>
+
+                <p class="mt-5 text-[#6B5B50] leading-relaxed text-lg">
+                    We're currently not accepting new orders.
+                    Please check back later.
+                </p>
+
+            <% } %>
+
+
+            <!-- STATUS CARD -->
+
+            <div
+                class="mt-8 bg-white
+                       border border-[#E8DCCB]
+                       rounded-3xl
+                       p-6 shadow-sm"
+            >
+
+                <div class="flex items-center justify-center gap-3">
+
+                    <span
+                        class="w-3 h-3 rounded-full
+                        <%= maintenanceMode
+                            ? 'bg-amber-500'
+                            : !storeOpen
+                                ? 'bg-red-500'
+                                : 'bg-orange-500'
+                        %>"
+                    ></span>
+
+                    <p class="font-semibold">
+
+                        <%= maintenanceMode
+                            ? 'Maintenance in progress'
+                            : !storeOpen
+                                ? 'Store currently closed'
+                                : 'Ordering temporarily disabled'
+                        %>
+
+                    </p>
+
+                </div>
+
+                <p class="text-sm text-[#8B7765] mt-2">
+                    Thank you for your patience.
+                </p>
+
+            </div>
+
+
+            <!-- HOME BUTTON -->
+
+            <a
+                href="/"
+                class="inline-flex items-center
+                       justify-center gap-2
+                       mt-8
+                       px-6 py-3
+                       rounded-xl
+                       bg-[#C9A36B]
+                       hover:bg-[#B89056]
+                       text-[#2F241D]
+                       font-semibold
+                       transition"
+            >
+
+                <i class="fa-solid fa-house"></i>
+
+                Back to Home
+
+            </a>
+
+
+            <p class="mt-8 text-sm text-[#8B7765]">
+                © <%= new Date().getFullYear() %> FLOURish Bakery
+            </p>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
+

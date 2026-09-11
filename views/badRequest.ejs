@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Bad Request | FLOURish</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+</head>
+
+
+<body class="min-h-screen bg-[#F8F4EE] flex items-center justify-center px-6">
+
+    <main class="w-full max-w-lg text-center">
+
+        <!-- ICON -->
+
+        <div class="flex justify-center mb-7">
+
+            <div
+                class="w-20 h-20 rounded-3xl
+                       bg-[#F8EFD8]
+                       flex items-center justify-center"
+            >
+
+                <i
+                    class="fa-solid fa-circle-exclamation
+                           text-4xl text-[#C9A36B]"
+                ></i>
+
+            </div>
+
+        </div>
+
+
+        <!-- ERROR CODE -->
+
+        <p
+            class="text-sm font-semibold tracking-[0.3em]
+                   text-[#C9A36B] uppercase"
+        >
+            Error <%= statusCode%>
+        </p>
+
+
+        <!-- TITLE -->
+
+        <h1
+            class="font-serif text-4xl sm:text-5xl
+                   text-[#2F241D] mt-3"
+        >
+            Something went wrong
+        </h1>
+
+
+        <!-- MESSAGE -->
+
+        <p
+            class="text-[#6B5B50] leading-relaxed
+                   mt-5 max-w-md mx-auto"
+        >
+            We couldn't process that request.
+            Please check the link and try again.
+        </p>
+
+
+        <!-- ACTIONS -->
+
+        <div
+            class="flex flex-col sm:flex-row
+                   justify-center gap-3 mt-8"
+        >
+
+            <button
+                onclick="history.back()"
+                class="px-6 py-3 rounded-xl
+                       border border-[#E8DCCB]
+                       font-semibold
+                       hover:bg-white transition"
+            >
+
+                <i class="fa-solid fa-arrow-left mr-2"></i>
+
+                Go Back
+
+            </button>
+
+
+            <a
+                href="/"
+                class="px-6 py-3 rounded-xl
+                       bg-[#C9A36B]
+                       text-[#2F241D]
+                       font-semibold
+                       hover:bg-[#B89056]
+                       transition"
+            >
+
+                <i class="fa-solid fa-house mr-2"></i>
+
+                Home
+
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

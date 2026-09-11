@@ -19,13 +19,22 @@ const checkoutBtn = document.querySelector('#checkoutBtn')
 
 function updateCartWarning() {
 
-    if (cartWarning.classList.contains('hidden')) return;
+    const unavailableItems =
+        document.querySelectorAll('.unavailable');
 
-    const unavailableItems = document.querySelectorAll(".unavailable")
-    if (!unavailableItems.length) {
-        cartWarning.classList.add('hidden');
-        checkoutBtn.disabled = false
-    }
+    const quantityWarnings =
+        document.querySelectorAll('.quantity-exceeded-warning:not(.hidden)');
+
+    const hasProblems =
+        unavailableItems.length > 0 ||
+        quantityWarnings.length > 0;
+
+    checkoutBtn.disabled = hasProblems;
+
+    cartWarning.classList.toggle(
+        'hidden',
+        unavailableItems.length === 0
+    );
 }
 
 async function removeItem (e) {
@@ -36,7 +45,7 @@ async function removeItem (e) {
     const res = await fetch('/cart', {
         method: 'DELETE',
         body: JSON.stringify({
-            itemId: e.currentTarget.getAttribute('data-id')
+            itemId: e.currentTarget.dataset.id
         }),
         headers: {
             'Content-Type': 'application/json'
@@ -45,11 +54,17 @@ async function removeItem (e) {
 
     hideLoading()
 
-    const updatedTotal = await res.json()
+    const updatedCartInfo = await res.json()
+
+    if(!updatedCartInfo.success) {
+        alert(updatedCartInfo.message)
+        return
+    }
+
     cartItem.remove()
 
-    subtotal.textContent = '₹' + updatedTotal.subtotal
-    total.textContent = '₹' + updatedTotal.total
+    subtotal.textContent = '₹' + updatedCartInfo.subtotal
+    total.textContent = '₹' + updatedCartInfo.total
 
     if(!document.querySelector('.items')) {
         cart.classList.add('hidden')
@@ -60,52 +75,118 @@ async function removeItem (e) {
 
 }
 
-async function changeQty (e) {
-    const qtyBtn = e.currentTarget
-    const qty = qtyBtn.parentElement.querySelector('.quantity')
-    const item = qtyBtn.closest('.items')
-    const lineTotal = item.querySelector('.line-total')
-    const quantityExceededWarning = item.querySelector('.quantity-exceeded-warning')
-    if(+qty.textContent <= 1 && qtyBtn.classList.contains('decrease-btn')) showLoading()
 
-    if(!quantityExceededWarning.classList.contains('hidden') && qtyBtn.classList.contains('decrease-btn') && +qty.textContent - 1 <= +qtyBtn.getAttribute('max')){
-        quantityExceededWarning.classList.add('hidden')
-        item.classList.remove('border-2', 'border-red-200')
-        checkoutBtn.disabled = false
-    }
-    if(+qty.textContent >= +qtyBtn.getAttribute('max') && qtyBtn.classList.contains('increase-btn')) return
+async function changeQty(e) {
 
+    const qtyBtn = e.currentTarget;
+    const qty = qtyBtn.parentElement.querySelector('.quantity');
+    const item = qtyBtn.closest('.items');
+    const lineTotal = item.querySelector('.line-total');
+    const quantityExceededWarning =
+        item.querySelector('.quantity-exceeded-warning');
 
-    const res = await fetch('/cart', {
-        method: 'PATCH',
-        body: JSON.stringify({
-            productId: qtyBtn.getAttribute('data-id'),
-            updateQty: qtyBtn.classList.contains('increase-btn') ? 1 : -1
-        }),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
+    const isIncrease =
+        qtyBtn.classList.contains('increase-btn');
 
-    hideLoading()
+    const isDecrease =
+        qtyBtn.classList.contains('decrease-btn');
 
-    const updatedCartDetails = await res.json()
+    const currentQty = +qty.textContent;
+    const maxQty = +qtyBtn.getAttribute('max');
 
-    if(updatedCartDetails.qty <= 0) {
-        item.remove()
-        if(!document.querySelector('.items')){
-            cart.classList.add('hidden')
-            emptyCart.classList.remove('hidden')
-        }
-    } else {
-        qty.textContent = updatedCartDetails.qty
-        lineTotal.textContent = '₹' + updatedCartDetails.lineTotal
+    // Don't allow increasing beyond the client-side limit.
+    if (currentQty >= maxQty && isIncrease) {
+        return;
     }
 
-    subtotal.textContent = '₹' + updatedCartDetails.subtotal
-    total.textContent = '₹' + updatedCartDetails.total
+    if (currentQty <= 1 && isDecrease) {
+        showLoading();
+    }
 
-}   
+    try {
+
+        const res = await fetch('/cart', {
+            method: 'PATCH',
+
+            body: JSON.stringify({
+                productId: qtyBtn.dataset.id,
+                updateQty: isIncrease ? 1 : -1
+            }),
+
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!res.ok) {
+            return;
+        }
+
+        const updatedCartDetails = await res.json();
+
+        if (!updatedCartDetails.success) {
+            alert(updatedCartDetails.message);
+            return;
+        }
+
+        /*
+         * Only update the quantity-exceeded UI after
+         * the server confirms the quantity change.
+         */
+        if (
+            quantityExceededWarning &&
+            isDecrease &&
+            !quantityExceededWarning.classList.contains('hidden') &&
+            updatedCartDetails.qty <= maxQty
+        ) {
+
+            quantityExceededWarning.classList.add('hidden');
+
+            item.classList.remove(
+                'border-2',
+                'border-red-200'
+            );
+
+            updateCartWarning()
+        }
+
+        if (updatedCartDetails.qty <= 0) {
+
+            item.remove();
+
+            if (!document.querySelector('.items')) {
+
+                cart.classList.add('hidden');
+                emptyCart.classList.remove('hidden');
+
+            }
+
+            updateCartWarning();
+
+        } else {
+
+            qty.textContent = updatedCartDetails.qty;
+
+            lineTotal.textContent =
+                '₹' + updatedCartDetails.lineTotal;
+        }
+
+        subtotal.textContent =
+            '₹' + updatedCartDetails.subtotal;
+
+        total.textContent =
+            '₹' + updatedCartDetails.total;
+
+    } catch (err) {
+
+        console.error(err);
+
+    } finally {
+
+        hideLoading();
+
+    }
+}
 
 removeBtns.forEach(btn => {
     btn.addEventListener('click', removeItem)
