@@ -37,4 +37,3 @@ app.use(checkoutRoutes)
 app.use(adminRoutes)
 
 server.listen(process.env.PORT)
-// (process.env)
