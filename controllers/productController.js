@@ -68,10 +68,20 @@ export async function searchProducts(req, res){
     const searchValue = req.query.q
     
     const resultProducts = await productModel.find({
-        name: {
-            $regex: searchValue,
-            $options: 'i'
-        }
+        $or: [
+            {
+                name: {
+                    $regex: searchValue,
+                    $options: 'i'
+                }
+            },
+            {
+                category: {
+                    $regex: searchValue,
+                    $options: 'i'
+                }
+            }
+        ]
     })
 
 

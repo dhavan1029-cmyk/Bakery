@@ -124,7 +124,9 @@ export async function createNewProduct(req, res) {
             });
         }
 
-        uploadedImage = await cloudinary.uploader.upload(req.file.path);
+        uploadedImage = await cloudinary.uploader.upload(req.file.path, {
+            folder: "flourish/products"
+        });
 
         await productModel.insertOne({
 

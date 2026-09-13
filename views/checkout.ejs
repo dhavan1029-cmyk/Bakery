@@ -213,7 +213,7 @@
 
                                             <input type="text" name="city" required placeholder="City" class="border border-[#E8DCCB] rounded-xl px-4 py-3" value='<%= formData?.city || ""%>'>
                                             <input type="text" name="state" required placeholder="State" class="border border-[#E8DCCB] rounded-xl px-4 py-3" value='<%= formData?.state || ""%>'>
-                                            <input type="number" name="pincode" required placeholder="PIN Code" class="border border-[#E8DCCB] rounded-xl px-4 py-3" value='<%= formData?.pincode || ""%>'>
+                                            <input type="number" name="pincode" max="999999" min="000001" required placeholder="PIN Code" class="border border-[#E8DCCB] rounded-xl px-4 py-3" value='<%= formData?.pincode || ""%>'>
                                         
                                         </div>
 

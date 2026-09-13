@@ -19,8 +19,7 @@ export async function loginAdmin(req, res) {
         const admin = await userModel.findOne({email, role: 'admin'}).select('password')
 
         if(!admin){
-            res.render('admin/login', {error: 'Invalid password or email', formData: {email}, message: ''})
-            return
+            return res.render('admin/login', {error: 'Invalid password or email', formData: {email}, message: ''})
         }
 
         if(bcrypt.compareSync(password, admin.password)) {
@@ -37,7 +36,6 @@ export async function loginAdmin(req, res) {
             res.redirect('/admin/dashboard')
 
         }else{
-
             return res.render('admin/login', {error: 'Invalid password or email', formData: {email}, message: ''})
 
         }

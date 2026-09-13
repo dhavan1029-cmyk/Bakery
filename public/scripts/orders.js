@@ -364,18 +364,15 @@ function updateOrderActions(orderCard, { orderId, status }) {
     if (!actions) return;
 
 
-    let html = `
-
-        <a
-            href="/orders/${orderId}"
-            class="px-6 py-3 rounded-xl bg-[#C9A36B] hover:bg-[#B89056] font-semibold transition"
-        >
-            <i class="fa-solid fa-eye mr-2"></i>
-            View Details
-        </a>
-
-    `;
-
+    let viewDetails = document.createElement('a')
+    viewDetails.href = "/orders/${orderId}"
+    viewDetails.className = "px-6 py-3 rounded-xl bg-[#C9A36B] hover:bg-[#B89056] font-semibold transition"
+    viewDetails.innerHTML = `
+        <i class="fa-solid fa-eye mr-2"></i>
+           View Details
+        `
+    
+    const actionBtn = document.createElement('button')
 
     /*
     |--------------------------------------------------------------------------
@@ -385,21 +382,16 @@ function updateOrderActions(orderCard, { orderId, status }) {
 
     if (['Preparing', 'Baking'].includes(status)) {
 
-        html += `
+        actionBtn.className = "cancel-order px-6 py-3 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 transition"
+        actionBtn.dataset.id = orderId
 
-            <button
-                type="button"
-                class="cancel-order px-6 py-3 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 transition"
-                data-id="${orderId}"
-            >
+        actionBtn.innerHTML = `
+        <i class="fa-solid fa-xmark mr-2"></i>
 
-                <i class="fa-solid fa-xmark mr-2"></i>
+        Cancel Order
+        `
 
-                Cancel Order
-
-            </button>
-
-        `;
+        actionBtn.addEventListener('click', cancelOrder)
 
     }
 
@@ -412,21 +404,16 @@ function updateOrderActions(orderCard, { orderId, status }) {
 
     if (['Delivered', 'Cancelled'].includes(status)) {
 
-        html += `
+        actionBtn.className = "reorder px-6 py-3 rounded-xl border border-[#E8DCCB] hover:bg-white transition"
+        actionBtn.dataset.id = orderId
 
-            <button
-                type="button"
-                class="reorder px-6 py-3 rounded-xl border border-[#E8DCCB] hover:bg-white transition"
-                data-id="${orderId}"
-            >
+        actionBtn.innerHTML = `
+        <i class="fa-solid fa-rotate-right mr-2"></i>
 
-                <i class="fa-solid fa-rotate-right mr-2"></i>
+        Reorder
+        `
 
-                Reorder
-
-            </button>
-
-        `;
+        actionBtn.addEventListener('click', reorder)
 
     }
 
@@ -438,26 +425,22 @@ function updateOrderActions(orderCard, { orderId, status }) {
     */
 
     if (status === 'Out for Delivery') {
+        actionBtn.className = "track-order px-6 py-3 rounded-xl border border-[#E8DCCB] hover:bg-white transition"
+        actionBtn.dataset.id = orderId
 
-        html += `
+        actionBtn.innerHTML = `
+        <i class="fa-solid fa-location-dot mr-2"></i>
 
-            <a
-                href="/orders/${orderId}"
-                class="track-order px-6 py-3 rounded-xl border border-[#E8DCCB] hover:bg-white transition"
-            >
-
-                <i class="fa-solid fa-location-dot mr-2"></i>
-
-                Track Order
-
-            </a>
-
-        `;
+        Track Order
+        `
+        actionBtn.onclick = () => {
+            window.location.href = `/order/${orderId}/track`
+        }
 
     }
 
-
-    actions.innerHTML = html;
+    actions.innerHTML = ''
+    actions.append(viewDetails, actionBtn)
 
 }
 
