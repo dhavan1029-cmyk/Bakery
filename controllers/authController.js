@@ -24,14 +24,15 @@ export async function loginUser(req, res){
         const user = await userModel.findOne({email}).select('password')
 
         if (!user) {
-            res.render('login', {error: 'Invalid email or password', loginRequired: ''})
+            res.render('login', {error: 'Invalid email or password', loginRequired: '', formData: {}})
             return
         }
 
         if (user.role === 'admin') {
             return res.render('login', {
                 error: 'Please use the admin login page.',
-                loginRequired: ''
+                loginRequired: '',
+                formData: {}
             })
         }
 
