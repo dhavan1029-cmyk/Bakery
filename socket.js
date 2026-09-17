@@ -10,8 +10,6 @@ export function initSocket(server) {
 
     io.on("connection", (socket) => {
 
-        console.log('User connected:', socket.id)
-
         const userId = socket.user._id.toString()
 
         socket.join(`user:${userId}`)

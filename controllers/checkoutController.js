@@ -78,7 +78,6 @@ function badRequest(res, statusCode = 400) {
     return res.status(statusCode).render("badRequest", { statusCode });
 }
 
-
 // GET CHECKOUT
 
 export async function getCheckoutPage(req, res) {
@@ -124,9 +123,7 @@ export async function getCheckoutPage(req, res) {
 
         // REORDER
         if (reorderId) {
-            const order = await ordersModel
-                .findOne({ _id: reorderId, userID: req.user._id })
-                .populate("products.product");
+            const order = await ordersModel.findOne({ _id: reorderId, userID: req.user._id }).populate('products.product')
 
             if (!order) return badRequest(res, 404);
             if (order.products.some(item => !item.product)) return badRequest(res);
@@ -158,9 +155,8 @@ export async function getCheckoutPage(req, res) {
 
         // CART CHECKOUT
         else if (!productID) {
-            const user = await userModel
-                .findOne({ email: req.user.email })
-                .populate("cart.product");
+            const user = req.user
+            user.populate('cart.product')
 
             if (!user) return badRequest(res, 401);
             if (!user.cart.length) {
@@ -322,9 +318,8 @@ export async function placeOrder(req, res) {
             return res.redirect("/checkout");
         }
 
-        const user = await userModel
-            .findOne({ email: req.user.email })
-            .populate("cart.product");
+        const user = req.user
+        await user.populate('cart.product')
 
         if (!user) return badRequest(res, 401);
 
@@ -346,9 +341,7 @@ export async function placeOrder(req, res) {
 
         // REORDER
         if (reorderId) {
-            const oldOrder = await ordersModel
-                .findOne({ _id: reorderId, userID })
-                .populate("products.product");
+            const oldOrder = await ordersModel.findOne({ _id: reorderId, userID }).populate('products.product')
 
             if (!oldOrder) return badRequest(res, 404);
             if (!oldOrder.products.length) return res.redirect("/checkout");
@@ -468,8 +461,11 @@ export async function placeOrder(req, res) {
             user.cart = [];
         }
 
-        user.orders.push(newOrder._id);
-        await user.save();
+        userModel.updateOne({id: user._id}, {
+            $push: {
+                orders: newOrder._id
+            }
+        })
 
         getIO().emit("notify admin", {
             orderId: newOrder._id.toString(),
@@ -491,11 +487,6 @@ export async function placeOrder(req, res) {
         return res.status(500).render("serverError");
     }
 }
-
-
-
-
-
 
 
 

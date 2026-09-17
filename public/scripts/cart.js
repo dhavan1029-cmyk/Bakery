@@ -1,3 +1,5 @@
+import { request } from "express"
+
 const socket = io()
 
 socket.on('order status changed', notification => {
@@ -104,6 +106,7 @@ async function changeQty(e) {
     }
 
     try {
+        console.time('update')
 
         const res = await fetch('/cart', {
             method: 'PATCH',
@@ -117,6 +120,8 @@ async function changeQty(e) {
                 'Content-Type': 'application/json'
             }
         });
+        
+        console.timeEnd('update')
 
         if (!res.ok) {
             return;
@@ -199,3 +204,4 @@ decreaseBtns.forEach(btn => {
 increaseBtns.forEach(btn => {
     btn.addEventListener('click', changeQty)
 })
+

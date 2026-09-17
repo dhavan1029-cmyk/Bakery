@@ -69,7 +69,7 @@ export async function signupUser(req, res){
         const email = req.body.email?.trim().toLowerCase()
 
         if(!username || !email || !password || !confirmPassword){
-            return res.render('signup', {error: 'Please fill all the fields'})
+            return res.render('signup', {error: 'Please fill all the fields', formData: {username, email}})
         }
 
         if(username.length < 3 || password.length < 6 || !validator.isEmail(email)) return res.render('signup', {error: 'Invalid fields'})
@@ -83,13 +83,21 @@ export async function signupUser(req, res){
         const user = await userModel.findOne({email})
 
         if(user) {
-            return res.render('signup', {error: 'This account already exists'})
+            return res.render('signup', {error: 'This account already exists', formData: {email, username}})
         }
 
         const encryptedPassword = bcrypt.hashSync(password, 10)
-        const newUser = await userModel.insertOne({username, email, password: encryptedPassword, role: 'customer'})
-
-        loginUser(req, res)
+        await userModel.insertOne({username, email, password: encryptedPassword, role: 'customer'})
+        
+        const token = jwt.sign({email}, process.env.JWT_CODE, {expiresIn: '7d'})
+           
+        res.cookie('userToken', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 1000 * 60 * 60 * 24 * 7
+        })
+        res.redirect(`/menu`)
 
     } catch (err) {
         

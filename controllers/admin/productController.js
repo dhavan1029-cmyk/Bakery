@@ -1,6 +1,7 @@
 import productModel from "../../models/productModel.js";
 import cloudinary from "../../config/cloudinary.js";
 import { isValidObjectId } from "mongoose";
+import { setValue, getValue } from "../../config/cache.js";
 
 
 function validateProduct({ name, description, availability, maxQuantityPerOrder, category, price, quantity}) {
@@ -33,9 +34,8 @@ export async function getProducts(req, res) {
 
         const { message } = req.query;
 
-        const products = await productModel
-            .find()
-            .sort({ createdAt: -1 });
+        const products = getValue('products') || await productModel.find()
+        if(!getValue('products')) setValue('products', products)
 
         res.render('admin/products', {
             products,
@@ -69,7 +69,9 @@ export async function renderEditProduct(req, res) {
 
         if (!isValidObjectId(id)) return res.redirect('/admin/products?message=Product not found');
 
-        const product = await productModel.findById(id);
+        const product = getValue(id) || await productModel.findById(id);
+
+        if(!getValue(id)) setValue(id, product)
 
         if (!product) {
             return res.status(404).render('admin/products/edit', {
@@ -128,7 +130,7 @@ export async function createNewProduct(req, res) {
             folder: "flourish/products"
         });
 
-        await productModel.insertOne({
+        const newProduct = await productModel.insertOne({
 
             name: name.trim(),
             description: description.trim(),
@@ -142,6 +144,9 @@ export async function createNewProduct(req, res) {
             imagePublicId: uploadedImage.public_id
 
         });
+
+        setValue(newProduct._id, newProduct)
+        setValue('products', [...getValue('products'), newProduct])
 
         res.redirect(
             '/admin/products?message=The changes are done'
@@ -189,7 +194,9 @@ export async function editProduct(req, res) {
             });
         }
 
-        const product = await productModel.findById(productId);
+        const product = getValue(productId) || await productModel.findById(productId);
+
+        if(!getValue(productId)) setValue(productId, product)
 
         if (!product) {
             return res.status(404).render(
