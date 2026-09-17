@@ -1,5 +1,3 @@
-import { request } from "express"
-
 const socket = io()
 
 socket.on('order status changed', notification => {
