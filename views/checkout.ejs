@@ -227,7 +227,7 @@
 
                                             <label class="flex gap-4 items-center border border-[#E8DCCB] rounded-2xl p-5 <%= cod ? 'cursor-pointer hover:border-[#C9A36B]' : 'opacity-60'%>">
 
-                                                <input type="radio" name="paymentMethod" value="cod" required>
+                                                <input type="radio" name="paymentMethod" value="cod" required <%= !cod ? 'disabled' : '' %>>
                                                 <i class="fa-solid fa-money-bill-wave text-2xl text-[#C9A36B]"></i>
 
                                                 <div>
@@ -239,7 +239,7 @@
 
                                             <label class="flex gap-4 items-center border border-[#E8DCCB] rounded-2xl p-5 <%= onlinePayment ? 'cursor-pointer hover:border-[#C9A36B]' : 'opacity-60'%>">
                                             
-                                                <input type="radio" name="paymentMethod" value="online" required>
+                                                <input type="radio" name="paymentMethod" value="online" required <%= !onlinePayment ? 'disabled' : '' %>>
                                                 <i class="fa-solid fa-credit-card text-2xl text-[#C9A36B]"></i>
 
                                                 <div>
