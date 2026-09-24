@@ -21,7 +21,7 @@ export async function loginUser(req, res){
         
         if(!validator.isEmail(email)) return res.render('login', {error: 'Invalid email or password', formData: req.body})
 
-        const user = await userModel.findOne({email}).select('password')
+        const user = await userModel.findOne({email}).select('password role')
 
         if (!user) {
             res.render('login', {error: 'Invalid email or password', loginRequired: '', formData: {}})
